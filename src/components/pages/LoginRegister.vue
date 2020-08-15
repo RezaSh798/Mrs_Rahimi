@@ -163,7 +163,7 @@ import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-va
 import fa from 'vee-validate/dist/locale/fa.json'
 import * as rules from 'vee-validate/dist/rules'
 import router from '../../router'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 // install rules and localization
 Object.keys(rules).forEach(rule => {
@@ -191,7 +191,7 @@ export default {
 		ValidationObserver
 	},
 	methods : {
-		...mapMutations(['register','login']),
+		...mapActions(['register','login']),
 		changeLocation() {
 			if(this.$route.params.location == 'login') {
 				return 'login';

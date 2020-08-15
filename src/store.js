@@ -39,6 +39,14 @@ const store = new Vuex.Store({
                 }
             });
         }
+    },
+    actions: {
+        register({ commit }, payload) {
+            commit('register', payload);
+        },
+        login({ commit }, payload) {
+            commit('login', payload);
+        }
     }
 });
 
