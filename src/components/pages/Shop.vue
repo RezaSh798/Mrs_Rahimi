@@ -596,6 +596,9 @@
 // imports components
 import PageTitle from '../layout/PageTitle.vue'
 
+import { mapState } from 'vuex'
+import store from '../../store'
+
 export default {
     components : {
         'page-title' : PageTitle
@@ -613,6 +616,10 @@ export default {
 			}
 		});
 		$sliderAmount.val( $sliderRange.slider("values", 0) + " - " + $sliderRange.slider("values", 1) );
+	},
+	computed: mapState(['products', 'brands', 'categories']),
+	created() {		
+		store.dispatch('shop');
 	}
 }
 </script>

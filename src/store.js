@@ -15,6 +15,12 @@ const store = new Vuex.Store({
             rememberMe : false,
             rol: '',
         },
+        products: {},
+
+        // filters
+        categories: {},
+        brands: {},
+        price: null,
     },
     mutations: {
         register(state, newUser) {
@@ -38,6 +44,35 @@ const store = new Vuex.Store({
                     console.log(res.err);
                 }
             });
+        },
+        shop(state) {
+            // get products from server
+            axios.get('')
+                .then(res => {
+                    if(res) {
+                        state.products = res.data.products;
+                    } else {
+                        console.log(res.err);
+                    }
+                });
+            // get categories from server
+            axios.get('')
+                .then(res => {
+                    if(res) {
+                        state.categories = res.data.categories;
+                    } else {
+                        console.log(res.err);
+                    }
+                });
+            // get brands from server
+            axios.get('')
+                .then(res => {
+                    if(res) {
+                        state.brands = res.data.brands;
+                    } else {
+                        console.log(res.err);
+                    }
+                });
         }
     },
     actions: {
@@ -46,6 +81,9 @@ const store = new Vuex.Store({
         },
         login({ commit }, payload) {
             commit('login', payload);
+        },
+        shop({ commit }) {
+            commit('shop');
         }
     }
 });
