@@ -46,7 +46,7 @@
 												</div>
 												<div class="form-group">
 													<ValidationProvider name="گذرواژه" rules="required|min:8|max:11" v-slot="{ errors }">
-														<input type="password" v-model="user.password" class="form-control" id="pwd" placeholder="گذرواژه">
+														<input type="password" v-model="user.pass" class="form-control" id="pwd" placeholder="گذرواژه">
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>
 												</div>
@@ -120,13 +120,13 @@
 												</div>
 												<div class="form-group">
 													<ValidationProvider name="گذرواژه" rules="required|min:8|max:11" v-slot="{ errors }" vid="confirmation">
-														<input type="password" v-model="user.confirmPassword" class="form-control" placeholder="گذرواژه">
+														<input type="password" v-model="user.confirmPass" class="form-control" placeholder="گذرواژه">
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>
 												</div>
 												<div class="form-group">
 													<ValidationProvider name="تائید گذرواژه" rules="required|confirmed:confirmation" v-slot="{ errors }">
-														<input type="password" v-model="user.password" class="form-control" placeholder="تائید گذرواژه">
+														<input type="password" v-model="user.pass" class="form-control" placeholder="تائید گذرواژه">
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>
 												</div>
@@ -163,7 +163,7 @@ import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-va
 import fa from 'vee-validate/dist/locale/fa.json'
 import * as rules from 'vee-validate/dist/rules'
 import router from '../../router'
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 // install rules and localization
 Object.keys(rules).forEach(rule => {
@@ -176,11 +176,12 @@ export default {
 	data() {
 		return {
 			user : {
-				name : '',
-				password : '',
-				confirmPassword : '',
+				name: '',
+				pass: null,
+				confirmPass : null,
 				email : '',
 				rememberMe : false,
+				rol: 'member',
 			}
 		}
 	},
@@ -190,6 +191,7 @@ export default {
 		ValidationObserver
 	},
 	methods : {
+		...mapMutations(['register','login']),
 		changeLocation() {
 			if(this.$route.params.location == 'login') {
 				return 'login';
@@ -197,19 +199,18 @@ export default {
 				return 'register';
 			}
 		},
-		onRegister() {	
-			// isAuthenticated = true;
-			
-			router.push({ name: 'home' });
+		onRegister() {		
+			this.register(this.user);
+			// router.push({ name: 'home' });
 		},
 		onLogin() {
-			// isAuthenticated = true;
-			$(document).ready( () => {
-				$('#loginDialog').removeClass('in');
-				$('#loginDialog').css('display','none');
-				$('body').css('padding-rigth','0px');
-				$('body').removeClass('modal-open');
-			});
+			this.login(this.user);
+			// $(document).ready( () => {
+			// 	$('#loginDialog').removeClass('in');
+			// 	$('#loginDialog').css('display','none');
+			// 	$('body').css('padding-rigth','0px');
+			// 	$('body').removeClass('modal-open');
+			// });
 			// router.push({ name: 'home' });
 		}
 	},
