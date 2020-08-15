@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-Vue.use(VueRouter);
 
+Vue.use(VueRouter);
 // import components
 import Index from './components/pages/Index.vue'
 import Shop from './components/pages/Shop.vue'
@@ -42,7 +42,7 @@ const routes = [
     {
         path : '/',
         alias : '/home',
-        name : 'Home',
+        name : 'home',
         component : Index
     },
     {
@@ -73,7 +73,7 @@ const routes = [
     {
         path : '/user/:location',
         name : 'signin/up',
-        component : LogReg
+        component : LogReg,
     },
     {
         path : '/*',

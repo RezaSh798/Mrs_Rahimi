@@ -29,7 +29,7 @@
 					<div class="text-center">
 						<button type="button" class="btn btn-primary text-center" data-toggle="modal" data-target=".login-modal-lg">ورود به حساب</button>
 					</div>
-					<div class="modal model-sign fade login-modal-lg" tabindex="-1" role="dialog">
+					<div id="loginDialog" class="modal model-sign fade login-modal-lg" tabindex="-1" role="dialog">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-body" style="direction:rtl;">
@@ -58,7 +58,7 @@
 												<div class="pull-left lost-pass">
 													<a href="#">گذرواژه تان را فراموش کرده اید ؟</a>
 												</div>
-												<button type="submit" :disabled="invalid" class="btn btn-primary btn-block">ورود</button>
+												<button type="submit" :disabled="invalid" class="btn btn-primary btn-block" @click="onLogin">ورود</button>
 											</form>
 										</ValidationObserver>
 										<div class="form-links text-center">
@@ -97,7 +97,7 @@
 					<div class="text-center">
 						<button type="button" class="btn btn-primary text-center" data-toggle="modal" data-target=".login-modal-lg">ایجاد حساب</button>
 					</div>
-					<div class="modal model-sign fade login-modal-lg" tabindex="-1" role="dialog">
+					<div id="registerDialog" class="modal model-sign fade login-modal-lg" tabindex="-1" role="dialog">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-body" style="direction:rtl;">
@@ -131,7 +131,7 @@
 													</ValidationProvider>
 												</div>
 												
-												<button type="submit" :disabled="invalid" class="btn btn-primary btn-block mt-30">ایجاد حساب</button>
+												<button type="submit" :disabled="invalid" class="btn btn-primary btn-block mt-30" @click="onRegister">ایجاد حساب</button>
 											</form>
 										</ValidationObserver>
 										<div class="form-links text-center">
@@ -162,6 +162,8 @@ import PageTitle from '../layout/PageTitle.vue'
 import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'
 import fa from 'vee-validate/dist/locale/fa.json'
 import * as rules from 'vee-validate/dist/rules'
+import router from '../../router'
+import { mapState } from 'vuex'
 
 // install rules and localization
 Object.keys(rules).forEach(rule => {
@@ -194,8 +196,24 @@ export default {
 			} else if(this.$route.params.location == 'register') {
 				return 'register';
 			}
+		},
+		onRegister() {	
+			// isAuthenticated = true;
+			
+			router.push({ name: 'home' });
+		},
+		onLogin() {
+			// isAuthenticated = true;
+			$(document).ready( () => {
+				$('#loginDialog').removeClass('in');
+				$('#loginDialog').css('display','none');
+				$('body').css('padding-rigth','0px');
+				$('body').removeClass('modal-open');
+			});
+			// router.push({ name: 'home' });
 		}
 	},
+	computed: mapState(['isAuthenticated']),
 }
 </script>
 

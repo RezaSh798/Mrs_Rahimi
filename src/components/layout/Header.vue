@@ -11,10 +11,13 @@
 					</div>
 					<div class="col-xs-12 col-sm-6 col-md-7">
 						<ul class="list-inline pull-right top-links">
-							<li>
+							<li v-if="!isAuthenticated">
 								<router-link to="/user/login">ورود</router-link>
 								/
 								<router-link to="/user/register">عضویت</router-link>
+							</li>
+							<li v-else>
+								خوش آمدید
 							</li>
 						</ul>
 					</div>
@@ -76,7 +79,7 @@
 						<li class="my-navbar-li">
 							<router-link to="/contact">ارتباط با ما</router-link>
 						</li>
-						<li class="my-navbar-li">
+						<li class="my-navbar-li" v-if="isAuthenticated && user.rol == 'admin'">
 							<router-link to="/panel/products">داشبورد</router-link>
 						</li>
 						<!-- li end -->
@@ -90,7 +93,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
+	computed: mapState([
+		'isAuthenticated',
+		'user'
+	]),
 	mounted() {
 		var $navAffix = $(".header nav");
 		$navAffix.affix({

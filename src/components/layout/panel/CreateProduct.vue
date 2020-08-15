@@ -1,7 +1,16 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation @submit="onSubmit()">
     <v-container>
-    <v-row>
+      <v-row>
+        <v-col
+        class="d-flex justify-center"
+        style="margin-top:-17px;"
+        cols="12"
+        >
+        <input type="file" multiple @change="onFilesSelected" style="display:none;" ref="files">
+        <input type="button" @click="$refs.files.click()" value="آپلود تصاویر">
+        </v-col>
+
         <v-col
         cols="12"
         md="6"
@@ -68,20 +77,6 @@
           dense
         ></v-select>
         </v-col>  
-        
-        <v-col
-        style="margin-top:-17px;"
-        cols="12"
-        md="6"
-        >
-        <v-file-input
-          :rules="imageRules"
-          accept="image/png, image/jpeg, image/bmp"
-          placeholder="انتخاب تصویر"
-          prepend-icon="mdi-camera"
-          label="تصویر"
-        ></v-file-input>
-        </v-col>
 
         <v-col
         cols="12"
@@ -106,7 +101,7 @@
           width="200px"
           type="submit"
         >
-        {{ this.$route.params.id == 'new' ? 'ذخیره' : 'بروزرسانی' }}
+          {{ this.$route.params.id == 'new' ? 'ذخیره' : 'بروزرسانی' }}
         </v-btn>
         </v-col>
       </v-row>
@@ -115,55 +110,73 @@
 </template>
 
 <script>
-  export default {
-    data : () => ({
-      // DATAES
-      valid: true,
-      brands: [
-        'test 1',
-        'test 2',
-        'test 3'
-      ],
+export default {
+  data : () => ({
+    // DATAES
+    valid: true,
+    brands: [
+      'test 1',
+      'test 2',
+      'test 3'
+    ],
 
-      product : {
-        name: '',
-        price: '',
-        image: '',
-        code: '',
-        Inventory: '',
-        text: '',
-        brand: ''
-      },
-      
-      // RULES
-      nameRules: [
-        v => !!v || 'این فیلد باید پر شود !',
-        v => v.length <= 20 || '20 کاراکتر مجاز است !',
-      ],
-      codeRules: [
-        v => !!v || 'این فیلد باید پر شود !',
-        v => v.length <= 10 || '10 کاراکتر مجاز است !',
-      ],
-      requiredRules: [
-        v => !!v || 'این فیلد باید پر شود !',
-      ],
-      imageRules: [
-        v => !!v || 'این فیلد باید پر شود !',
-        value => !value || value.size < 2000000 || 'تصویر باید کمتر از 2M باشد!',
-      ],
-      textRules: [
-        v => !!v || 'این فیلد باید پر شود !',
-        v => v.length > 50 || 'حداقل 50 کاراکتر وارد کنید !',
-        v => v.length < 200 || '200 کاراکتر مجاز است !'
-      ],
-    }),
-    methods : {
-      validate () {
-        this.$refs.form.validate()
-      },
-      onSubmit() {
-        alert('submit');
-      }
+    product : {
+      name: '',
+      price: '',
+      image: '',
+      code: '',
+      Inventory: '',
+      text: '',
+      brand: ''
     },
-  }
+    
+    images : [],
+
+    // RULES
+    nameRules: [
+      v => !!v || 'این فیلد باید پر شود !',
+      v => v.length <= 20 || '20 کاراکتر مجاز است !',
+    ],
+    codeRules: [
+      v => !!v || 'این فیلد باید پر شود !',
+      v => v.length <= 10 || '10 کاراکتر مجاز است !',
+    ],
+    requiredRules: [
+      v => !!v || 'این فیلد باید پر شود !',
+    ],
+    imageRules: [
+      v => !!v || 'این فیلد باید پر شود !',
+      value => !value || value.size < 2000000 || 'تصویر باید کمتر از 2M باشد!',
+    ],
+    textRules: [
+      v => !!v || 'این فیلد باید پر شود !',
+      v => v.length > 50 || 'حداقل 50 کاراکتر وارد کنید !',
+      v => v.length < 200 || '200 کاراکتر مجاز است !'
+    ],
+  }),
+  methods : {
+    validate () {
+      this.$refs.form.validate()
+    },
+    onSubmit() {
+      alert('submit');
+    },
+    onFilesSelected(event) {
+      console.log(event.target.files);
+      this.images = event.target.files;
+    },
+    // onUploadImage() {
+    //   const fd = new FormData();
+    //   fd.append('image', this.images, this.images[?].name);
+    //   axios.post('', fd, {
+    //     onUploadProgress : uploadEvent => {
+    //       console.log('upload progress: ' + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%')
+    //     }
+    //   })
+    //     .then(res => {
+    //       console.log(res);
+    //   });
+    // }
+  },
+}
 </script>
