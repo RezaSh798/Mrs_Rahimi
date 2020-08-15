@@ -214,6 +214,11 @@ export default {
 		}
 	},
 	computed: mapState(['isAuthenticated']),
+	created() {
+		if(this.isAuthenticated) {
+			router.push({ name: 'home' });
+		}
+	}
 }
 </script>
 

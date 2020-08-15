@@ -4,7 +4,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        isAuthenticated: false,
+        isAuthenticated: true,
         user: {
             id: 1,
             name: 'RezaSh798',
