@@ -6,14 +6,14 @@ Vue.use(axios);
 
 const store = new Vuex.Store({
     state: {
-        isAuthenticated: false,
+        isAuthenticated: true,
         user: {
             name: '',
             pass: null,
             confirmPass : null,
             email : '',
             rememberMe : false,
-            rol: '',
+            rol: 'admin',
         },
         products: {},
 
@@ -73,6 +73,15 @@ const store = new Vuex.Store({
                         console.log(res.err);
                     }
                 });
+        },
+        createPruduct(product) {
+            const newProduct = product;
+            newProduct.images = new FormData();
+            newProduct.images.append('images', product.images, 'uploadingImages');
+            axios.post('', newProduct)
+                .then(res => {
+                console.log(res);
+            });
         }
     },
     actions: {
@@ -84,8 +93,18 @@ const store = new Vuex.Store({
         },
         shop({ commit }) {
             commit('shop');
+        },
+        createPruduct({ commit }, payload) {
+            commit('createPruduct', payload);
         }
     }
 });
 
 export default store;
+
+// ,
+// {
+//     onUploadProgress : uploadEvent => {
+//     console.log('upload progress: ' + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%')
+//     }
+// }

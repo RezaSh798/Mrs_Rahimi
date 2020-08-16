@@ -2,14 +2,14 @@
   <v-form ref="form" v-model="valid" lazy-validation @submit="onSubmit()">
     <v-container>
       <v-row>
-        <v-col
+        <!-- <v-col
         class="d-flex justify-center"
         style="margin-top:-17px;"
         cols="12"
         >
         <input type="file" multiple @change="onFilesSelected" style="display:none;" ref="files">
         <input type="button" @click="$refs.files.click()" value="آپلود تصاویر">
-        </v-col>
+        </v-col> -->
 
         <v-col
         cols="12"
@@ -66,7 +66,6 @@
         </v-col>
 
         <v-col
-        class="d-flex"
         cols="12"
         md="6">
         <v-select
@@ -76,7 +75,23 @@
           label="برند ها"
           dense
         ></v-select>
-        </v-col>  
+        </v-col>
+
+        <v-col
+        id="my-img"
+        cols="12"
+        md="6"
+        >
+        <v-file-input
+          multiple
+          :rules="imageRules"
+          accept="image/png, image/jpeg, image/bmp"
+          placeholder="انتخاب تصاویر"
+          prepend-icon="mdi-camera"
+          label="تصویر"
+          @change="onFilesSelected"
+        ></v-file-input>
+        </v-col>
 
         <v-col
         cols="12"
@@ -110,6 +125,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data : () => ({
     // DATAES
@@ -123,14 +140,14 @@ export default {
     product : {
       name: '',
       price: '',
-      image: '',
       code: '',
       Inventory: '',
       text: '',
+      images : null,
       brand: ''
     },
     
-    images : [],
+    
 
     // RULES
     nameRules: [
@@ -146,7 +163,6 @@ export default {
     ],
     imageRules: [
       v => !!v || 'این فیلد باید پر شود !',
-      value => !value || value.size < 2000000 || 'تصویر باید کمتر از 2M باشد!',
     ],
     textRules: [
       v => !!v || 'این فیلد باید پر شود !',
@@ -155,28 +171,22 @@ export default {
     ],
   }),
   methods : {
+    ...mapActions(['createPruduct']),
     validate () {
       this.$refs.form.validate()
     },
+    onFilesSelected(files) {
+      this.product.images = files;
+    },
     onSubmit() {
-      alert('submit');
+      this.createPruduct(this.product);
     },
-    onFilesSelected(event) {
-      console.log(event.target.files);
-      this.images = event.target.files;
-    },
-    // onUploadImage() {
-    //   const fd = new FormData();
-    //   fd.append('image', this.images, this.images[?].name);
-    //   axios.post('', fd, {
-    //     onUploadProgress : uploadEvent => {
-    //       console.log('upload progress: ' + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%')
-    //     }
-    //   })
-    //     .then(res => {
-    //       console.log(res);
-    //   });
-    // }
   },
 }
 </script>
+
+<style>
+  #my-img {
+    margin-top: -17px;
+  }  
+</style>
