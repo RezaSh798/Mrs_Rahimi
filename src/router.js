@@ -17,6 +17,7 @@ import Panel from './components/pages/Panel.vue'
 import PanelProducts from './components/layout/panel/Products.vue'
 import PanelCreateProduct from './components/layout/panel/CreateProduct.vue'
 import PanelUsers from './components/layout/panel/Users.vue'
+import Messages from './components/layout/panel/Messages.vue'
 
 const routes = [
     {
@@ -26,6 +27,7 @@ const routes = [
         children : [
             {
                 path : 'products',
+                name : 'products',
                 component : PanelProducts
             },
             {
@@ -35,8 +37,14 @@ const routes = [
             },
             {
                 path : 'users',
+                name : 'users',
                 component : PanelUsers
             },
+            {
+                path : 'messages',
+                name : 'messages',
+                component : Messages
+            }
         ]
     },
     {

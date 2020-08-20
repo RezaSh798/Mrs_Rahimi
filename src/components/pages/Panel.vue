@@ -36,6 +36,11 @@
                                 <router-link style="color:gray;" to="/panel/users">کاربران</router-link>
                             </v-list-item-title>
                         </v-list-item>
+                        <v-list-item style="text-align:center;">
+                            <v-list-item-title>
+                                <router-link style="color:gray;" to="/panel/messages">پیام ها</router-link>
+                            </v-list-item-title>
+                        </v-list-item>
                     </v-list>
                 </v-menu>
             </v-row>
