@@ -162,7 +162,6 @@ import PageTitle from '../layout/PageTitle.vue'
 import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'
 import fa from 'vee-validate/dist/locale/fa.json'
 import * as rules from 'vee-validate/dist/rules'
-import router from '../../router'
 import { mapState, mapActions } from 'vuex'
 
 // install rules and localization
@@ -201,23 +200,19 @@ export default {
 		},
 		onRegister() {		
 			this.register(this.user);
-			// router.push({ name: 'home' });
+			$("#registerDialog").modal('hide');
+			this.$router.push({ name: 'home' });
 		},
 		onLogin() {
 			this.login(this.user);
-			// $(document).ready( () => {
-			// 	$('#loginDialog').removeClass('in');
-			// 	$('#loginDialog').css('display','none');
-			// 	$('body').css('padding-rigth','0px');
-			// 	$('body').removeClass('modal-open');
-			// });
-			// router.push({ name: 'home' });
+			$("#loginDialog").modal('hide');
+			this.$router.push({ name: 'home' });
 		}
 	},
 	computed: mapState(['isAuthenticated']),
 	created() {
 		if(this.isAuthenticated) {
-			router.push({ name: 'home' });
+			this.$router.push({ name: 'home' });
 		}
 	}
 }

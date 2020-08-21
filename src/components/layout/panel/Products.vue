@@ -40,8 +40,6 @@
 </template>
 
 <script>
-import router from '../../../router'
-
 export default {
     data () {
       return {
@@ -184,7 +182,7 @@ export default {
         },
         actionOperation () {
             if ( this.singleSelect && this.selected.length == 1 ) {
-                router.push({ name : 'edite', params : { id : this.selected[0].id } });
+                this.$router.push({ name : 'edite', params : { id : this.selected[0].id } });
             } else if ( this.singleSelect && this.selected.length != 1 ) {
                 this.alert = true;
             } else {
