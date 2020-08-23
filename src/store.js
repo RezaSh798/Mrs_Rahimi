@@ -6,7 +6,7 @@ Vue.use(axios);
 
 const store = new Vuex.Store({
     state: {
-        isAuthenticated: false,
+        isAuthenticated: true,
         user: {
             name: '',
             pass: null,
@@ -16,10 +16,8 @@ const store = new Vuex.Store({
             rol: 'admin',
         },
         products: {},
-
-        // filters
-        categories: {},
-        brands: {},
+        categories: [],
+        brands: [],
         price: null,
     },
     mutations: {
@@ -82,6 +80,17 @@ const store = new Vuex.Store({
                 .then(res => {
                 console.log(res);
             });
+        },
+        getCategories( state ) {
+            axios.get('http://localhost:8000/api/v1/category')
+                .then( response => {
+                    response.data.data.forEach( category => {
+                        state.categories.push( category.title );
+                    });
+                })
+                .catch( errors => {
+                    console.log( errors );
+                })
         }
     },
     actions: {
@@ -96,6 +105,9 @@ const store = new Vuex.Store({
         },
         createPruduct({ commit }, payload) {
             commit('createPruduct', payload);
+        },
+        getCategories({ commit }) {
+            commit('getCategories');
         }
     }
 });

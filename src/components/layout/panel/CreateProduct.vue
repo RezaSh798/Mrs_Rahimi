@@ -2,15 +2,6 @@
   <v-form ref="form" v-model="valid" lazy-validation @submit="onSubmit()">
     <v-container>
       <v-row>
-        <!-- <v-col
-        class="d-flex justify-center"
-        style="margin-top:-17px;"
-        cols="12"
-        >
-        <input type="file" multiple @change="onFilesSelected" style="display:none;" ref="files">
-        <input type="button" @click="$refs.files.click()" value="آپلود تصاویر">
-        </v-col> -->
-
         <v-col
         cols="12"
         md="6"
@@ -69,10 +60,10 @@
         cols="12"
         md="6">
         <v-select
-          v-model="product.brand"
-          :items="brands"
+          v-model="product.category"
+          :items="categories"
           :rules="requiredRules"
-          label="برند ها"
+          label="دسته بندی"
           dense
         ></v-select>
         </v-col>
@@ -125,18 +116,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data : () => ({
     // DATAES
     valid: true,
-    brands: [
-      'test 1',
-      'test 2',
-      'test 3'
-    ],
-
     product : {
       name: '',
       price: '',
@@ -144,10 +129,8 @@ export default {
       Inventory: '',
       text: '',
       images : null,
-      brand: ''
+      category: ''
     },
-    
-    
 
     // RULES
     nameRules: [
@@ -170,8 +153,11 @@ export default {
       v => v.length < 200 || '200 کاراکتر مجاز است !'
     ],
   }),
+  computed: {
+    ...mapActions(['createPruduct', 'getCategories']),
+    ...mapState(['categories']),
+  },
   methods : {
-    ...mapActions(['createPruduct']),
     validate () {
       this.$refs.form.validate()
     },
@@ -182,6 +168,9 @@ export default {
       this.createPruduct(this.product);
     },
   },
+  created() {
+    this.getCategories;
+  }
 }
 </script>
 
