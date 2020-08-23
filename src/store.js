@@ -101,10 +101,3 @@ const store = new Vuex.Store({
 });
 
 export default store;
-
-// ,
-// {
-//     onUploadProgress : uploadEvent => {
-//     console.log('upload progress: ' + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%')
-//     }
-// }

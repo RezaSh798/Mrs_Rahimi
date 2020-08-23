@@ -17,6 +17,6 @@ export default {
   components: {
     'my-header' : Header,
     'my-footer' : Footer,
-  }
+  },
 }
 </script>
