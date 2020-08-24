@@ -18,6 +18,7 @@ import PanelProducts from './components/layout/panel/Products.vue'
 import PanelCreateProduct from './components/layout/panel/CreateProduct.vue'
 import PanelUsers from './components/layout/panel/Users.vue'
 import Messages from './components/layout/panel/Messages.vue'
+import Categories from './components/layout/panel/Categories.vue'
 
 const routes = [
     {
@@ -44,6 +45,11 @@ const routes = [
                 path : 'messages',
                 name : 'messages',
                 component : Messages
+            },
+            {
+                path: 'categories',
+                name: 'categories',
+                component: Categories
             }
         ]
     },

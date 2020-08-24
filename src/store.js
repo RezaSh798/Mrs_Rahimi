@@ -91,6 +91,12 @@ const store = new Vuex.Store({
                 .catch( errors => {
                     console.log( errors );
                 })
+        },
+        createCategory( newCategory ) {
+            axios.post('http://localhost:8000/api/v1/category', newCategory)
+                .then( response => {
+                    console.log(response);
+                })
         }
     },
     actions: {
@@ -108,6 +114,9 @@ const store = new Vuex.Store({
         },
         getCategories({ commit }) {
             commit('getCategories');
+        },
+        createCategory({ commit }, payload) {
+            commit('createCategory', payload);
         }
     }
 });
