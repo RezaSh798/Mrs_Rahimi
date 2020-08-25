@@ -1,6 +1,9 @@
 <template>
 <section>
-    <CategoriesTree :categories="categories" />
+    <CategoriesTree
+    v-for="category in categories"
+    :key="category.id"
+    :category="category" />
 </section>
 </template>
 

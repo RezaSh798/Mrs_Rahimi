@@ -1,18 +1,26 @@
 <template>
-<div style="direction:rtl;">
+<div>
     <div
-        v-for="category in categories"
-        :key="category.id"
-        :style="{'margin-right': depth * 30 + 'px'}"
-        class="category">
+    :style="{'margin-right': depth * 30 + 'px'}"
+    class="category">
         <div class="display">
             <input
-            type="text"
-            v-model="catName"
-            :placeholder="category.name"
-            v-if="showEditInput == category.id"
-            @change="onUpdate(category.id)" />
+                type="text"
+                v-model="catName"
+                :placeholder="category.name"
+                v-if="showEditInput == category.id"
+                @change="onUpdate(category.id)" />
             <div class="display" @click="show = !show" v-else>
+                <i
+                    v-if="!show"
+                    style="fontSize:15px;"
+                    :class="(category.children.length > 0) ? 'fas fa-angle-double-left' : 'fas fa-circle-notch'">
+                </i>
+                <i
+                    v-else
+                    style="fontSize:15px;"
+                    :class="(category.children.length > 0) ? 'fas fa-angle-double-down' : 'fas fa-circle-notch'">
+                </i>
                 {{ category.name }}
             </div>
         </div>
@@ -30,8 +38,10 @@
         </div>
         
         <CategoriesTree
-            v-if="show"
-            :categories="category.children"
+            v-for="child in category.children"
+            :key="child.id"
+            :category="child"
+            v-show="show"
             :depth="depth + 1"
         />
     </div>
@@ -44,7 +54,7 @@ import { mapActions } from 'vuex'
 export default {
     name: 'CategoriesTree',
     props: {
-        categories: Array,
+        category: Object,
         depth: {
             type: Number,
             default: 0
@@ -82,7 +92,7 @@ export default {
             });
             this.catName = '';
         }
-    }
+    },
 }
 </script>
 
