@@ -72,7 +72,7 @@ const store = new Vuex.Store({
                     }
                 });
         },
-        createPruduct(product) {
+        createPruduct(state, product) {
             const newProduct = product;
             newProduct.images = new FormData();
             newProduct.images.append('images', product.images, 'uploadingImages');
@@ -92,11 +92,23 @@ const store = new Vuex.Store({
                     console.log( errors );
                 })
         },
-        createCategory( newCategory ) {
-            axios.post('http://localhost:8000/api/v1/category', newCategory)
-                .then( response => {
-                    console.log(response);
-                })
+        createCategory( state, newCategory ) {
+            axios({
+                method: 'POST',
+                url: 'http://localhost:8000/api/v1/category',
+                headers: {
+                    'Accept': 'application/json'
+                },
+                data: {
+                    title: newCategory
+                }
+            })
+            .then( response => {
+                alert( response.data.data );
+            })
+            .catch( errors => {
+                console.log( errors )
+            });
         }
     },
     actions: {
