@@ -11,7 +11,7 @@
             v-model="catName"
             :placeholder="category.name"
             v-if="showEditInput == category.id"
-            @change="onChange()" />
+            @change="onUpdate(category.id)" />
             <div class="display" @click="show = !show" v-else>
                 {{ category.name }}
             </div>
@@ -55,17 +55,29 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['createCategory']),
+        ...mapActions([
+            'updateCategory',
+            'deleteCategory',
+        ]),
         remove(catId) {
-            console.log(catId)
+            if(confirm('از حذف کردن این دسته مطمئن هستید ؟')) {
+                this.deleteCategory(catId);
+            }
         },
         edit(catId) {
-            console.log(catId)
-            this.showEditInput = catId;
+            if(this.showEditInput == catId) {
+                this.showEditInput = -1;
+            } else {
+                this.showEditInput = catId;
+            }
         },
-        onChange() {
+        onUpdate(catId) {
             this.showEditInput = -1;
-            this.createCategory(this.catName);
+            this.updateCategory({
+                id: catId,
+                name: this.catName,
+            });
+            this.catName = '';
         }
     }
 }

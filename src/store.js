@@ -92,23 +92,33 @@ const store = new Vuex.Store({
                     console.log( errors );
                 })
         },
-        createCategory( state, newCategory ) {
+        updateCategory( state, update ) {
             axios({
-                method: 'POST',
-                url: 'http://localhost:8000/api/v1/category',
+                method: 'PUT',
+                url: `http://localhost:8000/api/v1/category/${update.id}`,
                 headers: {
                     'Accept': 'application/json'
                 },
                 data: {
-                    title: newCategory
+                    title: update.name
                 }
             })
             .then( response => {
                 alert( response.data.data );
+                return response;
             })
             .catch( errors => {
                 console.log( errors )
             });
+        },
+        deleteCategory( state, id ) {
+            axios.delete( `http://localhost:8000/api/v1/category/${id}`)
+            .then(response => {
+                alert(response.data.data);
+            })
+            .catch(errors => {
+                console.log(errors);
+            })
         }
     },
     actions: {
@@ -127,8 +137,11 @@ const store = new Vuex.Store({
         getCategories({ commit }) {
             commit('getCategories');
         },
-        createCategory({ commit }, payload) {
-            commit('createCategory', payload);
+        updateCategory({ commit }, payload) {
+            commit('updateCategory', payload);
+        },
+        deleteCategory({commit}, payload) {
+            commit('deleteCategory', payload);
         }
     }
 });
