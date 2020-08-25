@@ -1,10 +1,10 @@
 <template>
 <div style="direction:rtl;">
     <div
-    v-for="category in categories"
-    :key="category.id"
-    :style="{'margin-right': depth * 30 + 'px'}"
-    class="category">
+        v-for="category in categories"
+        :key="category.id"
+        :style="{'margin-right': depth * 30 + 'px'}"
+        class="category">
         <div class="display">
             <input
             type="text"
@@ -17,12 +17,15 @@
             </div>
         </div>
 
-        <div class="display">
+        <div class="display" style="padding:2px;">
             <a @click="remove(category.id)">
                 <i class="far fa-trash-alt" style="color:#ef394e;"></i>
             </a>
             <a @click="edit(category.id)">
                 <i class="far fa-edit" style="color:#66bb6a;"></i>
+            </a>
+            <a @click="add(category.id)">
+                <i class="far fa-plus-square"></i>
             </a>
         </div>
         
@@ -90,10 +93,17 @@ export default {
     a {
         margin-right: 10px;
     }
+    a:last-child {
+        margin-left: 2px;
+    }
     .display {
         display:inline;
     }
     input {
         background: #f5f5f5;
+    }
+    a:hover i {
+        transform: scale(1.1);
+        transition: 300ms;
     }
 </style>
