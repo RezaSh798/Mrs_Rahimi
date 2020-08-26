@@ -12,6 +12,7 @@ import About from './components/pages/About.vue'
 import Product from './components/pages/Product.vue'
 import Contact from './components/pages/Contact.vue'
 import Panel from './components/pages/Panel.vue'
+import UserPanel from './components/pages/UserPanel.vue'
 
 // imports panels childeren components
 import PanelProducts from './components/layout/panel/Products.vue'
@@ -52,6 +53,11 @@ const routes = [
                 component: Categories
             }
         ]
+    },
+    {
+        path: '/user/panel',
+        name: 'userPanel',
+        component: UserPanel,
     },
     {
         path : '/',

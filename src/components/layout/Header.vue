@@ -17,7 +17,7 @@
 								<router-link to="/user/register">عضویت</router-link>
 							</li>
 							<li v-else>
-								خوش آمدید
+								<router-link to="/user/panel">پنل کاربر</router-link>
 							</li>
 						</ul>
 					</div>
@@ -51,12 +51,17 @@
 						<!-- li end -->
 						<li class="has-dropdown my-navbar-li" style="position:relative;">
 							<a href="#" data-toggle="dropdown" class="dropdown-toggle">صفحه ها</a>
-							<ul id="shop-dropdown" class="dropdown-menu" style="position:absolute;right:0px;">
+							<ul v-if="!isAuthenticated" id="shop-dropdown" class="dropdown-menu" style="position:absolute;right:0px;">
 								<li class="text-right">
 									<router-link to="/user/login">ورود</router-link>
 								</li>
 								<li class="text-right">
 									<router-link to="/user/register">عضویت</router-link>
+								</li>
+							</ul>
+							<ul  id="shop-dropdown" class="dropdown-menu" style="position:absolute;right:0px;" v-else>
+								<li class="text-right">
+									<router-link to="/user/panel">پنل کاربر</router-link>
 								</li>
 							</ul>
 						</li>
