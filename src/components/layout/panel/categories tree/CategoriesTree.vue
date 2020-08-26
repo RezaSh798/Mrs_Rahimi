@@ -14,36 +14,44 @@
                 <i
                     v-if="!show"
                     style="fontSize:15px;"
-                    :class="(category.children.length > 0) ? 'fas fa-angle-double-left' : 'fas fa-circle-notch'">
+                    :class="(category.hasOwnProperty('children') && category.children.data.length > 0) ? 'fas fa-angle-double-left' : 'fas fa-circle-notch'">
                 </i>
                 <i
                     v-else
                     style="fontSize:15px;"
-                    :class="(category.children.length > 0) ? 'fas fa-angle-double-down' : 'fas fa-circle-notch'">
+                    :class="(category.hasOwnProperty('children') && category.children.data.length > 0) ? 'fas fa-angle-double-down' : 'fas fa-circle-notch'">
                 </i>
-                {{ category.name }}
+                {{ category.title }}
             </div>
         </div>
 
         <div class="display" style="padding:2px;">
-            <a @click="remove(category.id)">
+            <a @click="onRemove(category.id)">
                 <i class="far fa-trash-alt" style="color:#ef394e;"></i>
             </a>
             <a @click="edit(category.id)">
                 <i class="far fa-edit" style="color:#66bb6a;"></i>
             </a>
-            <a @click="add(category.id)">
+            <a @click="showCreateInput = !showCreateInput">
                 <i class="far fa-plus-square"></i>
             </a>
+            <input
+                type="text"
+                v-model="newCategory"
+                placeholder="نام دسته"
+                v-if="showCreateInput"
+                @change="onCreate(category.id)" />
         </div>
         
-        <CategoriesTree
-            v-for="child in category.children"
-            :key="child.id"
-            :category="child"
-            v-show="show"
-            :depth="depth + 1"
-        />
+        <div v-if="category.hasOwnProperty('children')">
+            <CategoriesTree
+                v-for="child in category.children.data"
+                :key="child.id"
+                :category="child"
+                v-show="show"
+                :depth="depth + 1"
+            />
+        </div>
     </div>
 </div>
 </template>
@@ -64,24 +72,33 @@ export default {
         return {
             show: false,
             showEditInput: undefined,
-            catName: ''
+            showCreateInput: false,
+            catName: '',
+            newCategory: '',
         }
     },
     methods: {
         ...mapActions([
+            'createCategory',
             'updateCategory',
             'deleteCategory',
         ]),
-        remove(catId) {
-            if(confirm('از حذف کردن این دسته مطمئن هستید ؟')) {
-                this.deleteCategory(catId);
-            }
-        },
         edit(catId) {
             if(this.showEditInput == catId) {
                 this.showEditInput = -1;
             } else {
                 this.showEditInput = catId;
+            }
+        },
+        onReloadPage() {
+            setTimeout(() => {
+                this.$router.go();
+            }, 2000);
+        },
+        onRemove(catId) {
+            if(confirm('از حذف کردن این دسته مطمئن هستید ؟')) {
+                this.deleteCategory(catId);
+                this.onReloadPage();
             }
         },
         onUpdate(catId) {
@@ -91,6 +108,16 @@ export default {
                 name: this.catName,
             });
             this.catName = '';
+            this.onReloadPage();
+        },
+        onCreate(parentId) {
+            this.showCreateInput = false;
+            this.createCategory({
+                category_id: parentId,
+                title: this.newCategory,
+            });
+            this.newCategory = '';
+            this.onReloadPage();
         }
     },
 }

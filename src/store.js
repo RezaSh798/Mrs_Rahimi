@@ -84,13 +84,23 @@ const store = new Vuex.Store({
         getCategories( state ) {
             axios.get('http://localhost:8000/api/v1/category')
                 .then( response => {
-                    response.data.data.forEach( category => {
-                        state.categories.push( category.title );
-                    });
+                    state.categories = response.data.data;
+                    // response.data.data.forEach( category => {
+                    //     state.categories.push( category.title );
+                    // });
                 })
                 .catch( errors => {
                     console.log( errors );
                 })
+        },
+        createCategory(state, newCategory) {
+            axios.post('http://localhost:8000/api/v1/category', newCategory)
+            .then(response => {
+                alert(response.data.data);
+            })
+            .catch(errors => {
+                console.log(errors);
+            })
         },
         updateCategory( state, update ) {
             axios({
@@ -136,6 +146,9 @@ const store = new Vuex.Store({
         },
         getCategories({ commit }) {
             commit('getCategories');
+        },
+        createCategory({ commit }, payload) {
+            commit('createCategory', payload);
         },
         updateCategory({ commit }, payload) {
             commit('updateCategory', payload);

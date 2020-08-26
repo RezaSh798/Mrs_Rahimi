@@ -1,76 +1,33 @@
 <template>
-<section>
+<div>
+    <input
+        type="text"
+        v-if="show"
+        v-model="newCategory"
+        placeholder="نام دسته"
+        @change="add()"
+        style="background:#f5f5f5;">
+    <a @click="show = !show" style="font-size:18px;">
+        <i class="far fa-plus-square"></i>    
+    </a>
+
     <CategoriesTree
     v-for="category in categories"
     :key="category.id"
     :category="category" />
-</section>
+</div>
 </template>
 
 <script>
 import CategoriesTree from './categories tree/CategoriesTree.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
     name: 'Categories',
     data() {
         return {
-            categories: [
-                {
-                    id: 1,
-                    name: 'دسته 1',
-                    children: [
-                        {
-                            id: 1.1,
-                            name: 'دسته 1.1',
-                            children: []
-                        },
-                        {
-                            id: 1.2,
-                            name: 'دسته 1.2',
-                            children: [
-                                {
-                                    id: 1.21,
-                                    name: 'دسته 1.2.1',
-                                    children: [
-                                        {
-                                            id: 1.211,
-                                            name: 'دسته 1.2.1.1',
-                                            children: []
-                                        },
-                                        {
-                                            id: 1.212,
-                                            name: 'دسته 1.2.1.2',
-                                            children: []
-                                        },
-                                        {
-                                            id: 1.213,
-                                            name: 'دسته 1.2.1.3',
-                                            children: []
-                                        },
-                                    ]
-                                },
-                            ]
-                        },
-                        {
-                            id: 1.3,
-                            name: 'دسته 1.3',
-                            children: [
-                                {
-                                    id: 1.31,
-                                    name: 'دسته 1.3.1',
-                                    children: []
-                                },
-                            ]
-                        },
-                    ]
-                },
-                {
-                    id: 2,
-                    name: 'دسته 2',
-                    children: []
-                    }
-            ],
+            show: false,
+            newCategory: '',
             valid: true,
             category: {
                 name: ''
@@ -85,12 +42,35 @@ export default {
     components: { CategoriesTree },
     methods: {
         ...mapActions(['createCategory']),
-        validate () {
-            this.$refs.form.validate()
-        },
-        onSubmit() {
-            if( this.valid ) this.createCategory(this.category);
+        add() {
+            this.show = false;
+            this.createCategory({
+                id: null,
+                title: this.newCategory,
+            });
+            this.newCategory = '';
+            setTimeout(() => {
+                this.$router.go();
+            }, 2000);
         }
+    },
+    computed: {
+        ...mapActions(['getCategories']),
+        ...mapState(['categories']),
+    },
+    created() {
+        this.getCategories;
     }
 }
 </script>
+
+<style scoped>
+    i {
+        font-size: 20px;
+        margin-right: 10px;
+    }
+    a:hover i {
+        transform: scale(1.1);
+        transition: 300ms;
+    }
+</style>
