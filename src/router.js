@@ -14,12 +14,16 @@ import Contact from './components/pages/Contact.vue'
 import Panel from './components/pages/Panel.vue'
 import UserPanel from './components/pages/UserPanel.vue'
 
-// imports panels childeren components
+// imports admin panel's childeren components
 import PanelProducts from './components/layout/panel/Products.vue'
 import PanelCreateProduct from './components/layout/panel/CreateProduct.vue'
 import PanelUsers from './components/layout/panel/Users.vue'
 import Messages from './components/layout/panel/Messages.vue'
 import Categories from './components/layout/panel/Categories.vue'
+
+// import user panel's children components
+import Ticket from './components/layout/user panel/Ticket.vue'
+import Profile from './components/layout/user panel/Profile.vue'
 
 const routes = [
     {
@@ -58,6 +62,18 @@ const routes = [
         path: '/user/panel',
         name: 'userPanel',
         component: UserPanel,
+        children: [
+            {
+                path: '/ticket',
+                name: 'ticket',
+                component: Ticket
+            },
+            {
+                path: '/profile',
+                name: 'profile',
+                component: Profile
+            }
+        ]
     },
     {
         path : '/',

@@ -4,6 +4,17 @@
         <template slot="title">پنل کاربری</template>
         <template slot="location">پنل کاربری</template>
     </page-title>
+
+    <nav>
+        <ul>
+            <li><router-link to="/ticket">تیکت</router-link></li>
+            <li><router-link to="/profile">پروفایل</router-link></li>
+        </ul>
+    </nav>
+
+    <div>
+        <router-view></router-view>
+    </div>
 </section>
 </template>
 
