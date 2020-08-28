@@ -44,10 +44,9 @@ export default {
 			if( this.sec != 0 ) {
 				this.sec = this.sec - 1;
 			} else {
-				router.push({ path : '/home' });
+				this.$router.push({ name: 'home' });
 				clearInterval( this.time );
 			}
-			console.log(this.sec);
 		}, 1000);
 	},
 }

@@ -15,12 +15,39 @@ const store = new Vuex.Store({
             rememberMe : false,
             rol: 'admin',
         },
-        products: {},
+        products: [],
         categories: [],
-        brands: [],
-        price: null,
+
+        pageCount: 0,
     },
     mutations: {
+        // GET Requests
+        getProductsPerPage( state, page = 1 ) {
+            axios.get(`http://localhost:8000/api/v1/product?page=${page}`)
+            .then(response => {
+                state.products = response.data.data;
+                state.pageCount = Math.ceil(response.data.meta.total / 9);
+            })
+            .catch(errors => {
+                console.log(errors);
+            })
+        },
+        getCategories( state ) {
+            axios.get('http://localhost:8000/api/v1/category')
+                .then( response => {
+                    state.categories = response.data.data;
+                    // response.data.data.forEach( category => {
+                    //     state.categories.push( category.title );
+                    // });
+                })
+                .catch( errors => {
+                    console.log( errors );
+                })
+        },
+        getUser() {
+            console.log('we are in getUser mutation !');
+        },
+        // POST Requests
         register(state, newUser) {
             axios.post('', newUser)
                 .then(res => {
@@ -43,35 +70,6 @@ const store = new Vuex.Store({
                 }
             });
         },
-        shop(state) {
-            // get products from server
-            axios.get('')
-                .then(res => {
-                    if(res) {
-                        state.products = res.data.products;
-                    } else {
-                        console.log(res.err);
-                    }
-                });
-            // get categories from server
-            axios.get('')
-                .then(res => {
-                    if(res) {
-                        state.categories = res.data.categories;
-                    } else {
-                        console.log(res.err);
-                    }
-                });
-            // get brands from server
-            axios.get('')
-                .then(res => {
-                    if(res) {
-                        state.brands = res.data.brands;
-                    } else {
-                        console.log(res.err);
-                    }
-                });
-        },
         createPruduct(state, product) {
             const newProduct = product;
             newProduct.images = new FormData();
@@ -80,18 +78,6 @@ const store = new Vuex.Store({
                 .then(res => {
                 console.log(res);
             });
-        },
-        getCategories( state ) {
-            axios.get('http://localhost:8000/api/v1/category')
-                .then( response => {
-                    state.categories = response.data.data;
-                    // response.data.data.forEach( category => {
-                    //     state.categories.push( category.title );
-                    // });
-                })
-                .catch( errors => {
-                    console.log( errors );
-                })
         },
         createCategory(state, newCategory) {
             axios.post('http://localhost:8000/api/v1/category', newCategory)
@@ -102,6 +88,7 @@ const store = new Vuex.Store({
                 console.log(errors);
             })
         },
+        // PUT Request
         updateCategory( state, update ) {
             axios({
                 method: 'PUT',
@@ -121,6 +108,7 @@ const store = new Vuex.Store({
                 console.log( errors )
             });
         },
+        // DELETE Requests
         deleteCategory( state, id ) {
             axios.delete( `http://localhost:8000/api/v1/category/${id}`)
             .then(response => {
@@ -129,33 +117,40 @@ const store = new Vuex.Store({
             .catch(errors => {
                 console.log(errors);
             })
-        }
+        },
     },
     actions: {
+        // GET Actions
+        getProductsPerPage({commit}, payload) {
+            commit('getProductsPerPage', payload);
+        },
+        getUser({commit}) {
+            commit('getUser');
+        },
+        getCategories({ commit }) {
+            commit('getCategories');
+        },
+        // POST Actions
+        createPruduct({ commit }, payload) {
+            commit('createPruduct', payload);
+        },
+        createCategory({ commit }, payload) {
+            commit('createCategory', payload);
+        },
         register({ commit }, payload) {
             commit('register', payload);
         },
         login({ commit }, payload) {
             commit('login', payload);
         },
-        shop({ commit }) {
-            commit('shop');
-        },
-        createPruduct({ commit }, payload) {
-            commit('createPruduct', payload);
-        },
-        getCategories({ commit }) {
-            commit('getCategories');
-        },
-        createCategory({ commit }, payload) {
-            commit('createCategory', payload);
-        },
+        // PUT Actions
         updateCategory({ commit }, payload) {
             commit('updateCategory', payload);
         },
+        // DELETE Actions
         deleteCategory({commit}, payload) {
             commit('deleteCategory', payload);
-        }
+        },
     }
 });
 

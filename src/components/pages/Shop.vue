@@ -38,42 +38,89 @@
 					<!-- .row end -->
 					<div class="row">
 						<!-- Products -->
-						<div class="col-xs-12 col-sm-6 col-md-4 product" v-for="product in products" :key="product.id">
-							<div class="product-img">
-								<img :src="product.image" alt="Product"/>
-								<div class="product-hover">
-									<div class="product-action">
-										<!-- <a class="btn btn-primary" href="#">افزودن به سبد</a> -->
-										<router-link class="btn btn-primary" :to="'/product/' + product.id">مشخصات</router-link>
+						<div v-if="this.filteredProducts != false">
+							<div class="col-xs-12 col-sm-6 col-md-4 product" v-for="product in filteredProducts" :key="product.id">
+								<div class="product-img">
+									<img :src="product.image" alt="Product"/>
+									<div class="product-hover">
+										<div class="product-action">
+											<!-- <a class="btn btn-primary" href="#">افزودن به سبد</a> -->
+											<router-link class="btn btn-primary" :to="'/product/' + product.id">مشخصات</router-link>
+										</div>
 									</div>
+									<!-- .product-overlay end -->
 								</div>
-								<!-- .product-overlay end -->
+								<!-- .product-img end -->
+								<div class="product-bio">
+									<div class="prodcut-cat">
+										<p>{{ product.category_id }}</p>
+									</div>
+									<!-- .product-cat end -->
+									<div class="prodcut-title">
+										<h3>
+											{{ product.title }}
+										</h3>
+									</div>
+									<!-- .product-title end -->
+									<div class="product-price"  v-if="isAuthenticated">
+										<span class="symbole">تومان</span><span>{{ product.u_price }}</span>
+									</div>
+									<div class="product-price"  v-else>
+										<span class="symbole">تومان</span><span>{{ product.c_price }}</span>
+									</div>
+									<!-- .product-price end -->
+									
+								</div>
+								<!-- .product-bio end -->
 							</div>
-							<!-- .product-img end -->
-							<div class="product-bio">
-								<div class="prodcut-cat">
-									<p>{{ product.brand }}</p>
-								</div>
-								<!-- .product-cat end -->
-								<div class="prodcut-title">
-									<h3>
-										{{ product.name }}
-									</h3>
-								</div>
-								<!-- .product-title end -->
-								<div class="product-price">
-									<span class="symbole">تومان</span><span>{{ product.price }}</span>
-								</div>
-								<!-- .product-price end -->
-								
-							</div>
-							<!-- .product-bio end -->
 						</div>
+						<div v-else>
+							<div class="col-xs-12 col-sm-6 col-md-4 product" v-for="product in products" :key="product.id">
+								<div class="product-img">
+									<img :src="product.image" alt="Product"/>
+									<div class="product-hover">
+										<div class="product-action">
+											<!-- <a class="btn btn-primary" href="#">افزودن به سبد</a> -->
+											<router-link class="btn btn-primary" :to="'/product/' + product.id">مشخصات</router-link>
+										</div>
+									</div>
+									<!-- .product-overlay end -->
+								</div>
+								<!-- .product-img end -->
+								<div class="product-bio">
+									<div class="prodcut-cat">
+										<p>{{ product.category_id }}</p>
+									</div>
+									<!-- .product-cat end -->
+									<div class="prodcut-title">
+										<h3>
+											{{ product.title }}
+										</h3>
+									</div>
+									<!-- .product-title end -->
+									<div class="product-price"  v-if="isAuthenticated">
+										<span class="symbole">تومان</span><span>{{ product.u_price }}</span>
+									</div>
+									<div class="product-price"  v-else>
+										<span class="symbole">تومان</span><span>{{ product.c_price }}</span>
+									</div>
+									<!-- .product-price end -->
+									
+								</div>
+								<!-- .product-bio end -->
+							</div>
+						</div>
+						
 					</div>
 					<!-- .row end -->
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12">
-							<v-pagination id="pageinate" v-model="page" :length="pageCount" color="amber darken-4"></v-pagination>
+							<v-pagination
+							id="pageinate"
+							v-model="page"
+							@input="getPage()"
+							:length="pageCount"
+							color="amber darken-4"></v-pagination>
 						</div>
 						<!-- .col-md-12 end -->
 					</div>
@@ -112,23 +159,6 @@
 						</div>
 					</div>
 					<!-- .widget-filter end -->
-					
-					<!-- Select Brand
-                    ============================================= -->
-					<div class="widget widget-brands">
-						<div class="widget-title">
-							<h5>برند ها</h5>
-						</div>
-						<div class="widget-content">
-							<form>
-								<div class="check-option" v-for="brand in brands" :key="brand.id">
-									<input type="checkbox" class="checkbox-style" name="brands"   id="Opel" value="Opel">
-									<label for="Opel" class="checkbox-label" >{{ brand.name }}</label>
-								</div>
-							</form>
-						</div>
-					</div>
-					<!-- .widget-brand end -->
 				</div>
 				<!-- .col-md-3 end -->
 			</div>
@@ -142,20 +172,54 @@
 <script>
 // imports components
 import PageTitle from '../layout/PageTitle.vue'
-
-import { mapState } from 'vuex'
-import store from '../../store'
+import { mapState, mapActions } from 'vuex'
 
 export default {
 	data() {
 		return {
 			page : 1,
-			pageCount : 0,
-			itemsPerPage : 5,
+			itemsPerPage : 9,
+			min: 0,
+			max: 10000000,
+			filteredProducts: false,
 		}
 	},
     components : {
         'page-title' : PageTitle
+	},
+	computed: {
+		...mapState([
+			'products',
+			'categories',
+			'isAuthenticated',
+			'pageCount',
+		]),
+	},
+	methods: {
+		...mapActions(['getProductsPerPage']),
+		getPage() {
+			this.getProductsPerPage(this.page);
+		}
+	},
+	watch: {
+		min() {
+			this.filteredProducts = [];
+			this.products.filter(product => {
+				if(this.isAuthenticated) {
+					if(product.u_price >= this.min && product.u_price <= this.max) {
+						this.filteredProducts.push(product);
+					}
+				} else {
+					if(product.c_price >= this.min && product.c_price <= this.max) {
+						this.filteredProducts.push(product);
+					}
+				}
+			});
+		}
+	},
+	created() {
+		this.$store.dispatch('getProductsPerPage');
+		this.$vuetify.rtl = false;
 	},
 	mounted() {
 		var $sliderRange = $("#slider-range"),
@@ -166,15 +230,13 @@ export default {
 			max: 10000000,
 			values: [1000000, 3000000],
 			slide: function(event, ui) {
+				this.min = ui.values[0];
+				this.max = ui.values[1];
 				$sliderAmount.val( ui.values[0] + " - " + ui.values[1] );
 			}
 		});
 		$sliderAmount.val( $sliderRange.slider("values", 0) + " - " + $sliderRange.slider("values", 1) );
 	},
-	computed: mapState(['products', 'brands', 'categories']),
-	beforeCreate() {
-		store.dispatch('shop');
-	}
 }
 </script>
 

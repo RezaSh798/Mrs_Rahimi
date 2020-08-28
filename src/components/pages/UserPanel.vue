@@ -5,14 +5,22 @@
         <template slot="location">پنل کاربری</template>
     </page-title>
 
-    <nav>
-        <ul>
-            <li><router-link to="/ticket">تیکت</router-link></li>
-            <li><router-link to="/profile">پروفایل</router-link></li>
-        </ul>
-    </nav>
+    <div class="top-bar" style="border-top: 1px solid #e5e5e5;">
+        <div class="container">
+            <div class="row" style="margin-top:-25px !important">
+                <div class="col-12 just">
+                    <ul class="list-inline top-contact">
+                        <li><router-link to="/user/panel/ticket">تیکت</router-link></li>
+                        <li><router-link to="/user/panel/profile">پروفایل</router-link></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- .row end -->
+        </div>
+        <!-- .container end -->
+    </div>
 
-    <div>
+    <div class="just">
         <router-view></router-view>
     </div>
 </section>
@@ -20,8 +28,27 @@
 
 <script>
 import PageTitle from '../layout/PageTitle.vue'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-    components: { PageTitle }    
+    components: { PageTitle },
+    computed: {
+        ...mapState(['isAuthenticated']),
+        ...mapActions(['getUser']),
+    },
+    created() {
+        if(!this.isAuthenticated) {
+            this.$router.push({ name: 'home' });
+        } else {
+            this.getUser;
+        }
+    }
 }
 </script>
+
+<style scoped>
+    .just {
+        display: flex;
+        justify-content: center;
+    }
+</style>

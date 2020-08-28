@@ -7,7 +7,7 @@
             <input
                 type="text"
                 v-model="catName"
-                :placeholder="category.name"
+                :placeholder="category.title"
                 v-if="showEditInput == category.id"
                 @change="onUpdate(category.id)" />
             <div class="display" @click="show = !show" v-else>
@@ -40,7 +40,8 @@
                 v-model="newCategory"
                 placeholder="نام دسته"
                 v-if="showCreateInput"
-                @change="onCreate(category.id)" />
+                @change="onCreate(category.id)" 
+                style="margin-right:5px" />
         </div>
         
         <div v-if="category.hasOwnProperty('children')">
@@ -138,6 +139,7 @@ export default {
     }
     input {
         background: #f5f5f5;
+        border-radius: 5px;
     }
     a:hover i {
         transform: scale(1.1);

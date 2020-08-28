@@ -73,4 +73,8 @@ export default {
         transform: scale(1.1);
         transition: 300ms;
     }
+    input {
+        border-radius: 5px;
+        font-size: 20px;
+    }
 </style>

@@ -64,12 +64,12 @@ const routes = [
         component: UserPanel,
         children: [
             {
-                path: '/ticket',
+                path: 'ticket',
                 name: 'ticket',
                 component: Ticket
             },
             {
-                path: '/profile',
+                path: 'profile',
                 name: 'profile',
                 component: Profile
             }
