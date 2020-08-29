@@ -5,7 +5,6 @@ Vue.use(VueRouter);
 // import components
 import Index from './components/pages/Index.vue'
 import Shop from './components/pages/Shop.vue'
-import ShopCart from './components/pages/ShopCart'
 import Error404 from './components/pages/404.vue'
 import LogReg from './components/pages/LoginRegister.vue'
 import About from './components/pages/About.vue'
@@ -85,11 +84,6 @@ const routes = [
         path : '/shop',
         name : 'shop',
         component : Shop
-    },
-    {
-        path : '/shop-cart',
-        name : 'cart',
-        component: ShopCart
     },
     {
         path : '/about',

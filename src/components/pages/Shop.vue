@@ -146,7 +146,7 @@ export default {
 		return {
 			page : 1,
 			itemsPerPage : 9,
-			priceRangeFilter: {},
+			priceRangeFilter: null,
 		}
 	},
     components : {
@@ -177,6 +177,7 @@ export default {
 		this.$vuetify.rtl = false;
 	},
 	mounted() {
+		let test = null;
 		var $sliderRange = $("#slider-range"),
         $sliderAmount = $("#amount");
 		$sliderRange.slider({
@@ -186,6 +187,11 @@ export default {
 			values: [1000000, 3000000],
 			slide: function(event, ui) {
 				$sliderAmount.val( ui.values[0] + " - " + ui.values[1] );
+				test = ui;
+			},
+			change: () => {
+				this.priceRangeFilter = test.values;
+				console.log(this.priceRangeFilter);
 			}
 		});
 		$sliderAmount.val( $sliderRange.slider("values", 0) + " - " + $sliderRange.slider("values", 1) );

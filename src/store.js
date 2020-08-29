@@ -10,7 +10,6 @@ const store = new Vuex.Store({
         user: {},
         products: [],
         categories: [],
-
         pageCount: 0,
     },
     mutations: {
@@ -54,19 +53,20 @@ const store = new Vuex.Store({
                 });
         },
         login(state, oldUser) {
-            axios.post('', oldUser)
-            .then(response => {
-                if(response.status == 200) {
-                    state.user = response.user;
-                    state.isAuthenticated = true;
-                    if(oldUser.rememberMe) {
-                        localStorage.setItem('user', JSON.stringify(oldUser));
-                    }
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+            console.log(oldUser);
+            // axios.post('', oldUser)
+            // .then(response => {
+            //     if(response.status == 200) {
+            //         state.user = response.user;
+            //         state.isAuthenticated = true;
+            //         if(oldUser.rememberMe) {
+            //             localStorage.setItem('user', JSON.stringify(oldUser));
+            //         }
+            //     }
+            // })
+            // .catch(error => {
+            //     console.log(error);
+            // });
         },
         createPruduct(state, product) {
             const newProduct = product;
@@ -118,7 +118,7 @@ const store = new Vuex.Store({
         },
     },
     actions: {
-        // GET Actions
+        // GET
         getProductsPerPage({commit}, payload) {
             commit('getProductsPerPage', payload);
         },
@@ -128,7 +128,7 @@ const store = new Vuex.Store({
         getCategories({ commit }) {
             commit('getCategories');
         },
-        // POST Actions
+        // POST
         createPruduct({ commit }, payload) {
             commit('createPruduct', payload);
         },
@@ -141,11 +141,11 @@ const store = new Vuex.Store({
         login({ commit }, payload) {
             commit('login', payload);
         },
-        // PUT Actions
+        // PUT
         updateCategory({ commit }, payload) {
             commit('updateCategory', payload);
         },
-        // DELETE Actions
+        // DELETE
         deleteCategory({commit}, payload) {
             commit('deleteCategory', payload);
         },
