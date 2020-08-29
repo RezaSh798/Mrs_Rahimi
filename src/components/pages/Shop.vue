@@ -38,43 +38,7 @@
 					<!-- .row end -->
 					<div class="row">
 						<!-- Products -->
-						<div v-if="this.filteredProducts != false">
-							<div class="col-xs-12 col-sm-6 col-md-4 product" v-for="product in filteredProducts" :key="product.id">
-								<div class="product-img">
-									<img :src="product.image" alt="Product"/>
-									<div class="product-hover">
-										<div class="product-action">
-											<!-- <a class="btn btn-primary" href="#">افزودن به سبد</a> -->
-											<router-link class="btn btn-primary" :to="'/product/' + product.id">مشخصات</router-link>
-										</div>
-									</div>
-									<!-- .product-overlay end -->
-								</div>
-								<!-- .product-img end -->
-								<div class="product-bio">
-									<div class="prodcut-cat">
-										<p>{{ product.category_id }}</p>
-									</div>
-									<!-- .product-cat end -->
-									<div class="prodcut-title">
-										<h3>
-											{{ product.title }}
-										</h3>
-									</div>
-									<!-- .product-title end -->
-									<div class="product-price"  v-if="isAuthenticated">
-										<span class="symbole">تومان</span><span>{{ product.u_price }}</span>
-									</div>
-									<div class="product-price"  v-else>
-										<span class="symbole">تومان</span><span>{{ product.c_price }}</span>
-									</div>
-									<!-- .product-price end -->
-									
-								</div>
-								<!-- .product-bio end -->
-							</div>
-						</div>
-						<div v-else>
+						<div>
 							<div class="col-xs-12 col-sm-6 col-md-4 product" v-for="product in products" :key="product.id">
 								<div class="product-img">
 									<img :src="product.image" alt="Product"/>
@@ -134,10 +98,11 @@
 							<h5>دسته بندی</h5>
 						</div>
 						<div class="widget-content">
-							<ul class="list-unstyled">
-								<li v-for="category in categories" :key="category.id">
-									<a href="#"><i class="fa fa-angle-double-left"></i>{{ category.name }}</a>
-								</li>
+							<ul>
+								<CategoriesTreeFilter
+								v-for="category in categories"
+								:key="category.id"
+								:category="category" />
 							</ul>
 						</div>
 					</div>
@@ -155,7 +120,7 @@
 								<label for="amount">قیمت ( تومن ) : </label>
 								<input type="text" id="amount" readonly style="direction:ltr;">
 							</p>
-							<a class="btn btn-secondary" href="#">فیلتر</a>
+							<a class="btn btn-secondary" @click="filter()">فیلتر</a>
 						</div>
 					</div>
 					<!-- .widget-filter end -->
@@ -172,20 +137,21 @@
 <script>
 // imports components
 import PageTitle from '../layout/PageTitle.vue'
+import CategoriesTreeFilter from '../layout/CategoriesTreeFilter.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
+	name: 'Shop',
 	data() {
 		return {
 			page : 1,
 			itemsPerPage : 9,
-			min: 0,
-			max: 10000000,
-			filteredProducts: false,
+			priceRangeFilter: {},
 		}
 	},
     components : {
-        'page-title' : PageTitle
+		'page-title' : PageTitle,
+		CategoriesTreeFilter
 	},
 	computed: {
 		...mapState([
@@ -193,32 +159,21 @@ export default {
 			'categories',
 			'isAuthenticated',
 			'pageCount',
+			'categories',
 		]),
 	},
 	methods: {
 		...mapActions(['getProductsPerPage']),
 		getPage() {
 			this.getProductsPerPage(this.page);
-		}
-	},
-	watch: {
-		min() {
-			this.filteredProducts = [];
-			this.products.filter(product => {
-				if(this.isAuthenticated) {
-					if(product.u_price >= this.min && product.u_price <= this.max) {
-						this.filteredProducts.push(product);
-					}
-				} else {
-					if(product.c_price >= this.min && product.c_price <= this.max) {
-						this.filteredProducts.push(product);
-					}
-				}
-			});
-		}
+		},
+		filter() {
+			console.log(this.priceRangeFilter);
+		},
 	},
 	created() {
 		this.$store.dispatch('getProductsPerPage');
+		this.$store.dispatch('getCategories');
 		this.$vuetify.rtl = false;
 	},
 	mounted() {
@@ -230,8 +185,6 @@ export default {
 			max: 10000000,
 			values: [1000000, 3000000],
 			slide: function(event, ui) {
-				this.min = ui.values[0];
-				this.max = ui.values[1];
 				$sliderAmount.val( ui.values[0] + " - " + ui.values[1] );
 			}
 		});

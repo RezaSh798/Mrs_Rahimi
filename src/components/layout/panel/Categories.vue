@@ -67,7 +67,6 @@ export default {
 <style scoped>
     i {
         font-size: 20px;
-        margin-right: 10px;
     }
     a:hover i {
         transform: scale(1.1);
@@ -76,5 +75,6 @@ export default {
     input {
         border-radius: 5px;
         font-size: 20px;
+        margin-left: 10px;
     }
 </style>

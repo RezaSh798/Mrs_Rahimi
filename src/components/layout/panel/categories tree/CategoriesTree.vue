@@ -1,7 +1,7 @@
 <template>
 <div>
     <div
-    :style="{'margin-right': depth * 30 + 'px'}"
+    :style="{'margin-right': depth * 10 + 'px'}"
     class="category">
         <div class="display">
             <input

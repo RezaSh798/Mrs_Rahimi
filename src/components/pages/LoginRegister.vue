@@ -39,8 +39,8 @@
 										<ValidationObserver v-slot="{ invalid }">
 											<form class="mb-0">
 												<div class="form-group">
-													<ValidationProvider name="نام کاربری" rules="required|max:10" v-slot="{ errors }">
-														<input type="text" v-model="user.name" class="form-control" id="username" placeholder="نام کاربری">
+													<ValidationProvider name="نام کاربری" rules="required|email" v-slot="{ errors }">
+														<input type="text" v-model="user.email" class="form-control" id="email" placeholder="نام کاربری">
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>
 												</div>
@@ -107,12 +107,6 @@
 										<ValidationObserver v-slot="{ invalid }">
 											<form class="mb-0">
 												<div class="form-group">
-													<ValidationProvider name="نام کاربری" rules="required|max:10" v-slot="{ errors }">
-														<input type="text" v-model="user.name" class="form-control" id="username" placeholder="نام کاربری">
-														<span>{{ errors[0] }}</span>
-													</ValidationProvider>
-												</div>
-												<div class="form-group">
 													<ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
 														<input type="text" v-model="user.email" class="form-control" id="email" placeholder="ایمیل">
 														<span>{{ errors[0] }}</span>
@@ -130,7 +124,12 @@
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>
 												</div>
-												
+												<div class="checkbox pull-right">
+													<label>
+														<input type="checkbox" v-model="user.rememberMe">
+														مرا به خاطر بسپار</label>
+												</div>
+
 												<button type="submit" :disabled="invalid" class="btn btn-primary btn-block mt-30" @click="onRegister">ایجاد حساب</button>
 											</form>
 										</ValidationObserver>
@@ -175,12 +174,10 @@ export default {
 	data() {
 		return {
 			user : {
-				name: '',
+				email : '',
 				pass: null,
 				confirmPass : null,
-				email : '',
 				rememberMe : false,
-				rol: 'member',
 			}
 		}
 	},

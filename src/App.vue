@@ -18,5 +18,11 @@ export default {
     'my-header' : Header,
     'my-footer' : Footer,
   },
+  created() {
+		if(localStorage.getItem('user')) {
+			const user = JSON.parse(localStorage.getItem('user'));
+			this.$store.dispatch('login', user);
+		}
+  }
 }
 </script>

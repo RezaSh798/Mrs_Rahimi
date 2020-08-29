@@ -6,15 +6,8 @@ Vue.use(axios);
 
 const store = new Vuex.Store({
     state: {
-        isAuthenticated: true,
-        user: {
-            name: '',
-            pass: null,
-            confirmPass : null,
-            email : '',
-            rememberMe : false,
-            rol: 'admin',
-        },
+        isAuthenticated: false,
+        user: {},
         products: [],
         categories: [],
 
@@ -36,9 +29,6 @@ const store = new Vuex.Store({
             axios.get('http://localhost:8000/api/v1/category')
                 .then( response => {
                     state.categories = response.data.data;
-                    // response.data.data.forEach( category => {
-                    //     state.categories.push( category.title );
-                    // });
                 })
                 .catch( errors => {
                     console.log( errors );
@@ -50,24 +40,32 @@ const store = new Vuex.Store({
         // POST Requests
         register(state, newUser) {
             axios.post('', newUser)
-                .then(res => {
-                    if(res) {
+                .then(response => {
+                    if(response.status == 200) {
                         state.isAuthenticated = true;
-                        state.user = newUser;
-                    } else {
-                        console.log(res.err);
+                        state.user = response.data.data;
+                        if(newUser.rememberMe) {
+                            localStorage.setItem('user', JSON.stringify(newUser));
+                        }
                     }
+                })
+                .catch(error => {
+                    console.log(error);
                 });
         },
         login(state, oldUser) {
             axios.post('', oldUser)
-            .then(res => {
-                if(res) {
-                    state.user = res.user;
+            .then(response => {
+                if(response.status == 200) {
+                    state.user = response.user;
                     state.isAuthenticated = true;
-                } else {
-                    console.log(res.err);
+                    if(oldUser.rememberMe) {
+                        localStorage.setItem('user', JSON.stringify(oldUser));
+                    }
                 }
+            })
+            .catch(error => {
+                console.log(error);
             });
         },
         createPruduct(state, product) {
@@ -75,8 +73,8 @@ const store = new Vuex.Store({
             newProduct.images = new FormData();
             newProduct.images.append('images', product.images, 'uploadingImages');
             axios.post('', newProduct)
-                .then(res => {
-                console.log(res);
+                .then(response => {
+                console.log(response);
             });
         },
         createCategory(state, newCategory) {
