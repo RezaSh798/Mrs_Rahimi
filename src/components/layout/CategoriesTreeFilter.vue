@@ -1,7 +1,6 @@
 <template>
 <li>
-    <a @click="show = !show"><i class="fa fa-angle-double-left"></i>{{ category.title }}</a>
-
+    <a @click="onClick(category.title)"><i class="fa fa-angle-double-left"></i>{{ category.title }}</a>
     <ul
     v-if="category.hasOwnProperty('children') && category.children.data.length > 0"
     class="list-unstyled"
@@ -17,6 +16,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
     name: 'CategoriesTreeFilter',
     props: {
@@ -31,5 +31,12 @@ export default {
             show: false,
         }
     },
+    methods: {
+        ...mapMutations(['categoryFilter']),
+        onClick(categoryTitle) {
+            this.show = !this.show;
+            this.categoryFilter(categoryTitle);
+        }
+    }
 }
 </script>

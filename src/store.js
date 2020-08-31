@@ -6,11 +6,13 @@ Vue.use(axios);
 
 const store = new Vuex.Store({
     state: {
-        isAuthenticated: false,
+        isAuthenticated: true,
         user: {},
         products: [],
         categories: [],
         pageCount: 0,
+        // filter states
+        categoryTitle: '',
     },
     mutations: {
         // GET Requests
@@ -86,6 +88,10 @@ const store = new Vuex.Store({
                 console.log(errors);
             })
         },
+        shopFilters(state, priceRange) {
+            console.log(state.categoryTitle);
+            console.log(priceRange);
+        },
         // PUT Request
         updateCategory( state, update ) {
             axios({
@@ -116,6 +122,10 @@ const store = new Vuex.Store({
                 console.log(errors);
             })
         },
+        // SET STATES
+        categoryFilter(state, categoryTitle) {
+            state.categoryTitle = categoryTitle;
+        }
     },
     actions: {
         // GET
@@ -140,6 +150,9 @@ const store = new Vuex.Store({
         },
         login({ commit }, payload) {
             commit('login', payload);
+        },
+        shopFilters({commit}, payload) {
+            commit('shopFilters', payload);
         },
         // PUT
         updateCategory({ commit }, payload) {

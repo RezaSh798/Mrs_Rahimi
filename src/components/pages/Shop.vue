@@ -91,6 +91,7 @@
 				</div>
 				<!-- .col-md-9 end -->
 				<div id="my-sidebar" class="col-xs-12 col-sm-12 col-md-3 sidebar">
+					<h5>فیلتر کردن با :</h5>
 					<!-- Categories
                     ============================================= -->
 					<div class="widget widget-categories">
@@ -112,7 +113,7 @@
                     ============================================= -->
 					<div class="widget widget-filter">
 						<div class="widget-title">
-							<h5>فیلتر کردن با قیمت</h5>
+							<h5>قیمت</h5>
 						</div>
 						<div class="widget-content">
 							<div id="slider-range"></div>
@@ -146,7 +147,7 @@ export default {
 		return {
 			page : 1,
 			itemsPerPage : 9,
-			priceRangeFilter: null,
+			priceRange: null,
 		}
 	},
     components : {
@@ -163,12 +164,15 @@ export default {
 		]),
 	},
 	methods: {
-		...mapActions(['getProductsPerPage']),
+		...mapActions([
+			'getProductsPerPage',
+			'shopFilters'
+		]),
 		getPage() {
 			this.getProductsPerPage(this.page);
 		},
 		filter() {
-			console.log(this.priceRangeFilter);
+			this.shopFilters(this.priceRange);
 		},
 	},
 	created() {
@@ -190,8 +194,7 @@ export default {
 				test = ui;
 			},
 			change: () => {
-				this.priceRangeFilter = test.values;
-				console.log(this.priceRangeFilter);
+				this.priceRange = test.values;
 			}
 		});
 		$sliderAmount.val( $sliderRange.slider("values", 0) + " - " + $sliderRange.slider("values", 1) );
