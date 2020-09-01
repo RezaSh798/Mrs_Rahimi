@@ -1,5 +1,7 @@
 <template>
 <div>
+  <LoadingOverlay />
+
     <v-data-table
     v-model="selected"
     :headers="headers"
@@ -17,6 +19,8 @@
 </template>
 
 <script>
+import LoadingOverlay from '../LoadingOverlay.vue'
+
 export default {
     data() {
         return {
@@ -144,6 +148,9 @@ export default {
             pageCount : 0,
             itemsPerPage : 5,
             }
-    }
+    },
+    components: {
+      LoadingOverlay,
+    },
 }
 </script>

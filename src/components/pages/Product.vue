@@ -211,16 +211,7 @@
 								</ul>
 								<div class="form-review">
 									<form>
-										<input type="text" class="form-control" id="name" placeholder="نام"/>
 										<input type="email" class="form-control" id="email" placeholder="ایمیل"/>
-										<select class="form-control">
-											<option selected="" value="Default">امتیاز شما</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-										</select>
 										<textarea class="form-control" id="review" rows="2" placeholder="دیدگاه..."></textarea>
 										<button type="submit" class="btn btn-primary btn-black btn-block">ثبت دیدگاه</button>
 									</form>
@@ -404,11 +395,13 @@
 
 <script>
 import PageTitle from '../layout/PageTitle.vue'
+import { mapState } from 'vuex';
 
 export default {
     components : {
         'page-title' : PageTitle,
 	},
+	computed: mapState(['product']),
 	mounted() {
 		/* ------------------ Product Image SLider ------------------ */
 		$('.product-img-slider').slick({

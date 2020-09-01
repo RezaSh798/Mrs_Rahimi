@@ -7,7 +7,10 @@ Vue.use(axios);
 const store = new Vuex.Store({
     state: {
         isAuthenticated: true,
-        user: {},
+        user: {
+            rol: 'admin',
+        },
+        product: {},
         products: [],
         categories: [],
         pageCount: 0,
@@ -125,6 +128,9 @@ const store = new Vuex.Store({
         // SET STATES
         categoryFilter(state, categoryTitle) {
             state.categoryTitle = categoryTitle;
+        },
+        product(state, product) {
+            state.product = product;
         }
     },
     actions: {

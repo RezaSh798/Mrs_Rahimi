@@ -1,45 +1,49 @@
 <template>
 <div>
-    <v-alert
-      v-model="alert"
-      border="left"
-      close-text="Close Alert"
-      color="red darken-1"
-      dark
-      dismissible
-    >
-        لطفا برای بروزرسانی فقط یکی از محصولات را انتخاب کنید !
-    </v-alert>
-    <v-card
-    class="d-flex justify-start"
-    >
-        <v-switch v-model="singleSelect" :label="actionName()" class="pa-3" color="amber darken-4"></v-switch>
-        <v-btn
-        id="operationBtn"
-        :color="singleSelect ? 'green' : '#ef394e'"
-        @click="actionOperation()"
-        >
-        {{ singleSelect ? 'بروزرسانی' : 'حذف' }}
-        </v-btn>
-    </v-card>
-    <v-data-table
-    v-model="selected"
-    :headers="headers"
-    :items="desserts"
-    :page.sync="page"
-    :items-per-page="itemsPerPage"
-    hide-default-footer
-    class="elevation-1"
-    @page-count="pageCount = $event"
-    show-select
-    :single-select="singleSelect"
-    item-key="id"
-    ></v-data-table>
-    <v-pagination id="pageinate" v-model="page" :length="pageCount" color="amber darken-4"></v-pagination>
+  <LoadingOverlay />
+
+  <v-alert
+    v-model="alert"
+    border="left"
+    close-text="Close Alert"
+    color="red darken-1"
+    dark
+    dismissible
+  >
+      لطفا برای بروزرسانی فقط یکی از محصولات را انتخاب کنید !
+  </v-alert>
+  <v-card
+  class="d-flex justify-start"
+  >
+      <v-switch v-model="singleSelect" :label="actionName()" class="pa-3" color="amber darken-4"></v-switch>
+      <v-btn
+      id="operationBtn"
+      :color="singleSelect ? 'green' : '#ef394e'"
+      @click="actionOperation()"
+      >
+      {{ singleSelect ? 'بروزرسانی' : 'حذف' }}
+      </v-btn>
+  </v-card>
+  <v-data-table
+  v-model="selected"
+  :headers="headers"
+  :items="desserts"
+  :page.sync="page"
+  :items-per-page="itemsPerPage"
+  hide-default-footer
+  class="elevation-1"
+  @page-count="pageCount = $event"
+  show-select
+  :single-select="singleSelect"
+  item-key="id"
+  ></v-data-table>
+  <v-pagination id="pageinate" v-model="page" :length="pageCount" color="amber darken-4"></v-pagination>
 </div>
 </template>
 
 <script>
+import LoadingOverlay from '../LoadingOverlay.vue'
+
 export default {
     data () {
       return {
@@ -171,6 +175,9 @@ export default {
         pageCount : 0,
         itemsPerPage : 5,
       }
+    },
+    components: {
+      LoadingOverlay,
     },
     methods : {
         actionName () {

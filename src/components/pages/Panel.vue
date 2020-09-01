@@ -74,6 +74,9 @@ export default {
     components : {
         'page-title' : PageTitle,
     },
+    created() {
+        this.$vuetify.rtl = true;
+    }
 }
 </script>
 

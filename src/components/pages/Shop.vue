@@ -1,5 +1,6 @@
 <template>
 <section>
+	<LoadingOverlay />
     <page-title icon="fab fa-shopify">
         <template slot="title">فروشگاه</template>
         <template slot="location">فروشگاه</template>
@@ -45,7 +46,10 @@
 									<div class="product-hover">
 										<div class="product-action">
 											<!-- <a class="btn btn-primary" href="#">افزودن به سبد</a> -->
-											<router-link class="btn btn-primary" :to="'/product/' + product.id">مشخصات</router-link>
+											<router-link
+											class="btn btn-primary"
+											:to="'/product/' + product.id"
+											@click="setProduct(product)">مشخصات</router-link>
 										</div>
 									</div>
 									<!-- .product-overlay end -->
@@ -53,7 +57,7 @@
 								<!-- .product-img end -->
 								<div class="product-bio">
 									<div class="prodcut-cat">
-										<p>{{ product.category_id }}</p>
+										<p>{{ product.category }}</p>
 									</div>
 									<!-- .product-cat end -->
 									<div class="prodcut-title">
@@ -138,8 +142,9 @@
 <script>
 // imports components
 import PageTitle from '../layout/PageTitle.vue'
+import LoadingOverlay from '../layout/LoadingOverlay.vue'
 import CategoriesTreeFilter from '../layout/CategoriesTreeFilter.vue'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
 	name: 'Shop',
@@ -152,7 +157,8 @@ export default {
 	},
     components : {
 		'page-title' : PageTitle,
-		CategoriesTreeFilter
+		CategoriesTreeFilter,
+		LoadingOverlay,
 	},
 	computed: {
 		...mapState([
@@ -164,6 +170,7 @@ export default {
 		]),
 	},
 	methods: {
+		...mapMutations(['product']),
 		...mapActions([
 			'getProductsPerPage',
 			'shopFilters'
@@ -173,6 +180,10 @@ export default {
 		},
 		filter() {
 			this.shopFilters(this.priceRange);
+			this.$router.go();
+		},
+		setProduct(product) {
+			this.product(product);
 		},
 	},
 	created() {
@@ -181,6 +192,7 @@ export default {
 		this.$vuetify.rtl = false;
 	},
 	mounted() {
+		// Slider Range
 		let test = null;
 		var $sliderRange = $("#slider-range"),
         $sliderAmount = $("#amount");

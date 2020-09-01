@@ -1,5 +1,7 @@
 <template>
 <div>
+    <LoadingOverlay />
+
     <input
         type="text"
         v-if="show"
@@ -20,6 +22,7 @@
 
 <script>
 import CategoriesTree from './categories tree/CategoriesTree.vue'
+import LoadingOverlay from '../LoadingOverlay.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
@@ -39,7 +42,7 @@ export default {
             ],
         }
     },
-    components: { CategoriesTree },
+    components: { CategoriesTree, LoadingOverlay },
     methods: {
         ...mapActions(['createCategory']),
         add() {

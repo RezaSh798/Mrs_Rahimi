@@ -20,7 +20,6 @@
 						<img  src="assets/images/shop/grid/1.jpg" alt="Product"/>
 						<div class="product-hover">
 							<div class="product-action">
-								<a class="btn btn-primary" href="#">افزودن به سبد</a>
 								<router-link class="btn btn-primary" to="/product/id">مشخصات</router-link>
 							</div>
 						</div>
@@ -54,7 +53,6 @@
 						<img  src="assets/images/shop/grid/2.jpg" alt="Product"/>
 						<div class="product-hover">
 							<div class="product-action">
-								<a class="btn btn-primary" href="#">افزودن به سبد</a>
 								<router-link class="btn btn-primary" to="/product/id">مشخصات</router-link>
 							</div>
 						</div>
@@ -88,7 +86,6 @@
 						<img  src="assets/images/shop/grid/3.jpg" alt="Product"/>
 						<div class="product-hover">
 							<div class="product-action">
-								<a class="btn btn-primary" href="#">افزودن به سبد</a>
 								<router-link class="btn btn-primary" to="/product/id">مشخصات</router-link>
 							</div>
 						</div>
@@ -122,7 +119,6 @@
 						<img  src="assets/images/shop/grid/4.jpg" alt="Product"/>
 						<div class="product-hover">
 							<div class="product-action">
-								<a class="btn btn-primary" href="#">افزودن به سبد</a>
 								<router-link class="btn btn-primary" to="/product/id">مشخصات</router-link>
 							</div>
 						</div>
@@ -156,7 +152,6 @@
 						<img  src="assets/images/shop/grid/5.jpg" alt="Product"/>
 						<div class="product-hover">
 							<div class="product-action">
-								<a class="btn btn-primary" href="#">افزودن به سبد</a>
 								<router-link class="btn btn-primary" to="/product/id">مشخصات</router-link>
 							</div>
 						</div>
@@ -190,7 +185,6 @@
 						<img  src="assets/images/shop/grid/6.jpg" alt="Product"/>
 						<div class="product-hover">
 							<div class="product-action">
-								<a class="btn btn-primary" href="#">افزودن به سبد</a>
 								<router-link class="btn btn-primary" to="/product/id">مشخصات</router-link>
 							</div>
 						</div>
@@ -224,7 +218,6 @@
 						<img  src="assets/images/shop/grid/1.jpg" alt="Product"/>
 						<div class="product-hover">
 							<div class="product-action">
-								<a class="btn btn-primary" href="#">افزودن به سبد</a>
 								<router-link class="btn btn-primary" to="/product/id">مشخصات</router-link>
 							</div>
 						</div>
@@ -258,7 +251,6 @@
 						<img  src="assets/images/shop/grid/2.jpg" alt="Product"/>
 						<div class="product-hover">
 							<div class="product-action">
-								<a class="btn btn-primary" href="#">افزودن به سبد</a>
 								<router-link class="btn btn-primary" to="/product/id">مشخصات</router-link>
 							</div>
 						</div>
