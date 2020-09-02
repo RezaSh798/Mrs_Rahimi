@@ -4672,7 +4672,7 @@ td.cart-product-quantity {
 	z-index: 1;
 	pointer-events: none;
 	cursor: pointer;
-	color: #d22e2e;
+	color: var(--main-color);
 }
 
 .shop-options .product-options2 select {

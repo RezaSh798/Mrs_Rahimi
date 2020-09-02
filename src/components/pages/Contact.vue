@@ -8,30 +8,36 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-8 widget-contact pl-0 pr-0 p-none-xs p-none-sm" style="direction:rtl;">
-					<form id="contact-form" action="assets/php/sendmail.php" method="post">
-						<div class="col-md-6">
-							<input type="email" class="form-control mb-30" name="contact-email" id="email" placeholder="ایمیل : " required/>
-						</div>
-						<div class="col-md-6">
-							<input type="text" class="form-control mb-30" name="contact-name" id="name" placeholder="نام : " required/>
-						</div>
-						<div class="col-md-12">
-							<textarea class="form-control mb-30" name="contact-message" id="message" rows="4" placeholder="پیام شما ..." required></textarea>
-						</div>
-						<div class="col-md-12">
-							<button type="submit" id="submit-message" class="btn btn-primary btn-block">ثبت دیدگاه</button>
-						</div>
-						<div class="col-xs-12 col-sm-12 col-md-12 mt-xs">
-							<!--Alert Message-->
-							<div id="contact-result">
+					<ValidationObserver v-slot="{ invalid }">
+						<form id="contact-form">
+							<div class="col-md-6">
+								<ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
+									<input type="email" class="form-control mb-30" v-model="contact.email" id="email" placeholder="ایمیل : " />
+									<span>{{ errors[0] }}</span>
+								</ValidationProvider>
 							</div>
-						</div>
-					</form>
+							<div class="col-md-6">
+								<ValidationProvider name="نام کاربری" rules="required" v-slot="{ errors }">
+									<input type="text" class="form-control mb-30" v-model="contact.userName" id="name" placeholder="نام کاربری : " />
+									<span>{{ errors[0] }}</span>
+								</ValidationProvider>
+							</div>
+							<div class="col-md-12">
+								<ValidationProvider name="متن" rules="required|min:50|max:300" v-slot="{ errors }">
+									<textarea class="form-control mb-30" id="message" v-model="contact.message" rows="4" placeholder="پیام شما ..."></textarea>
+									<span>{{ errors[0] }}</span>
+								</ValidationProvider>
+							</div>
+							<div class="col-md-12">
+								<button type="submit" :disabled="invalid" @click="sendMessage()" id="submit-message" class="btn btn-primary btn-block">ارسال</button>
+							</div>
+						</form>
+					</ValidationObserver>
 				</div>
 				<!-- .col-md-8 end -->
 				<div class="col-xs-12 col-sm-12 col-md-4" style="direction:rtl;">
 					<div class="contct-widget-content">
-						<p class="mb-0">شرکت مهرآوید نیرو فعالیت رسمی خود را از سال 1394 آغاز نموده که در ابتدا به عنوان یک شرکت مجری، در زمینه ی توزیع و برق رسانی بوده است، با توجه به اساسنامه شرکت مدیران این مجموعه تصمیم به تغییر وضعیت فعالیت شرکت از اجرا به تعمین کالا نموده اند.</p>
+						<p class="mb-0">شرکت مهرآوید نیرو فعالیت رسمی خود را از سال 1394 آغاز نموده که در ابتدا به عنوان یک شرکت مجری، در زمینه ی توزیع و برق رسانی بوده است، با توجه به اساسنامه شرکت مدیران این مجموعه تصمیم به تغییر وضعیت فعالیت شرکت از اجرا به تامین کالا نموده اند.</p>
 						<div class="widget-contact-info mt-md">
 							<div class="col-xs-12 col-sm-12 col-md-6 pl-0 mb-30-xs mb-30-sm">
 								<h6>تلفن :</h6>
@@ -64,10 +70,36 @@
 
 <script>
 import PageTitle from '../layout/PageTitle.vue'
+import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'
+import fa from 'vee-validate/dist/locale/fa.json'
+import * as rules from 'vee-validate/dist/rules'
+
+// install rules and localization
+Object.keys(rules).forEach(rule => {
+  extend(rule, rules[rule]);
+});
+
+localize('fa', fa);
 
 export default {
+	data() {
+		return {
+			contact: {
+				email: '',
+				userName: '',
+				message: '',
+			}
+		}
+	},
     components : {
-        'page-title' : PageTitle,
-    }    
+		'page-title' : PageTitle,
+		ValidationObserver,
+		ValidationProvider
+	},
+	methods: {
+		sendMessage() {
+			console.log(this.contact);
+		}
+	}
 }
 </script>
