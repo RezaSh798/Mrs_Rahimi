@@ -4,23 +4,6 @@
         <template slot="title">ارتباط با ما</template>
         <template slot="location">ارتباطات</template>
     </page-title>
-
-    <!-- Google Maps
-    ============================================= -->
-	<!-- <section class="google-maps pb-0">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12">
-					<div id="googleMap" style="width:100%;height:447px;">
-					</div>
-				</div>
-			</div>
-		</div>
-	</section> -->
-	<!-- .google-maps end -->
-
-    <!-- Contact #1
-    ============================================= -->
 	<section class="contact">
 		<div class="container">
 			<div class="row">
@@ -48,22 +31,22 @@
 				<!-- .col-md-8 end -->
 				<div class="col-xs-12 col-sm-12 col-md-4" style="direction:rtl;">
 					<div class="contct-widget-content">
-						<p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز</p>
+						<p class="mb-0">شرکت مهرآوید نیرو فعالیت رسمی خود را از سال 1394 آغاز نموده که در ابتدا به عنوان یک شرکت مجری، در زمینه ی توزیع و برق رسانی بوده است، با توجه به اساسنامه شرکت مدیران این مجموعه تصمیم به تغییر وضعیت فعالیت شرکت از اجرا به تعمین کالا نموده اند.</p>
 						<div class="widget-contact-info mt-md">
 							<div class="col-xs-12 col-sm-12 col-md-6 pl-0 mb-30-xs mb-30-sm">
 								<h6>تلفن :</h6>
-								<p><i class="fa fa-phone"></i>+ 2 01065370701</p>
-								<p class="mb-0"><i class="fa fa-fax"></i>+ 2 01065370701</p>
+								<p><i class="fa fa-phone"></i>09152041699</p>
+								<p class="mb-0"><i class="fa fa-fax"></i>05137133686</p>
 							</div>
 							<!-- .col-md-6 end -->
 							<div class="col-xs-12 col-sm-12 col-md-6">
 								<h6>ایمیل :</h6>
-								<p class="mb-0"><i class="fa fa-envelope"></i>7oroof@7oroof.com</p>
+								<p class="mb-0"><i class="fa fa-envelope"></i>mehravidniroo@gmail.com</p>
 							</div>
 							<!-- .col-md-6 end -->
 							<div class="col-xs-12 col-sm-12 col-md-12 pl-0 mt-30 mb-30-xs mb-30-sm">
 								<h6>آدرس :</h6>
-								<p class="mb-0"><i class="fa fa-map-marker"></i>2 AlBahr St, Tanta , AlGharbia, Egypt.</p>
+								<p class="mb-0"><i class="fa fa-map-marker"></i>مشهد، خیابان صاحب الزمان، بین صاحب الزمان 26 و 28، مجتمع فاضل، واحد 120</p>
 							</div>
 							<!-- .col-md-12 end -->
 						</div>

@@ -6208,6 +6208,14 @@ footer {
 	background-color: #3B5998;
 }
 
+.footer-social a.share-telegram:hover {
+	background-color: #00ACC1;
+}
+
+.footer-social a.share-instagram:hover {
+	background-color: #C2185B;
+}
+
 .footer-social a.share-twitter:hover {
 	background-color: #00ACEE;
 }

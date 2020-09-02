@@ -1,9 +1,5 @@
 <template>
-    <!-- Footer #2
-    ============================================= -->
 	<footer id="footer" class="footer footer-2">
-		<!-- Footer Info
-	    ============================================= -->
 		<div class="footer-info">
 			<div class="container">
 				<div class="row">
@@ -163,14 +159,11 @@
 							<h5>درباره ی ما</h5>
 						</div>
 						<div class="footer-widget-content">
-							<p style="direction:rtl;">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+							<p style="direction:rtl;">شرکت مهرآوید نیرو فعالیت رسمی خود را از سال 1394 آغاز نموده که در ابتدا به عنوان یک شرکت مجری، در زمینه ی توزیع و برق رسانی بوده است، با توجه به اساسنامه شرکت مدیران این مجموعه تصمیم به تغییر وضعیت فعالیت شرکت از اجرا به تعمین کالا نموده اند.</p>
 							<div class="footer-social">
-								<a class="share-facebook" href="#"><i class="fa fa-facebook"></i></a>
-								<a class="share-google-plus" href="#"><i class="fa fa-google-plus"></i></a>
-								<a class="share-twitter" href="#"><i class="fa fa-twitter"></i></a>
-								<a class="share-pinterest" href="#"><i class="fa fa-pinterest"></i></a>
-								<a class="share-vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-								<a class="share-rss" href="#"><i class="fa fa-rss"></i></a>
+								<a class="share-facebook" href="http://www.facebook.com/mehravidniroo"><i class="fa fa-facebook"></i></a>
+								<a class="share-telegram" href=" https://t.me/mehravidniroo"><i class="fab fa-telegram-plane"></i></a>
+								<a class="share-instagram" href=" http://www.instagram.com/mehravidniroo"><i class="fa fa-instagram"></i></a>
 							</div>
 						</div>
 					</div>
@@ -180,15 +173,13 @@
 			<!-- .container end -->
 		</div>
 		<!-- .footer-widget end -->
-		
-		<!-- Footer Bar
-	============================================= -->
 		<div class="footer-bar">
 			<div class="container">
 				<div class="row">
 					<div class="col-12 text-center">
 						<div class="powered">
-							<p style="direction:rtl;">تمام حقوق این وب سایت متعلق به گروه 
+							<p style="direction:rtl;">
+								تمام حقوق این وب سایت متعلق به گروه 
 								<a href="#">LEFT2DEAD</a>
 								می باشد
 							</p>

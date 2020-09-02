@@ -5,8 +5,8 @@
 				<div class="row" style="margin-top:-25px !important">
 					<div class="col-xs-12 col-sm-6 col-md-5">
 						<ul class="list-inline top-contact">
-							<li>+ 2 0106 5370701<span> : تماس</span></li>
-							<li>7oroof@7oroof.com<span> : ایمیل</span></li>
+							<li>05137133686<span> : تماس</span></li>
+							<li>mehravidniroo@gmail.com<span> : ایمیل</span></li>
 						</ul>
 					</div>
 					<div class="col-xs-12 col-sm-6 col-md-7">
