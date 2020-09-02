@@ -26,7 +26,7 @@
   :single-select="singleSelect"
   item-key="id"
   ></v-data-table>
-  <v-pagination id="pageinate" v-model="page" :length="pageCount" color="amber darken-4"></v-pagination>
+  <v-pagination id="pageinate" v-model="page" :length="pageCount" color="#FF3D00"></v-pagination>
 </div>
 </template>
 

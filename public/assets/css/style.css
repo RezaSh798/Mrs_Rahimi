@@ -69,6 +69,12 @@ To make it easy to search about class or section, you do not need scroll in this
 use [ CTR + F ] and type [ SECTION NAME ] or [ .class-name ] You can find it quickly and save your time. You have been noted! :)
 */
 
+/* 	color variables  */
+:root {
+	--main-color: #FF3D00;
+	--hover-coler: #757575;
+}
+
 html {
 	scroll-behavior: smooth;
 }
@@ -174,21 +180,21 @@ a {
 	-moz-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
-	color: #d22e2e;
+	color: var(--main-color);
 }
 
 a:hover {
-	color: #a92424;
+	color: var(--hover-color);
 	text-decoration: none;
 }
 
 a:focus {
-	color: #a92424;
+	color: var(--hover-color);
 	text-decoration: none;
 }
 
 a:active {
-	color: #a92424;
+	color: var(--hover-color);
 	text-decoration: none;
 }
 
@@ -469,7 +475,7 @@ ul.dot-list li i {
 .text-just {
 	text-align: justify;
 }
-@media only screen (max-width: 767px) {
+@media only screen and (max-width: 767px) {
  .text-center-xs {
  text-align: center;
 }
@@ -1246,9 +1252,9 @@ ul.dot-list li i {
 }
 
 .btn-primary {
-	background-color: #d22e2e;
+	background-color: var(--main-color);
 	color: #ffffff;
-	border: 2px solid #d22e2e;
+	border: 2px solid var(--main-color);
 }
 
 .btn-primary:hover,
@@ -1257,7 +1263,7 @@ ul.dot-list li i {
 .btn-primary:active:focus {
 	background-color: transparent;
 	color: #ffffff;
-	border-color: #d22e2e;
+	border-color: var(--hover-coler);
 }
 
 .btn-secondary {
@@ -1281,7 +1287,7 @@ ul.dot-list li i {
 	width: 150%;
 	height: 100%;
 	z-index: -1;
-	background-color: #d22e2e;
+	background-color: var(--hover-coler);
 	-webkit-transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
 	transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
 	-webkit-transform-origin: 0% 100%;
@@ -1303,7 +1309,7 @@ ul.dot-list li i {
 .btn-primary:hover::before,
 .btn-primary:focus::before,
 .btn-primary:active::before {
-	background-color: #d22e2e;
+	background-color: var(--hover-coler);
 }
 
 .btn-block {
@@ -1523,7 +1529,7 @@ ul.dot-list li i {
 	float: left;
 	font-family: fontawesome;
 	font-size: 10px;
-	color: #d22e2e;
+	color: var(--main-color);
 	text-align: center;
 	width: 11px;
 	height: 11px;
@@ -1536,7 +1542,7 @@ ul.dot-list li i {
 .accordion .panel-heading .accordion-toggle.collapsed:after {
 	content: "\f067";
 	/* symbol for "collapsed" panels */
-	color: #d22e2e;
+	color: var(--main-color);
 	background-color: transparent;
 }
 
@@ -1571,7 +1577,7 @@ ul.dot-list li i {
 }
 
 .heading .subheading {
-	color: #d22e2e;
+	color: var(--main-color);
 	font-family: 'Ubuntu', sans-serif;
 	font-size: 12px;
 	font-weight: 400;
@@ -1589,7 +1595,7 @@ ul.dot-list li i {
 	content: "";
 	width: 8px;
 	height: 8px;
-	background-color: #d22e2e;
+	background-color: var(--main-color);
 	vertical-align: middle;
 }
 
@@ -1649,7 +1655,7 @@ ul.dot-list li i {
 }
 
 .page-title .breadcrumb a:hover {
-	color: #d22e2e;
+	color: var(--main-color);
 }
 
 /*------------------------------------*\
@@ -1893,7 +1899,7 @@ ul.dot-list li i {
 
 .modal-body p {
 	text-align: center;
-	color: #d22e2e;
+	color: var(--main-color);
 	font-family: 'Ubuntu', sans-serif;
 	font-size: 12px;
 	font-weight: 400;
@@ -1982,7 +1988,7 @@ ul.dot-list li i {
 .modal-body .form-links a:hover,
 .modal-body .lost-pass a:hover,
 .modal-body a:hover {
-	color: #d22e2e;
+	color: var(--main-color);
 }
 
 .modal-backdrop.in {
@@ -2208,7 +2214,7 @@ ul.dot-list li i {
 }
 
 .top-bar ul a:hover {
-	color: #d22e2e;
+	color: var(--main-color);
 }
 
 .top-bar .top-links .open > .dropdown-menu {
@@ -2666,7 +2672,7 @@ ul.dot-list li i {
 	margin-left: -10px;
 	width: 20px;
 	height: 2px;
-	background: #d22e2e;
+	background: var(--main-color);
 	content: '';
 	opacity: 0;
 	-webkit-transition: all 0.3s ease;
@@ -2705,7 +2711,7 @@ ul.dot-list li i {
 }
 
 .navbar-toggle {
-	border-color: #d22e2e;
+	border-color: var(--main-color);
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
 	border-radius: 0;
@@ -2713,7 +2719,7 @@ ul.dot-list li i {
 }
 
 .navbar-toggle .icon-bar {
-	background-color: #d22e2e;
+	background-color: var(--main-color);
 }
 
 .container > .navbar-header {
@@ -3681,7 +3687,7 @@ li.dropdown-submenu.pull-left > ul.dropdown-menu {
 }
 
 .slick-dots li.slick-active {
-	background-color: #d22e2e;
+	background-color: var(--main-color);
 }
 
 .slick-dots li button {
@@ -3711,7 +3717,7 @@ li.dropdown-submenu.pull-left > ul.dropdown-menu {
 }
 
 .feature-panel .feature-icon {
-	color: #d22e2e;
+	color: var(--main-color);
 	font-size: 32px;
 	margin-bottom: 0;
 	line-height: 1;
@@ -4739,7 +4745,7 @@ td.cart-product-quantity {
 }
 
 .product .product-price {
-	color: #d22e2e;
+	color: var(--main-color);
 	font-family: 'Ubuntu', sans-serif;
 	font-weight: 700;
 	font-size: 18px;
@@ -5492,7 +5498,7 @@ td.cart-product-quantity {
 }
 
 .widget-contact-info i {
-	color: #d22e2e;
+	color: var(--main-color);
 	font-size: 16px;
 	font-weight: 400;
 	line-height: 24px;
@@ -5563,11 +5569,11 @@ td.cart-product-quantity {
 }
 
 .widget-categories ul li a:hover {
-	color: #d22e2e;
+	color: var(--main-color);
 }
 
 .widget-categories ul li a i {
-	color: #d22e2e;
+	color: var(--main-color);
 	font-size: 13px;
 	font-weight: 400;
 	line-height: 24px;
@@ -5575,7 +5581,7 @@ td.cart-product-quantity {
 }
 
 .widget-categories ul li a:hover i {
-	color: #bd2929;
+	color: var(--hover-coler);
 }
 
 .widget-categories ul li a span {
@@ -5917,7 +5923,7 @@ td.cart-product-quantity {
 
 .widget-filter .ui-slider-range {
 	height: 8px;
-	background-color: #d22e2e;
+	background-color: var(--main-color);
 	margin-bottom: 20px;
 }
 
@@ -5934,13 +5940,13 @@ td.cart-product-quantity {
 }
 
 .widget-filter input {
-	color: #d22e2e;
+	color: var(--main-color);
 	border: none;
 	background-color: transparent;
 }
 
 .widget-filter .btn {
-	background-color: #d22e2e;
+	background-color: var(--main-color);
 	border-radius: 1px;
 	color: #ffffff;
 	font-family: 'Open Sans', sans-serif;
@@ -6245,7 +6251,7 @@ footer {
 	position: absolute;
 	right: 0;
 	content: "\f100";
-	color: #d22e2e;
+	color: var(--main-color);
 	font-family: fontawesome;
 	font-size: 13px;
 	font-weight: 400;
@@ -6253,7 +6259,7 @@ footer {
 }
 
 .footer-widget-link li a:hover {
-	color: #d22e2e;
+	color: var(--main-color);
 }
 
 .footer-bar {
@@ -6309,7 +6315,7 @@ footer {
 /* Footer #2 */
 .footer-2 .footer-info .info-icon {
 	background-color: #191919;
-	color: #d22e2e;
+	color: var(--main-color);
 }
 
 /* Footer #4 */

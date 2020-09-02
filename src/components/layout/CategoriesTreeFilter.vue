@@ -1,6 +1,8 @@
 <template>
 <li>
-    <a @click="onClick(category.title)"><i class="fa fa-angle-double-left"></i>{{ category.title }}</a>
+    <a @click="onClick(category.title)">
+        <i :class="show ? 'fa fa-angle-double-down' : 'fa fa-angle-double-left'"></i>
+        {{ category.title }}</a>
     <ul
     v-if="category.hasOwnProperty('children') && category.children.data.length > 0"
     class="list-unstyled"

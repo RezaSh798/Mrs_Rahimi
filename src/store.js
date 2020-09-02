@@ -6,7 +6,7 @@ Vue.use(axios);
 
 const store = new Vuex.Store({
     state: {
-        isAuthenticated: true,
+        isAuthenticated: false,
         user: {
             rol: 'admin',
         },

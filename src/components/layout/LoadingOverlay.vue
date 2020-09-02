@@ -3,7 +3,7 @@
         <loading :active.sync="isLoading" 
         :can-cancel="true" 
         :is-full-page="fullPage"
-        :color="'#d22e2e'">
+        :color="'#FF3D00'">
         </loading>
     </div>
 </template>

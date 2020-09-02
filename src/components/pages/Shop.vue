@@ -5,13 +5,13 @@
         <template slot="title">فروشگاه</template>
         <template slot="location">فروشگاه</template>
     </page-title>
-
     <section id="shopgrid" class="shop shop-grid">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-9">
 					<div class="row">
 						<div class="col-xs-12  col-sm-12  col-md-12">
+							<button @click="openSidbar()" style="color:black !important;">Click Me</button>
 							<div class="shop-options">
 								<div id="my-shop-option" class="product-options2 pull-right pull-none-xs" style="direction:rtl;">
 									<ul class="list-inline">
@@ -88,7 +88,7 @@
 							v-model="page"
 							@input="getPage()"
 							:length="pageCount"
-							color="amber darken-4"></v-pagination>
+							color="#FF3D00"></v-pagination>
 						</div>
 						<!-- .col-md-12 end -->
 					</div>
@@ -185,6 +185,9 @@ export default {
 		setProduct(product) {
 			this.product(product);
 		},
+		openSidbar() {
+			document.getElementById('my-sidebar').style.width = '250px';
+		}
 	},
 	created() {
 		this.$store.dispatch('getProductsPerPage');
@@ -221,6 +224,15 @@ export default {
 	@media only screen and (max-width: 767px) and (min-width: 320px) {
 		#my-shop-option {
 			margin-top: -15px;
+		}
+		#my-sidebar {
+			width: 0px;
+			height: 100%;
+			top: 0;
+			right: 0;
+			overflow-x: hidden;
+			transition: .5s;
+			z-index: 1;
 		}
 	}
 </style>
