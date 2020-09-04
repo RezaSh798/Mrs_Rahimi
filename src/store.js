@@ -24,6 +24,7 @@ const store = new Vuex.Store({
             .then(response => {
                 state.products = response.data.data;
                 state.pageCount = Math.ceil(response.data.meta.total / 9);
+                console.log(state.products);
             })
             .catch(errors => {
                 console.log(errors);
@@ -43,35 +44,44 @@ const store = new Vuex.Store({
         },
         // POST Requests
         register(state, newUser) {
-            axios.post('', newUser)
-                .then(response => {
-                    if(response.status == 200) {
-                        state.isAuthenticated = true;
-                        state.user = response.data.data;
-                        if(newUser.rememberMe) {
-                            localStorage.setItem('user', JSON.stringify(newUser));
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            console.log(newUser);
+            axios.post('http://localhost:8000/api/v1/register', {
+                email: newUser.email,
+                password: newUser.password,
+                password_confirmation: newUser.password_confirmation
+            })
+            .then(response => {
+                if(response.status == 201) {
+                    state.isAuthenticated = true;
+                    state.user = response.data.data;
+                    state.user.password = newUser.password;
+                    localStorage.setItem('user', JSON.stringify(state.user));
+                    if(newUser.rememberMe) localStorage.setItem('remember', 'true');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
         },
         login(state, oldUser) {
-            console.log(oldUser);
-            // axios.post('', oldUser)
-            // .then(response => {
-            //     if(response.status == 200) {
-            //         state.user = response.user;
-            //         state.isAuthenticated = true;
-            //         if(oldUser.rememberMe) {
-            //             localStorage.setItem('user', JSON.stringify(oldUser));
-            //         }
-            //     }
-            // })
-            // .catch(error => {
-            //     console.log(error);
-            // });
+            axios.post('http://localhost:8000/api/v1/login', {
+                email: oldUser.email,
+                password: oldUser.password,
+            })
+            .then(response => {
+                if(response.status == 200) {
+                    state.isAuthenticated = true;
+                    state.user = response.data.data;
+                    state.user.password = oldUser.password;
+                    localStorage.setItem('user', JSON.stringify(state.user));
+                    if(oldUser.rememberMe) {
+                        localStorage.setItem('remember', 'true');
+                    }
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
         },
         createPruduct(state, product) {
             const newProduct = product;

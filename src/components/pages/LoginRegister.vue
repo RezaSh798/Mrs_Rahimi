@@ -46,7 +46,7 @@
 												</div>
 												<div class="form-group">
 													<ValidationProvider name="گذرواژه" rules="required|min:8|max:11" v-slot="{ errors }">
-														<input type="password" v-model="user.pass" class="form-control" id="pwd" placeholder="گذرواژه">
+														<input type="password" v-model="user.password" class="form-control" id="pwd" placeholder="گذرواژه">
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>
 												</div>
@@ -55,9 +55,9 @@
 														<input type="checkbox" v-model="user.rememberMe">
 														مرا به خاطر بسپار</label>
 												</div>
-												<div class="pull-left lost-pass">
+												<!-- <div class="pull-left lost-pass">
 													<a href="#">گذرواژه تان را فراموش کرده اید ؟</a>
-												</div>
+												</div> -->
 												<button type="submit" :disabled="invalid" class="btn btn-primary btn-block" @click="onLogin">ورود</button>
 											</form>
 										</ValidationObserver>
@@ -114,13 +114,13 @@
 												</div>
 												<div class="form-group">
 													<ValidationProvider name="گذرواژه" rules="required|min:8|max:11" v-slot="{ errors }" vid="confirmation">
-														<input type="password" v-model="user.confirmPass" class="form-control" placeholder="گذرواژه">
+														<input type="password" v-model="user.password_confirmation" class="form-control" placeholder="گذرواژه">
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>
 												</div>
 												<div class="form-group">
 													<ValidationProvider name="تائید گذرواژه" rules="required|confirmed:confirmation" v-slot="{ errors }">
-														<input type="password" v-model="user.pass" class="form-control" placeholder="تائید گذرواژه">
+														<input type="password" v-model="user.password" class="form-control" placeholder="تائید گذرواژه">
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>
 												</div>
@@ -175,8 +175,8 @@ export default {
 		return {
 			user : {
 				email : '',
-				pass: null,
-				confirmPass : null,
+				password: null,
+				password_confirmation : null,
 				rememberMe : false,
 			}
 		}
@@ -198,7 +198,7 @@ export default {
 		onRegister() {		
 			this.register(this.user);
 			$("#registerDialog").modal('hide');
-			this.$router.push({ name: 'home' });
+			// this.$router.push({ name: 'home' });
 		},
 		onLogin() {
 			this.login(this.user);
