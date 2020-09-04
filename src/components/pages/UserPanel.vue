@@ -20,7 +20,7 @@
         <!-- .container end -->
     </div>
 
-    <div class="just">
+    <div>
         <router-view></router-view>
     </div>
 </section>

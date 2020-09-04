@@ -2,32 +2,56 @@
 <div style="direction:rtl !important;">
     <ValidationObserver v-slot="{ invalid }">
         <form class="mb-0">
-            <div class="form-group">
-                    <input
-                    type="file"
-                    ref="file"
-                    style="display:none;"
-                    @change="avatarSelected">
-                <ValidationProvider name="آواتار">
-                    <button id="avatar" @click="$refs.file.click()"></button>
-                    <span>
-                        <!-- {{ errors[0] }} -->
-                    </span>
-                </ValidationProvider>
+            <div class="row">
+                <div class="col-xl-12 col-md-6 just">
+                    <div>
+                        <div class="form-group">
+                        <input
+                        type="file"
+                        ref="file"
+                        style="display:none;"
+                        @change="avatarSelected">
+                        <button id="avatar" @click="$refs.file.click()"></button>
+                        </div>
+                        <div class="form-group">
+                            <ValidationProvider name="نام" rules="max:10|alpha_spaces" v-slot="{ errors }">
+                                <input type="text" v-model="user.name" class="form-control" id="name" placeholder="نام">
+                                <span>{{ errors[0] }}</span>
+                            </ValidationProvider>
+                        </div>
+                        <div class="form-group">
+                            <ValidationProvider name="نام خانوادگی" rules="max:20|alpha_spaces" v-slot="{ errors }">
+                                <input type="text" v-model="user.family" id="family" class="form-control" placeholder="نام خانوادگی">
+                                <span>{{ errors[0] }}</span>
+                            </ValidationProvider>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="info" class="col-xl-12 col-md-6"  style="padding-top:30px;">
+                    <div>
+                        <div class="form-group myFloat">
+                            <ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
+                                <input type="text" v-model="user.email" class="form-control" id="email" placeholder="ایمیل">
+                                <span>{{ errors[0] }}</span>
+                            </ValidationProvider>
+                        </div>
+                        <div class="form-group myFloat">
+                            <ValidationProvider name="شماره موبایل" rules="max:10|alpha_spaces" v-slot="{ errors }">
+                                <input type="text" v-model="user.phone_number" class="form-control" id="phone_number" placeholder="شماره موبایل">
+                                <span>{{ errors[0] }}</span>
+                            </ValidationProvider>
+                        </div>
+                        <div class="form-group" style="clear:both;">
+                            <ValidationProvider name="آدرس" rules="max:150|alpha" v-slot="{ errors }">
+                                <textarea v-model="user.address" placeholder="آدرس" id="textArea" cols="30" rows="10"></textarea>
+                                <span style="display: block;">{{ errors[0] }}</span>
+                            </ValidationProvider>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-30" :disabled="invalid" @click="onSubmit()">ویرایش</button>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <ValidationProvider name="نام کاربری" rules="required|max:10" v-slot="{ errors }">
-                    <input type="text" v-model="user.name" class="form-control" id="username" placeholder="نام کاربری">
-                    <span>{{ errors[0] }}</span>
-                </ValidationProvider>
-            </div>
-            <div class="form-group">
-                <ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
-                    <input type="text" v-model="user.email" class="form-control" id="email" placeholder="ایمیل">
-                    <span>{{ errors[0] }}</span>
-                </ValidationProvider>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block mt-30" :disabled="invalid" @click="onSubmit()">ویرایش</button>
         </form>
     </ValidationObserver>
 </div>
@@ -87,12 +111,46 @@ export default {
         line-height: 33px;
         border-radius: 2px;
         border: 1px solid #e5e5e5;
-        width: 100%;
+        width: 200px;
         color: #b2b2b2;
         font-family: 'Ubuntu', sans-serif;
         font-size: 13px;
         font-weight: 400;
         padding: 0 20px;
         margin-bottom: 20px;
+    }
+    .just {
+        display: flex;
+        justify-content: center;
+    }
+    .myFloat {
+        float: right;
+        margin-left: 50px;
+    }
+    textarea {
+        border: 1px solid #e5e5e5;
+        width: 450px;
+        padding: 15px;
+        height: 150px;
+    }
+    button {
+        width: 450px;
+    }
+    @media only screen and (max-width: 767px) and (min-width: 320px) {
+        #info {
+            display: flex;
+            justify-content: center;
+            padding-top: 0px !important;
+        }
+        #info div div {
+            float: none;
+            margin-left: 0px;
+        }
+        textarea {
+            width: 200px;
+        }
+        button {
+            width: 200px;
+        }
     }
 </style>
