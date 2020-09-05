@@ -1,6 +1,6 @@
 <template>
 <div style="direction:rtl !important;">
-    <ValidationObserver v-slot="{ invalid }">
+    <ValidationObserver>
         <form class="mb-0">
             <div class="row">
                 <div class="col-xl-12 col-md-6 just">
@@ -15,14 +15,14 @@
                         </div>
                         <div class="form-group">
                             <ValidationProvider name="نام" rules="max:10|alpha_spaces" v-slot="{ errors }">
-                                <input type="text" v-model="user.name" class="form-control" id="name" placeholder="نام">
-                                <span>{{ errors[0] }}</span>
+                                <input type="text" v-model="user.name" id="name" placeholder="نام">
+                                <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
                         <div class="form-group">
                             <ValidationProvider name="نام خانوادگی" rules="max:20|alpha_spaces" v-slot="{ errors }">
-                                <input type="text" v-model="user.family" id="family" class="form-control" placeholder="نام خانوادگی">
-                                <span>{{ errors[0] }}</span>
+                                <input type="text" v-model="user.family" id="family" placeholder="نام خانوادگی">
+                                <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
                     </div>
@@ -32,23 +32,23 @@
                     <div>
                         <div class="form-group myFloat">
                             <ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
-                                <input type="text" v-model="user.email" class="form-control" id="email" placeholder="ایمیل">
-                                <span>{{ errors[0] }}</span>
+                                <input type="text" v-model="user.email" id="email" placeholder="ایمیل">
+                                <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
                         <div class="form-group myFloat">
                             <ValidationProvider name="شماره موبایل" rules="max:10|alpha_spaces" v-slot="{ errors }">
-                                <input type="text" v-model="user.phone_number" class="form-control" id="phone_number" placeholder="شماره موبایل">
-                                <span>{{ errors[0] }}</span>
+                                <input type="text" v-model="user.phone_number" id="phone_number" placeholder="شماره موبایل">
+                                <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
                         <div class="form-group" style="clear:both;">
                             <ValidationProvider name="آدرس" rules="max:150|alpha" v-slot="{ errors }">
                                 <textarea v-model="user.address" placeholder="آدرس" id="textArea" cols="30" rows="10"></textarea>
-                                <span style="display: block;">{{ errors[0] }}</span>
+                                <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block mt-30" :disabled="invalid" @click="onSubmit()">ویرایش</button>
+                        <button type="submit" class="btn btn-primary btn-block mt-30" @click="onSubmit()">ویرایش</button>
                     </div>
                 </div>
             </div>
@@ -135,6 +135,10 @@ export default {
     }
     button {
         width: 450px;
+    }
+    .mySpan {
+        display: block;
+        width: 200px;
     }
     @media only screen and (max-width: 767px) and (min-width: 320px) {
         #info {

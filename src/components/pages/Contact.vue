@@ -12,19 +12,19 @@
 						<form id="contact-form">
 							<div class="col-md-6">
 								<ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
-									<input type="email" class="form-control mb-30" v-model="contact.email" id="email" placeholder="ایمیل : " />
+									<input type="email" class="form-control mb-30" v-model="user.email" id="email" placeholder="ایمیل : " />
 									<span>{{ errors[0] }}</span>
 								</ValidationProvider>
 							</div>
 							<div class="col-md-6">
 								<ValidationProvider name="نام کاربری" rules="required" v-slot="{ errors }">
-									<input type="text" class="form-control mb-30" v-model="contact.userName" id="name" placeholder="نام کاربری : " />
+									<input type="text" class="form-control mb-30" v-model="user.name" id="name" placeholder="نام کاربری : " />
 									<span>{{ errors[0] }}</span>
 								</ValidationProvider>
 							</div>
 							<div class="col-md-12">
 								<ValidationProvider name="متن" rules="required|min:50|max:300" v-slot="{ errors }">
-									<textarea class="form-control mb-30" id="message" v-model="contact.message" rows="4" placeholder="پیام شما ..."></textarea>
+									<textarea class="form-control mb-30" id="message" v-model="user.message" rows="4" placeholder="پیام شما ..."></textarea>
 									<span>{{ errors[0] }}</span>
 								</ValidationProvider>
 							</div>
@@ -84,9 +84,9 @@ localize('fa', fa);
 export default {
 	data() {
 		return {
-			contact: {
+			user: {
 				email: '',
-				userName: '',
+				name: '',
 				message: '',
 			}
 		}
