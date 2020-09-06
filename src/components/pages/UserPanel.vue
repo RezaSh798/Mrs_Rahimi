@@ -31,7 +31,9 @@ import PageTitle from '../layout/PageTitle.vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
-    components: { PageTitle },
+    components: { 
+        'page-title' : PageTitle
+    },
     computed: {
         ...mapState(['isAuthenticated']),
         ...mapActions(['getUser']),
@@ -39,8 +41,6 @@ export default {
     created() {
         if(!this.isAuthenticated) {
             this.$router.push({ name: 'home' });
-        } else {
-            this.getUser;
         }
     }
 }

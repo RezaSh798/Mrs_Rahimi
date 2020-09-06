@@ -10,18 +10,25 @@
                         type="file"
                         ref="file"
                         style="display:none;"
+                        accept="jpeg, jpg, png, gif"
                         @change="avatarSelected">
-                        <button id="avatar" @click="$refs.file.click()"></button>
+
+                        <button
+                        id="avatar"
+                        :style="(userEdit.avatar != null) ? `background-image: url(${userEdit.avatar})` : userEdit.avatar = null"
+                        @click="$refs.file.click()">
+                        </button>
                         </div>
+
                         <div class="form-group">
                             <ValidationProvider name="نام" rules="max:10|alpha_spaces" v-slot="{ errors }">
-                                <input type="text" v-model="user.name" id="name" placeholder="نام">
+                                <input type="text" v-model="userEdit.name" id="name" placeholder="نام">
                                 <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
                         <div class="form-group">
                             <ValidationProvider name="نام خانوادگی" rules="max:20|alpha_spaces" v-slot="{ errors }">
-                                <input type="text" v-model="user.family" id="family" placeholder="نام خانوادگی">
+                                <input type="text" v-model="userEdit.family" id="family" placeholder="نام خانوادگی">
                                 <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
@@ -32,19 +39,19 @@
                     <div>
                         <div class="form-group myFloat">
                             <ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
-                                <input type="text" v-model="user.email" id="email" placeholder="ایمیل">
+                                <input type="text" v-model="userEdit.email" id="email" placeholder="ایمیل">
                                 <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
                         <div class="form-group myFloat">
-                            <ValidationProvider name="شماره موبایل" rules="max:10|alpha_spaces" v-slot="{ errors }">
-                                <input type="text" v-model="user.phone_number" id="phone_number" placeholder="شماره موبایل">
+                            <ValidationProvider name="شماره موبایل" rules="max:11|alpha_num" v-slot="{ errors }">
+                                <input type="text" v-model="userEdit.phone_number" id="phone_number" placeholder="شماره موبایل">
                                 <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
                         <div class="form-group" style="clear:both;">
-                            <ValidationProvider name="آدرس" rules="max:150|alpha" v-slot="{ errors }">
-                                <textarea v-model="user.address" placeholder="آدرس" id="textArea" cols="30" rows="10"></textarea>
+                            <ValidationProvider name="آدرس" rules="max:150" v-slot="{ errors }">
+                                <textarea v-model="userEdit.address" placeholder="آدرس" id="textArea" cols="30" rows="10"></textarea>
                                 <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
@@ -61,6 +68,7 @@
 import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'
 import fa from 'vee-validate/dist/locale/fa.json'
 import * as rules from 'vee-validate/dist/rules'
+import { mapActions, mapState } from 'vuex';
 // install rules and localization
 Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule]);
@@ -71,27 +79,32 @@ localize('fa', fa);
 export default {
     data() {
         return {
-            user : {
-                avatar: null,
-				name: '',
-				pass: null,
-				confirmPass : null,
-				email : '',
-			}
+            userEdit: {}
         }
     },
     components: {
         ValidationObserver,
         ValidationProvider,
     },
+    computed: {
+        ...mapActions(['getUser']),
+        ...mapState(['user']),
+    },
     methods: {
+        ...mapActions(['updateUser']),
         avatarSelected( event ) {
-            this.avatar = event.target.files[0];
+            this.userEdit.avatar = event.target.files[0];
         },
         onSubmit() {
-            alert('ok');
+            this.updateUser(this.userEdit);
         }
-    }
+    },
+    created() {
+        this.getUser;
+        setTimeout(() => {
+            this.userEdit = this.user;
+        }, 2000);
+    },
 }
 </script>
 

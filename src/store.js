@@ -7,44 +7,61 @@ Vue.use(axios);
 const store = new Vuex.Store({
     state: {
         isAuthenticated: false,
-        user: {
-            rol: 'admin',
-        },
+        user: undefined,
+        rol: 'admin',
         product: {},
         products: [],
         categories: [],
         pageCount: 0,
+
+        error: '',
         // filter states
         categoryTitle: '',
     },
     mutations: {
         // GET Requests
         getProductsPerPage( state, page = 1 ) {
-            axios.get(`http://localhost:8000/api/v1/product?page=${page}`)
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.get(`http://localhost:8000/api/v1/product?api_token=${user.api_token}&page=${page}`)
             .then(response => {
                 state.products = response.data.data;
                 state.pageCount = Math.ceil(response.data.meta.total / 9);
-                console.log(state.products);
             })
             .catch(errors => {
                 console.log(errors);
             })
         },
         getCategories( state ) {
-            axios.get('http://localhost:8000/api/v1/category')
-                .then( response => {
-                    state.categories = response.data.data;
-                })
-                .catch( errors => {
-                    console.log( errors );
-                })
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.get(`http://localhost:8000/api/v1/category?api_token=${user.api_token}`)
+            .then( response => {
+                state.categories = response.data.data;
+            })
+            .catch( errors => {
+                console.log( errors );
+            })
         },
-        getUser() {
-            console.log('we are in getUser mutation !');
+        getUser(state) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.get(`http://localhost:8000/api/v1/user/${user.id}?api_token=${user.api_token}`)
+            .then(response => {
+                state.user = {
+                    id: response.data.data.id,
+                    name: response.data.data.name,
+                    family: response.data.data.family,
+                    email: response.data.data.email,
+                    phone_number: response.data.data.phone_number,
+                    address: response.data.data.address,
+                    avatar: response.data.data.avatar,
+                    api_token: response.data.data.api_token,
+                }
+            })
+            .catch(errors => {
+                console.log(errors);
+            })
         },
         // POST Requests
         register(state, newUser) {
-            console.log(newUser);
             axios.post('http://localhost:8000/api/v1/register', {
                 email: newUser.email,
                 password: newUser.password,
@@ -53,10 +70,14 @@ const store = new Vuex.Store({
             .then(response => {
                 if(response.status == 201) {
                     state.isAuthenticated = true;
-                    state.user = response.data.data;
-                    state.user.password = newUser.password;
-                    localStorage.setItem('user', JSON.stringify(state.user));
-                    if(newUser.rememberMe) localStorage.setItem('remember', 'true');
+                    const user = {
+                        id: response.data.data.id,
+                        email: response.data.data.email,
+                        password: newUser.password,
+                        api_token: response.data.data.api_token
+                    }
+                    localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('login', 'true');
                 }
             })
             .catch(error => {
@@ -71,16 +92,19 @@ const store = new Vuex.Store({
             .then(response => {
                 if(response.status == 200) {
                     state.isAuthenticated = true;
-                    state.user = response.data.data;
-                    state.user.password = oldUser.password;
-                    localStorage.setItem('user', JSON.stringify(state.user));
-                    if(oldUser.rememberMe) {
-                        localStorage.setItem('remember', 'true');
+                    const user = {
+                        id: response.data.data.id,
+                        email: response.data.data.email,
+                        password: oldUser.password,
+                        api_token: response.data.data.api_token
                     }
+                    localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('login', 'true');
                 }
             })
             .catch(error => {
                 console.log(error);
+                state.error = error;
             });
         },
         createPruduct(state, product) {
@@ -104,6 +128,21 @@ const store = new Vuex.Store({
         shopFilters(state, priceRange) {
             console.log(state.categoryTitle);
             console.log(priceRange);
+        },
+        updateUser(state, user) {
+            let uploadUser = new FormData();
+            uploadUser.append('_method', 'PUT');
+            uploadUser.append('email', user.email);
+            uploadUser.append('name', user.name);
+            uploadUser.append('family', user.family);
+            uploadUser.append('phone_number', user.phone_number);
+            uploadUser.append('address', user.address);
+            uploadUser.append('avatar', user.avatar);
+            
+            axios.post(`http://localhost:8000/api/v1/user/${user.id}?api_token=${user.api_token}`, uploadUser)
+            .catch(errors => {
+                console.log(errors);
+            });
         },
         // PUT Request
         updateCategory( state, update ) {
@@ -173,6 +212,9 @@ const store = new Vuex.Store({
         // PUT
         updateCategory({ commit }, payload) {
             commit('updateCategory', payload);
+        },
+        updateUser({commit}, payload) {
+            commit('updateUser', payload);
         },
         // DELETE
         deleteCategory({commit}, payload) {

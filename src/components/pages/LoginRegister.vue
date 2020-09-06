@@ -50,11 +50,6 @@
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>
 												</div>
-												<div class="checkbox pull-right">
-													<label>
-														<input type="checkbox" v-model="user.rememberMe">
-														مرا به خاطر بسپار</label>
-												</div>
 												<!-- <div class="pull-left lost-pass">
 													<a href="#">گذرواژه تان را فراموش کرده اید ؟</a>
 												</div> -->
@@ -124,11 +119,6 @@
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>
 												</div>
-												<div class="checkbox pull-right">
-													<label>
-														<input type="checkbox" v-model="user.rememberMe">
-														مرا به خاطر بسپار</label>
-												</div>
 
 												<button type="submit" :disabled="invalid" class="btn btn-primary btn-block mt-30" @click="onRegister">ایجاد حساب</button>
 											</form>
@@ -177,7 +167,6 @@ export default {
 				email : '',
 				password: null,
 				password_confirmation : null,
-				rememberMe : false,
 			}
 		}
 	},
@@ -198,7 +187,7 @@ export default {
 		onRegister() {		
 			this.register(this.user);
 			$("#registerDialog").modal('hide');
-			// this.$router.push({ name: 'home' });
+			this.$router.push({ name: 'home' });
 		},
 		onLogin() {
 			this.login(this.user);

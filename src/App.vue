@@ -19,10 +19,10 @@ export default {
     'my-footer' : Footer,
   },
   created() {
-		if(localStorage.getItem('remember')) {
-			const user = JSON.parse(localStorage.getItem('user'));
-			this.$store.dispatch('login', user);
-		}
+    if (localStorage.getItem('login')) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      this.$store.dispatch('login', user);
+    }
   }
 }
 </script>

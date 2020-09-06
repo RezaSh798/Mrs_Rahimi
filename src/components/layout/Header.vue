@@ -76,7 +76,7 @@
 						<li class="my-navbar-li">
 							<router-link to="/contact">ارتباط با ما</router-link>
 						</li>
-						<li class="my-navbar-li" v-if="isAuthenticated && user.rol == 'admin'">
+						<li class="my-navbar-li" v-if="isAuthenticated && rol == 'admin'">
 							<router-link to="/panel/products">داشبورد</router-link>
 						</li>
 						<!-- li end -->
@@ -95,7 +95,7 @@ import { mapState } from 'vuex'
 export default {
 	computed: mapState([
 		'isAuthenticated',
-		'user'
+		'rol'
 	]),
 	mounted() {
 		var $navAffix = $(".header nav");
