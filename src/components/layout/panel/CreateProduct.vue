@@ -1,136 +1,146 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation @submit="onSubmit()">
-    <v-container>
-      <v-row>
-        <v-col
-        cols="12"
-        md="6"
-        >
-        <v-text-field
-          v-model="product.name"
-          :rules="nameRules"
-          :counter="20"
-          label="نام محصول"
-          required
-        ></v-text-field>
-        </v-col>
-
-        <v-col
-        cols="12"
-        md="6"
-        >
-        <v-text-field
-          v-model="product.price"
-          :rules="requiredRules"
-          counter
-          label="قیمت محصول"
-          required
-          type="number"
-        ></v-text-field>
-        </v-col>
-
-        <v-col
-        cols="12"
-        md="6"
-        >
-        <v-text-field
-          v-model="product.code"
-          :rules="codeRules"
-          label="کد محصول"
-          counter
-          required
-        ></v-text-field>
-        </v-col>
-
-        <v-col
-        cols="12"
-        md="6"
-        >
-        <v-text-field
-          v-model="product.Inventory"
-          :rules="requiredRules"
-          label="موجودی"
-          counter
-          type="number"
-          required
-        ></v-text-field>
-        </v-col>
-
-        <v-col
-        cols="12"
-        md="6">
-        <v-select
-          v-model="product.category"
-          :items="categories"
-          :rules="requiredRules"
-          label="دسته بندی"
-          dense
-        ></v-select>
-        </v-col>
-
-        <v-col
-        id="my-img"
-        cols="12"
-        md="6"
-        >
-        <v-file-input
-          multiple
-          :rules="imageRules"
-          accept="image/png, image/jpeg, image/bmp"
-          placeholder="انتخاب تصاویر"
-          prepend-icon="mdi-camera"
-          label="تصویر"
-          @change="onFilesSelected"
-        ></v-file-input>
-        </v-col>
-
-        <v-col
-        cols="12"
-        >
-        <v-textarea
-          v-model="product.text"
-          :rules="textRules"
-          autocomplete="توصیح"
-          :counter="200"
-          label="توضیحات محصول"
-        ></v-textarea>
-        </v-col>
-
-        <v-col
+  <div>
+    <LoadingOverlay />
+  
+    <v-form ref="form" v-model="valid" lazy-validation @submit="onSubmit()">
+      <v-container>
+        <v-row>
+          <v-col
           cols="12"
-          class="d-flex justify-center"
-        >
-        <v-btn
-          :disabled="!valid"
-          @click="validate"
-          :color=" this.$route.params.id == 'new' ? '#ef394e' : 'green'"
-          width="200px"
-          type="submit"
-        >
-          {{ this.$route.params.id == 'new' ? 'ذخیره' : 'بروزرسانی' }}
-        </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-form>
+          md="6"
+          >
+          <v-text-field
+            v-model="product.title"
+            :rules="nameRules"
+            :counter="20"
+            label="نام محصول"
+            required
+          ></v-text-field>
+          </v-col>
+
+          <v-col
+          cols="12"
+          md="6"
+          >
+          <v-text-field
+            v-model="product.c_price"
+            :rules="requiredRules"
+            counter
+            label="قیمت محصول"
+            required
+            type="number"
+          ></v-text-field>
+          </v-col>
+
+          <v-col
+          cols="12"
+          md="6"
+          >
+          <v-text-field
+            v-model="product.u_price"
+            :rules="requiredRules"
+            counter
+            label="قیمت محصول با تخفیف"
+            required
+            type="number"
+          ></v-text-field>
+          </v-col>
+
+          <v-col
+          cols="12"
+          md="6"
+          >
+          <v-text-field
+            v-model="product.inventory"
+            :rules="requiredRules"
+            label="موجودی"
+            counter
+            type="number"
+            required
+          ></v-text-field>
+          </v-col>
+
+          <v-col
+          cols="12"
+          md="6"
+          id="category"
+          style="position:relative;">
+            <label id="lable" for="select">دسته بندی</label>
+            <select id="select" @change="setCategoryId(categoryId)" v-model="categoryId">
+              <option
+              v-for="category in pCategories"
+              :key="category.id"
+              :value="category.id">
+              {{ category.title }}</option>
+            </select>
+          </v-col>
+
+          <v-col
+          id="my-img"
+          cols="12"
+          md="6"
+          >
+          <v-file-input
+            multiple
+            :rules="imageRules"
+            accept="image/png, image/jpeg, image/bmp"
+            placeholder="انتخاب تصاویر"
+            prepend-icon="mdi-camera"
+            label="تصویر"
+            @change="onFilesSelected"
+          ></v-file-input>
+          </v-col>
+
+          <v-col
+          cols="12"
+          >
+          <v-textarea
+            v-model="product.desc"
+            :rules="textRules"
+            autocomplete="توصیح"
+            :counter="200"
+            label="توضیحات محصول"
+          ></v-textarea>
+          </v-col>
+
+          <v-col
+            cols="12"
+            class="d-flex justify-center"
+          >
+          <v-btn
+            :disabled="!valid"
+            @click="validate"
+            :color=" this.$route.params.id == 'new' ? '#FF3D00' : 'green'"
+            width="200px"
+            type="submit"
+          >
+            {{ this.$route.params.id == 'new' ? 'ذخیره' : 'بروزرسانی' }}
+          </v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import LoadingOverlay from '../LoadingOverlay.vue'
 
 export default {
   data : () => ({
     // DATAES
     valid: true,
     product : {
-      name: '',
-      price: '',
-      code: '',
-      Inventory: '',
-      text: '',
-      images : null,
-      category: ''
+      title: '',
+      c_price: '',
+      u_price: '',
+      inventory: '',
+      desc: '',
+      category_id: ''
     },
+    images : null,
+    categoryId: '',
 
     // RULES
     nameRules: [
@@ -153,23 +163,38 @@ export default {
       v => v.length < 200 || '200 کاراکتر مجاز است !'
     ],
   }),
+  components: {
+    LoadingOverlay
+  },
   computed: {
-    ...mapActions(['createPruduct', 'getCategories']),
-    ...mapState(['categories']),
+    ...mapGetters(['pCategories']),
+    ...mapActions(['getCategories'])
   },
   methods : {
+    ...mapActions(['createPruduct']),
     validate () {
       this.$refs.form.validate()
     },
     onFilesSelected(files) {
-      this.product.images = files;
+      this.images = files;
     },
     onSubmit() {
-      this.createPruduct(this.product);
+      this.createPruduct({
+        body: this.product,
+        productImages: this.images,
+      });
     },
+    setCategoryId(id) {
+      this.product.category_id = id;
+    }
   },
   created() {
     this.getCategories;
+  },
+  mounted() {
+    $("#category").click(() => {
+      $('#lable').addClass('onLable');
+    });
   }
 }
 </script>
@@ -177,5 +202,22 @@ export default {
 <style>
   #my-img {
     margin-top: -17px;
-  }  
+  }
+  select {
+    width: 100%;
+    border-bottom: 1px solid gray;
+    height: 32px;
+    padding-right: 10px;
+  }
+  #lable {
+    position: absolute;
+    top: 18px;
+    background: white;
+    color: #666666;
+  }
+  .onLable {
+    top: -5px !important;
+    font-size: 12px !important;
+    transition: 300ms;
+  }
 </style>

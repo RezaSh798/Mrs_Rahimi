@@ -10,6 +10,7 @@
             <div class="row" style="margin-top:-25px !important">
                 <div class="col-12 just">
                     <ul class="list-inline top-contact">
+                        <li @click="exit()"><router-link to="/">خروج</router-link></li>
                         <li><router-link to="/user/panel/ticket">تیکت</router-link></li>
                         <li><router-link to="/user/panel/profile">پروفایل</router-link></li>
                     </ul>
@@ -37,6 +38,12 @@ export default {
     computed: {
         ...mapState(['isAuthenticated']),
         ...mapActions(['getUser']),
+    },
+    methods: {
+        ...mapActions(['logOut']),
+        exit() {
+            this.logOut();
+        }
     },
     created() {
         if(!this.isAuthenticated) {

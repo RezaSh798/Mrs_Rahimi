@@ -8,6 +8,7 @@ const store = new Vuex.Store({
     state: {
         isAuthenticated: false,
         user: undefined,
+        users: [],
         rol: 'admin',
         product: {},
         products: [],
@@ -17,6 +18,24 @@ const store = new Vuex.Store({
         error: '',
         // filter states
         categoryTitle: '',
+    },
+    getters: {
+        pCategories(state) {
+            let pCategories = [];
+            function recursive(cat = state.categories) {
+                cat.forEach(category => {
+                  pCategories.push({
+                    id: category.id,
+                    title: category.title,
+                  });
+                  if(category.children.data.length > 0) {
+                    return recursive(category.children.data);
+                  }
+                });
+            }
+            recursive();
+            return pCategories;
+        }
     },
     mutations: {
         // GET Requests
@@ -39,6 +58,17 @@ const store = new Vuex.Store({
             })
             .catch( errors => {
                 console.log( errors );
+            })
+        },
+        getUsers(state, page = 1) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.get(`http://localhost:8000/api/v1/user?api_token=${user.api_token}&page=${page}`)
+            .then(response => {
+                state.users = response.data.data[0];
+                state.pageCount =  Math.ceil(response.data.meta.total / 10);
+            })
+            .catch(error => {
+                console.log(error);
             })
         },
         getUser(state) {
@@ -107,17 +137,24 @@ const store = new Vuex.Store({
                 state.error = error;
             });
         },
+        logOut(state) {
+            localStorage.setItem('login', 'false');
+            state.isAuthenticated = false;
+        },
         createPruduct(state, product) {
-            const newProduct = product;
-            newProduct.images = new FormData();
-            newProduct.images.append('images', product.images, 'uploadingImages');
-            axios.post('', newProduct)
-                .then(response => {
-                console.log(response);
-            });
+            console.log(product);
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.post(`http://localhost:8000/api/v1/product?api_token=${user.api_token}`, product.body)
+            .then(response => {
+                alert(response.data.message);
+            })
+            .catch(error => {
+                console.log(error);
+            })
         },
         createCategory(state, newCategory) {
-            axios.post('http://localhost:8000/api/v1/category', newCategory)
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.post(`http://localhost:8000/api/v1/category?api_token=${user.api_token}`, newCategory)
             .then(response => {
                 alert(response.data.data);
             })
@@ -146,9 +183,10 @@ const store = new Vuex.Store({
         },
         // PUT Request
         updateCategory( state, update ) {
+            const user = JSON.parse(localStorage.getItem('user'));
             axios({
                 method: 'PUT',
-                url: `http://localhost:8000/api/v1/category/${update.id}`,
+                url: `http://localhost:8000/api/v1/category/${update.id}?api_token=${user.api_token}`,
                 headers: {
                     'Accept': 'application/json'
                 },
@@ -166,12 +204,33 @@ const store = new Vuex.Store({
         },
         // DELETE Requests
         deleteCategory( state, id ) {
-            axios.delete( `http://localhost:8000/api/v1/category/${id}`)
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.delete( `http://localhost:8000/api/v1/category/${id}?api_token=${user.api_token}`)
             .then(response => {
                 alert(response.data.data);
             })
             .catch(errors => {
                 console.log(errors);
+            })
+        },
+        deleteProducts(state, products) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.delete(`http://localhost:8000/api/v1/product?api_token=${user.api_token}`, products)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+        deleteUsers(state, users) {
+            const user = JSON.parse(localStorage.getItem('user'))
+            axios.delete(`http://localhost:8000/api/v1/user?api_token=${user.api_token}`, users)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
             })
         },
         // SET STATES
@@ -190,6 +249,9 @@ const store = new Vuex.Store({
         getUser({commit}) {
             commit('getUser');
         },
+        getUsers({commit}, payload) {
+            commit('getUsers', payload);
+        },
         getCategories({ commit }) {
             commit('getCategories');
         },
@@ -206,6 +268,9 @@ const store = new Vuex.Store({
         login({ commit }, payload) {
             commit('login', payload);
         },
+        logOut({commit}) {
+            commit('logOut');
+        },
         shopFilters({commit}, payload) {
             commit('shopFilters', payload);
         },
@@ -220,6 +285,12 @@ const store = new Vuex.Store({
         deleteCategory({commit}, payload) {
             commit('deleteCategory', payload);
         },
+        deleteProducts({commit}, payload) {
+            commit('deleteProducts', payload);
+        },
+        deleteUsers({commit}, payload) {
+            commit('deleteUsers', payload);
+        }
     }
 });
 

@@ -10,19 +10,19 @@
     dark
     dismissible
   >
-      لطفا برای بروزرسانی فقط یکی از محصولات را انتخاب کنید !
+    لطفا برای بروزرسانی فقط یکی از محصولات را انتخاب کنید !
   </v-alert>
   <v-card
   class="d-flex justify-start"
   >
-      <v-switch v-model="singleSelect" :label="actionName()" class="pa-3" color="amber darken-4"></v-switch>
-      <v-btn
-      id="operationBtn"
-      :color="singleSelect ? 'green' : '#ef394e'"
-      @click="actionOperation()"
-      >
-      {{ singleSelect ? 'بروزرسانی' : 'حذف' }}
-      </v-btn>
+    <v-switch v-model="singleSelect" :label="actionName()" class="pa-3" color="amber darken-4"></v-switch>
+    <v-btn
+    id="operationBtn"
+    :color="singleSelect ? 'green' : '#FF3D00'"
+    @click="actionOperation()"
+    >
+    {{ singleSelect ? 'بروزرسانی' : 'حذف' }}
+    </v-btn>
   </v-card>
   <v-data-table
   v-model="selected"
@@ -32,171 +32,72 @@
   :items-per-page="itemsPerPage"
   hide-default-footer
   class="elevation-1"
-  @page-count="pageCount = $event"
   show-select
   :single-select="singleSelect"
   item-key="id"
   ></v-data-table>
-  <v-pagination id="pageinate" v-model="page" :length="pageCount" color="#FF3D00"></v-pagination>
+  <v-pagination id="pageinate" v-model="page" @input="getPage()" :length="pageCount" color="#FF3D00"></v-pagination>
 </div>
 </template>
 
 <script>
 import LoadingOverlay from '../LoadingOverlay.vue'
+import { mapActions, mapState } from 'vuex'
 
 export default {
-    data () {
-      return {
-        alert : false,
+  data () {
+    return {
+      alert : false,
 
-        headers: [
-          {
-            text: 'کد',
-            align: 'start',
-            sortable: false,
-            value: 'code',
-          },
-          { text: 'نام محصول', value: 'name' },
-          { text: 'قیمت', value: 'price' },
-          { text: 'موجودی', value: 'Inventory' },
-          { text: 'برند', value: 'brand' },
-        ],
-        desserts: [
-          {
-            id: 1,
-            code: '123123',
-            name: 'هود سارینا',
-            price: 2000000,
-            Inventory: 24,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 2,
-            code: '123123',
-            name: 'هود کارینا',
-            price: 2880000,
-            Inventory: 53,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 3,
-            code: '123123',
-            name: 'هود سارینا',
-            price: 2000000,
-            Inventory: 24,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 4,
-            code: '123123',
-            name: 'هود سارینا',
-            price: 2000000,
-            Inventory: 24,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 5,
-            code: '123123',
-            name: 'هود سارینا',
-            price: 2000000,
-            Inventory: 24,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 6,
-            code: '123123',
-            name: 'هود کارینا',
-            price: 2880000,
-            Inventory: 53,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 7,
-            code: '123123',
-            name: 'هود کارینا',
-            price: 2880000,
-            Inventory: 53,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 8,
-            code: '123123',
-            name: 'هود سارینا',
-            price: 2000000,
-            Inventory: 24,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 9,
-            code: '123123',
-            name: 'هود سارینا',
-            price: 2000000,
-            Inventory: 24,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 10,
-            code: '123123',
-            name: 'هود کارینا',
-            price: 2880000,
-            Inventory: 53,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 11,
-            code: '123123',
-            name: 'هود سارینا',
-            price: 2000000,
-            Inventory: 24,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 12,
-            code: '123123',
-            name: 'هود سارینا',
-            price: 2000000,
-            Inventory: 24,
-            brand: 'ایلیااستیل',
-          },
-          {
-            id: 13,
-            code: '123123',
-            name: 'هود سارینا',
-            price: 2000000,
-            Inventory: 24,
-            brand: 'ایلیااستیل',
-          },
-        ],
+      headers: [
+        { text: 'نام محصول', value: 'title', sortable: false, align: 'start' },
+        { text: 'قیمت', value: 'c_price' },
+        { text: 'قیمت با تخفیف', value: 'u_price' }, // takhfif
+        { text: 'موجودی', value: 'inventory' },
+        { text: 'دسته بندی', value: 'category' },
+      ],
 
-        selected : [],
-        singleSelect: false,
+      selected : [],
+      singleSelect: false,
 
-        page : 1,
-        pageCount : 0,
-        itemsPerPage : 5,
+      page : 1,
+      itemsPerPage : 9,
+    }
+  },
+  components: {
+    LoadingOverlay,
+  },
+  computed: {
+    ...mapState({
+      pageCount: 'pageCount',
+      desserts: 'products'
+    }),
+  },
+  methods : {    
+    ...mapActions(['getProductsPerPage', 'deleteProducts']),
+    actionName () {
+        if( this.singleSelect ) {
+            return 'انتخاب تکی';
+        } else {
+            return 'انتخاب چندتایی';
+        }
+    },
+    actionOperation () {
+      if ( this.singleSelect && this.selected.length == 1 ) {
+        this.$router.push({ name : 'edite', params : { id : this.selected[0] } });
+      } else if ( this.singleSelect && this.selected.length != 1 ) {
+        this.alert = true;
+      } else {
+        this.deleteProducts(this.selected);
       }
     },
-    components: {
-      LoadingOverlay,
-    },
-    methods : {
-        actionName () {
-            if( this.singleSelect ) {
-                return 'انتخاب تکی';
-            } else {
-                return 'انتخاب چندتایی';
-            }
-        },
-        actionOperation () {
-            if ( this.singleSelect && this.selected.length == 1 ) {
-                this.$router.push({ name : 'edite', params : { id : this.selected[0].id } });
-            } else if ( this.singleSelect && this.selected.length != 1 ) {
-                this.alert = true;
-            } else {
-                //  DELETE API
-            }
-        }
+    getPage() {
+      this.getProductsPerPage(this.page);
     }
+  },
+  created() {
+    this.$store.dispatch('getProductsPerPage');
+  }
 }
 </script>
 
