@@ -6,7 +6,7 @@
     v-model="alert"
     border="left"
     close-text="Close Alert"
-    color="red darken-1"
+    color="#FF3D00"
     dark
     dismissible
   >

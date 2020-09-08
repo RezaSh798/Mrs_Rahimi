@@ -142,10 +142,28 @@ const store = new Vuex.Store({
             state.isAuthenticated = false;
         },
         createPruduct(state, product) {
-            console.log(product);
             const user = JSON.parse(localStorage.getItem('user'));
             axios.post(`http://localhost:8000/api/v1/product?api_token=${user.api_token}`, product.body)
             .then(response => {
+                if(response.status == 200) {
+                    const id = response.data.data;
+                    let fd = new FormData();
+                    fd.append('api_token', user.api_token);
+                    for (let index = 0; index < product.productImages.length; index++) {
+                        fd.append('images[]', product.productImages[index]);                        
+                    }
+                    axios.post(`http://localhost:8000/api/v1/upload/${id}`, fd, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(response => {
+                        alert(response.data.data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                }
                 alert(response.data.message);
             })
             .catch(error => {
@@ -177,6 +195,9 @@ const store = new Vuex.Store({
             uploadUser.append('avatar', user.avatar);
             
             axios.post(`http://localhost:8000/api/v1/user/${user.id}?api_token=${user.api_token}`, uploadUser)
+            .then(response => {
+                alert(response.data.data);
+            })
             .catch(errors => {
                 console.log(errors);
             });

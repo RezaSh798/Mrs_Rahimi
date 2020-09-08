@@ -139,7 +139,7 @@ export default {
       desc: '',
       category_id: ''
     },
-    images : null,
+    images : [],
     categoryId: '',
 
     // RULES
