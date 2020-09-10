@@ -42,14 +42,13 @@
 						<div>
 							<div class="col-xs-12 col-sm-6 col-md-4 product" v-for="product in products" :key="product.id">
 								<div class="product-img">
-									<img :src="product.image" alt="Product"/>
+									<img :src="product.images[0].length ? product.images[0][0].image : './product.png'" alt="تصویر محصول"/>
 									<div class="product-hover">
 										<div class="product-action">
 											<!-- <a class="btn btn-primary" href="#">افزودن به سبد</a> -->
 											<router-link
 											class="btn btn-primary"
-											:to="'/product/' + product.id"
-											@click="setProduct(product)">مشخصات</router-link>
+											:to="'/product/' + product.id">مشخصات</router-link>
 										</div>
 									</div>
 									<!-- .product-overlay end -->
@@ -170,7 +169,7 @@ export default {
 		]),
 	},
 	methods: {
-		...mapMutations(['product']),
+		...mapMutations(['singleProduct']),
 		...mapActions([
 			'getProductsPerPage',
 			'shopFilters'
@@ -183,7 +182,7 @@ export default {
 			this.$router.go();
 		},
 		setProduct(product) {
-			this.product(product);
+			this.singleProduct(product);
 		},
 		openSidbar() {
 			document.getElementById('my-sidebar').style.width = '250px';

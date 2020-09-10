@@ -45,16 +45,20 @@
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-7" style="direction:rtl !important">
-					<div class="product-title text-center-xs">
-						<h3>Cold Air System</h3>
+					<div class="product-title text-center-xs" style="padding-bottom: 10px;">
+						<h3 style="display: inline;">{{ product.title }}</h3>
+						<div class="product-price pull-left pull-none-xs">
+							<p v-if="isAuthenticated"><span class="discount">{{ product.c_price }}</span>{{ product.u_price }}</p>
+							<p v-else>{{ product.c_price }}</p>
+						</div>
 					</div>
 					<!-- .product-title end -->
-					<div class="product-meta mb-30">
+					<!-- <div class="product-meta mb-30">
 						<div class="product-price pull-left pull-none-xs">
 							<p><span class="discount">$220.00</span>$150.00</p>
-						</div>
+						</div> -->
 						<!-- .product-price end -->
-						<div class="product-review text-right text-center-xs">
+						<!-- <div class="product-review text-right text-center-xs">
 							<span class="product-rating">
 							<i class="fa fa-star"></i>
 							<i class="fa fa-star"></i>
@@ -65,13 +69,13 @@
 							<span>5 Review(s)</span> / <span>
 							<a href="#">Add Review</a>
 							</span>
-						</div>
+						</div> -->
 						<!--- .product-review end -->
-					</div>
+					<!-- </div> -->
 					<!-- .product-img end -->
 					
 					<div class="product-desc text-center-xs">
-						<p class="mb-0">Lorem ipsum dolor sit amet, mauris suspendisse viverra eleifend tortor tellus suscipit, tortor aliquet at nulla mus, dignissim neque, nulla neque. Ultrices proin mi urna nibh ut, aenean sollicitudin etiam libero nisl, ultrices ridiculus in magna purus consequuntur, ipsum donec orci ad vitae pede, id odio.</p>
+						<p class="mb-0">{{ product.desc }}</p>
 					</div>
 					<!-- .product-desc end -->
 					
@@ -79,15 +83,14 @@
 					<div class="product-details text-center-xs">
 						<h5>جزئیات بیشتر :</h5>
 						<ul class="list-unstyled">
-							<li>محصول : <span class="my-other-details">Air System</span></li>
-							<li>کد : <span class="my-other-details">#0214</span></li>
-							<li>موجودی : <span class="my-other-details">Available</span></li>
-							<li>برند : <span class="my-other-details">Opel</span></li>
+							<li>محصول : <span class="my-other-details">{{ product.title }}</span></li>
+							<li>موجودی : <span class="my-other-details">{{ product.inventory > 0 ? 'موجود' : 'ناموجود' }}</span></li>
+							<li>دسته بندی : <span class="my-other-details">{{ product.category }}</span></li>
 						</ul>
 					</div>
 					<!-- .product-details end -->
 					<hr class="mt-30 mb-30">
-					<div class="product-action">
+					<!-- <div class="product-action">
 						<div class="product-quantity pull-left pull-none-xs">
 							<span class="qua">تعداد :</span>
 							<span>
@@ -101,9 +104,9 @@
 							<a class="btn btn-primary bordered" href="#">علاقه مندم</a>
 							<a class="btn btn-primary bordered" href="#">مقایسه</a>
 						</div>
-					</div>
+					</div> -->
 					<!-- .product-action end -->
-					<hr class="mt-30 mb-30">
+					<!-- <hr class="mt-30 mb-30">
 					<div class="product-share  text-center-xs">
 						<h5 class="share-title">به استراک گذاری : </h5>
 						<a class="share-facebook" href="#"><i class="fa fa-facebook"></i></a>
@@ -111,7 +114,7 @@
 						<a class="share-google-plus" href="#"><i class="fa fa-google-plus"></i></a>
 						<a class="share-pinterest" href="#"><i class="fa fa-pinterest"></i></a>
 						<a class="share-dribbble" href="#"><i class="fa fa-dribbble"></i></a>
-					</div>
+					</div> -->
 					<!-- .product-share end -->
 				</div>
 			</div>
@@ -121,100 +124,45 @@
 					<div class="product-tabs">
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs" role="tablist">
-							<li role="presentation" class="active" style="float:right;">
-								<a href="#description" aria-controls="description" role="tab" data-toggle="tab">توضیح</a>
-							</li>
 							<li role="presentation" style="float:right;">
-								<a href="#details" aria-controls="details" role="tab" data-toggle="tab">جزئیات</a>
-							</li>
-							<li role="presentation" style="float:right;">
-								<a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">بازدید (4)</a>
+								<a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">دیدگاه ها )({{  }}</a>
 							</li>
 						</ul>
 						
 						<!-- Tab panes -->
 						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane active" id="description">
-								<p>Lorem ipsum dolor sit amet, mauris suspendisse viverra eleifend tortor tellus suscipit, tortor aliquet at nulla mus, dignissim neque, nulla neque. Ultrices proin mi urna nibh ut, aenean sollicitudin etiam libero nisl, ultrices ridiculus in magna purus consequuntur, ipsum donec orci ad vitae pede, id odio.</p>
-								<p>Lorem ipsum dolor sit amet, mauris suspendisse viverra eleifend tortor tellus suscipit, tortor aliquet at nulla mus, dignissim neque, nulla neque. Ultrices proin mi urna nibh ut, aenean sollicitudin etiam libero nisl, ultrices ridiculus in magna purus consequuntur, ipsum donec orci ad vitae pede, id odio.</p>
-							</div>
-							<!-- #description end -->
-							<div role="tabpanel" class="tab-pane" id="details">
-								<h5>Technical Details</h5>
-								<table class="table table-striped">
-									<tbody>
-										<tr>
-											<td>Part Number</td>
-											<td>60-MCTE</td>
-										</tr>
-										<tr>
-											<td>Item Weight</td>
-											<td>54 pounds</td>
-										</tr>
-										<tr>
-											<td>Product Dimensions</td>
-											<td>92.8 x 92.8 x 92.8 inches</td>
-										</tr>
-										<tr>
-											<td>Item model number</td>
-											<td>60-MCTE</td>
-										</tr>
-										<tr>
-											<td>Item Package Quantity</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>Number of Handles</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>Batteries Required?</td>
-											<td>No</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
 							<!-- #details end -->
 							<div role="tabpanel" class="tab-pane reviews" id="reviews">
 								<ul class="product-review list-unstyled">
+									<!-- for loop to show all comments -->
 									<li class="review-comment">
 										<h6>Mostafa Amin</h6>
 										<p class="review-date">22/02/2016</p>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-half-o"></i>
-										</div>
-										<div class="product-comment">
-											<p>Lorem ipsum dolor sit amet, mauris suspendisse viverra eleifend tortor tellus suscipit, tortor aliquet at nulla mus, dignissim neque, nulla neque. Ultrices proin mi urna nibh ut, aenean sollicitudin etiam libero nisl, ultrices ridiculus in magna purus consequuntur, ipsum donec orci ad vitae pede, id odio.</p>
-										</div>
-									</li>
-									<!-- .review-comment end -->
-									
-									<li class="review-comment">
-										<h6>Mohamed Habaza</h6>
-										<p class="review-date">21/02/2016</p>
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star-o"></i>
-											<i class="fa fa-star-o"></i>
-										</div>
 										<div class="product-comment">
 											<p>Lorem ipsum dolor sit amet, mauris suspendisse viverra eleifend tortor tellus suscipit, tortor aliquet at nulla mus, dignissim neque, nulla neque. Ultrices proin mi urna nibh ut, aenean sollicitudin etiam libero nisl, ultrices ridiculus in magna purus consequuntur, ipsum donec orci ad vitae pede, id odio.</p>
 										</div>
 									</li>
 									<!-- .review-comment end -->
 								</ul>
-								<div class="form-review">
-									<form>
-										<input type="email" class="form-control" id="email" placeholder="ایمیل"/>
-										<textarea class="form-control" id="review" rows="2" placeholder="دیدگاه..."></textarea>
-										<button type="submit" class="btn btn-primary btn-black btn-block">ثبت دیدگاه</button>
-									</form>
+								<div v-if="isAuthenticated" class="form-review">
+									<ValidationObserver v-slot="{ invalid }">
+										<form @submit="onComment()">
+											<ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
+												<input type="email" v-model="comment.email" class="form-control" id="email" placeholder="ایمیل"/>
+												<span>{{ errors[0] }}</span>
+											</ValidationProvider>
+											<ValidationProvider name="دیدگاه" rules="required|min:5|max:300" v-slot="{ errors }">
+												<textarea class="form-control" v-model="comment.body" id="review" rows="2" placeholder="دیدگاه..."></textarea>
+												<span>{{ errors[0] }}</span>
+											</ValidationProvider>
+											<button type="submit" :disabled="invalid" class="btn btn-primary btn-black btn-block">ثبت دیدگاه</button>
+										</form>
+									</ValidationObserver>
+								</div>
+								<div v-else>
+									<div class="alert">
+										<p>برای ارسال دیدگاه ابتدا باید وارد اکانت خود شوید!</p>
+									</div>
 								</div>
 							</div>
 							<!-- #reviews end -->
@@ -225,18 +173,7 @@
 				</div>
 			</div>
 			<!-- .row end -->
-			<!-- Pager -->
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 pager">
-					<div class="page-prev">
-						<a href="#"><i class="fa fa-angle-left"></i></a>
-					</div>
-					<div class="page-next">
-						<a href="#"><i class="fa fa-angle-right"></i></a>
-					</div>
-				</div>
-			</div>
-			<!-- .row end -->
+			<!-- related products -->
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12">
 					<div class="widget-related-product">
@@ -395,13 +332,46 @@
 
 <script>
 import PageTitle from '../layout/PageTitle.vue'
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
+
+import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'
+import fa from 'vee-validate/dist/locale/fa.json'
+import * as rules from 'vee-validate/dist/rules'
+
+// install rules and localization
+Object.keys(rules).forEach(rule => {
+  extend(rule, rules[rule]);
+});
+
+localize('fa', fa);
 
 export default {
-    components : {
-        'page-title' : PageTitle,
+	data() {
+		return {
+			comment: {
+				email: '',
+				body: ''
+			}
+		}
 	},
-	computed: mapState(['product']),
+    components : {
+		'page-title' : PageTitle,
+		ValidationObserver,
+		ValidationProvider
+	},
+	computed: {
+		...mapState(['product', 'isAuthenticated']),
+	},
+	methods: {
+		...mapActions(['getComments', 'getProduct', 'createComment']),
+		onComment() {
+			this.createComment(this.comment);
+		}
+	},
+	created() {
+		this.getProduct(this.$route.params.id)
+		this.getComments(this.$route.params.id);
+	},
 	mounted() {
 		/* ------------------ Product Image SLider ------------------ */
 		$('.product-img-slider').slick({
@@ -443,5 +413,13 @@ export default {
 <style>
 	.my-other-details {
 		float: left !important;
+	}
+	.alert {
+        border: 1px solid #FF3D00;
+        border-radius: 5px;
+        background-image:linear-gradient(to left bottom,#F50057, #FF3D00);
+    }
+	.alert p {
+		color: black;
 	}
 </style>

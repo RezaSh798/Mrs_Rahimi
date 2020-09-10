@@ -20,14 +20,16 @@
                         </button>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group posi">
                             <ValidationProvider name="نام" rules="max:10|alpha_spaces" v-slot="{ errors }">
+                                <label for="#name">نام</label>
                                 <input type="text" v-model="userEdit.name" id="name" placeholder="نام">
                                 <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group posi">
                             <ValidationProvider name="نام خانوادگی" rules="max:20|alpha_spaces" v-slot="{ errors }">
+                                <label for="#family">نام خانوادگی</label>
                                 <input type="text" v-model="userEdit.family" id="family" placeholder="نام خانوادگی">
                                 <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
@@ -37,20 +39,23 @@
 
                 <div id="info" class="col-xl-12 col-md-6"  style="padding-top:30px;">
                     <div>
-                        <div class="form-group myFloat">
+                        <div class="form-group posi myFloat">
                             <ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
+                                <label for="#email">ایمیل</label>
                                 <input type="text" v-model="userEdit.email" id="email" placeholder="ایمیل">
                                 <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
-                        <div class="form-group myFloat">
+                        <div class="form-group posi myFloat">
                             <ValidationProvider name="شماره موبایل" rules="max:11|alpha_num" v-slot="{ errors }">
+                                <label for="#phone_number">شماره همراه</label>
                                 <input type="text" v-model="userEdit.phone_number" id="phone_number" placeholder="شماره موبایل">
                                 <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
                         </div>
-                        <div class="form-group" style="clear:both;">
+                        <div class="form-group posi" style="clear:both;">
                             <ValidationProvider name="آدرس" rules="max:150" v-slot="{ errors }">
+                                <label for="#textArea">آدرس</label>
                                 <textarea v-model="userEdit.address" placeholder="آدرس" id="textArea" cols="30" rows="10"></textarea>
                                 <span class="mySpan">{{ errors[0] }}</span>
                             </ValidationProvider>
@@ -103,7 +108,7 @@ export default {
         this.getUser;
         setTimeout(() => {
             this.userEdit = this.user;
-        }, 2000);
+        }, 1000);
     },
 }
 </script>
@@ -152,6 +157,18 @@ export default {
     .mySpan {
         display: block;
         width: 200px;
+    }
+    .posi {
+        position: relative;
+    }
+    label {
+        font-size: 12px;;
+        position: absolute;
+        top: -11px;
+        right: 12px;
+        background: white;
+        padding-right: 3px;
+        padding-left: 3px;
     }
     @media only screen and (max-width: 767px) and (min-width: 320px) {
         #info {

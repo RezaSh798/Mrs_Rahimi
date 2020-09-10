@@ -19,6 +19,7 @@ import PanelCreateProduct from './components/layout/panel/CreateProduct.vue'
 import PanelUsers from './components/layout/panel/Users.vue'
 import Messages from './components/layout/panel/Messages.vue'
 import Categories from './components/layout/panel/Categories.vue'
+import PanelUpdateProduct from './components/layout/panel/UpdateProduct.vue'
 
 // import user panel's children components
 import Ticket from './components/layout/user panel/Ticket.vue'
@@ -36,9 +37,14 @@ const routes = [
                 component : PanelProducts
             },
             {
-                path : 'create-product/:id',
-                name : 'edite',
+                path : 'create-product',
+                name: 'create',
                 component : PanelCreateProduct
+            },
+            {
+                path: 'update',
+                name: 'update',
+                component: PanelUpdateProduct
             },
             {
                 path : 'users',

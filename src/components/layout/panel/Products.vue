@@ -42,7 +42,7 @@
 
 <script>
 import LoadingOverlay from '../LoadingOverlay.vue'
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 
 export default {
   data () {
@@ -75,6 +75,7 @@ export default {
   },
   methods : {    
     ...mapActions(['getProductsPerPage', 'deleteProducts']),
+    ...mapMutations(['getproduct']),
     actionName () {
         if( this.singleSelect ) {
             return 'انتخاب تکی';
@@ -84,7 +85,8 @@ export default {
     },
     actionOperation () {
       if ( this.singleSelect && this.selected.length == 1 ) {
-        this.$router.push({ name : 'edite', params : { id : this.selected[0] } });
+        this.getproduct(this.selected[0]);
+        this.$router.push({ name : 'update' });
       } else if ( this.singleSelect && this.selected.length != 1 ) {
         this.alert = true;
       } else {

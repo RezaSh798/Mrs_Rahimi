@@ -23,7 +23,7 @@
                     <v-list>
                         <v-list-item style="text-align:center;">
                             <v-list-item-title>
-                                <router-link style="color:gray;" to="/panel/create-product/new">ثبت محصول</router-link>
+                                <router-link style="color:gray;" to="/panel/create-product">ثبت محصول</router-link>
                             </v-list-item-title>
                         </v-list-item>
                         <v-list-item style="text-align:center;">

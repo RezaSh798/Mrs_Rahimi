@@ -39,7 +39,7 @@
 										<ValidationObserver v-slot="{ invalid }">
 											<form class="mb-0">
 												<div class="form-group">
-													<ValidationProvider name="نام کاربری" rules="required|email" v-slot="{ errors }">
+													<ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
 														<input type="text" v-model="user.email" class="form-control" id="email" placeholder="ایمیل">
 														<span>{{ errors[0] }}</span>
 													</ValidationProvider>

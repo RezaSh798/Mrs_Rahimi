@@ -10,8 +10,8 @@ const store = new Vuex.Store({
         user: undefined,
         users: [],
         rol: 'admin',
-        product: {},
         products: [],
+        product: {},
         categories: [],
         pageCount: 0,
 
@@ -89,6 +89,27 @@ const store = new Vuex.Store({
             .catch(errors => {
                 console.log(errors);
             })
+        },
+        getProduct(state, product_id) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.get(`http://localhost:8000/api/v1/product/${product_id}?api_token=${user.api_token}`)
+            .then(response => {
+                state.product = response.data.data
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+        getComments(state, product_id) {
+            console.log(product_id);
+            // const user = JSON.parse(localStorage.getItem('user'));
+            // axios.get(`http://localhost:8000/api/v1/comment/${product_id}?api_token=${user.api_token}`)
+            // .then(response => {
+            //     console.log(response);
+            // })
+            // .catch(error => {
+            //     console.log(error);
+            // });
         },
         // POST Requests
         register(state, newUser) {
@@ -184,23 +205,17 @@ const store = new Vuex.Store({
             console.log(state.categoryTitle);
             console.log(priceRange);
         },
-        updateUser(state, user) {
-            let uploadUser = new FormData();
-            uploadUser.append('_method', 'PUT');
-            uploadUser.append('email', user.email);
-            uploadUser.append('name', user.name);
-            uploadUser.append('family', user.family);
-            uploadUser.append('phone_number', user.phone_number);
-            uploadUser.append('address', user.address);
-            uploadUser.append('avatar', user.avatar);
-            
-            axios.post(`http://localhost:8000/api/v1/user/${user.id}?api_token=${user.api_token}`, uploadUser)
+        createComment(state, payload) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            payload.product_id = state.product.id;
+            payload.user_id = user.id;
+            axios.post(`http://localhost:8000/api/v1/comment?api_token=${user.api_token}`, payload)
             .then(response => {
-                alert(response.data.data);
+                alert(response.data.date);
             })
-            .catch(errors => {
-                console.log(errors);
-            });
+            .catch(error => {
+                console.log(error);
+            })
         },
         // PUT Request
         updateCategory( state, update ) {
@@ -223,6 +238,24 @@ const store = new Vuex.Store({
                 console.log( errors )
             });
         },
+        updateUser(state, user) {
+            let uploadUser = new FormData();
+            uploadUser.append('_method', 'PUT');
+            uploadUser.append('email', user.email);
+            uploadUser.append('name', user.name);
+            uploadUser.append('family', user.family);
+            uploadUser.append('phone_number', user.phone_number);
+            uploadUser.append('address', user.address);
+            uploadUser.append('avatar', user.avatar);
+            
+            axios.post(`http://localhost:8000/api/v1/user/${user.id}?api_token=${user.api_token}`, uploadUser)
+            .then(response => {
+                alert(response.data.data);
+            })
+            .catch(errors => {
+                console.log(errors);
+            });
+        },
         // DELETE Requests
         deleteCategory( state, id ) {
             const user = JSON.parse(localStorage.getItem('user'));
@@ -236,7 +269,11 @@ const store = new Vuex.Store({
         },
         deleteProducts(state, products) {
             const user = JSON.parse(localStorage.getItem('user'));
-            axios.delete(`http://localhost:8000/api/v1/product?api_token=${user.api_token}`, products)
+            let fd = new FormData();
+            for (let index = 0; index < products.length; index++) {
+                fd.append('products[]', products[index]);                
+            }
+            axios.delete(`http://localhost:8000/api/v1/multi/delete/product?api_token=${user.api_token}`, fd)
             .then(response => {
                 console.log(response);
             })
@@ -258,9 +295,6 @@ const store = new Vuex.Store({
         categoryFilter(state, categoryTitle) {
             state.categoryTitle = categoryTitle;
         },
-        product(state, product) {
-            state.product = product;
-        }
     },
     actions: {
         // GET
@@ -275,6 +309,12 @@ const store = new Vuex.Store({
         },
         getCategories({ commit }) {
             commit('getCategories');
+        },
+        getComments({commit}, payload) {
+            commit('getComments', payload);
+        },
+        getProduct({commit}, payload) {
+            commit('getProduct', payload);
         },
         // POST
         createPruduct({ commit }, payload) {
@@ -294,6 +334,9 @@ const store = new Vuex.Store({
         },
         shopFilters({commit}, payload) {
             commit('shopFilters', payload);
+        },
+        createComment({commit}, payload) {
+            commit('createComment', payload);
         },
         // PUT
         updateCategory({ commit }, payload) {

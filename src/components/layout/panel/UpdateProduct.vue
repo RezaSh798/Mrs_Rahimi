@@ -110,11 +110,11 @@
           <v-btn
             :disabled="!valid"
             @click="validate"
-            color="#FF3D00"
+            color="green"
             width="200px"
             type="submit"
           >
-            ذخیره
+            بروزرسانی
           </v-btn>
           </v-col>
         </v-row>
@@ -124,7 +124,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import LoadingOverlay from '../LoadingOverlay.vue'
 
 export default {
@@ -168,7 +168,8 @@ export default {
   },
   computed: {
     ...mapGetters(['pCategories']),
-    ...mapActions(['getCategories'])
+    ...mapActions(['getCategories']),
+    ...mapState(['singleProduct']),
   },
   methods : {
     ...mapActions(['createPruduct']),

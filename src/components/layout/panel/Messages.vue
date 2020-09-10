@@ -2,18 +2,30 @@
 <div>
   <LoadingOverlay />
 
-    <v-data-table
-    v-model="selected"
-    :headers="headers"
-    :items="desserts"
-    :page.sync="page"
-    :items-per-page="itemsPerPage"
-    hide-default-footer
-    class="elevation-1"
-    @page-count="pageCount = $event"
-    show-select
-    item-key="id"
-    ></v-data-table>
+    <div id="main" class="container">
+        <div class="alert row"> <!-- for -->
+            <div class="userInfo col-sm-12 col-lg-2">
+                <div class="avatar">
+                    <img src="" alt="آواتار کاربر">
+                </div>
+                <div class="name">
+                    <h6>{{  }}</h6>
+                </div>
+            </div>
+            <div class="userMessage col-sm-12 col-lg-9">
+                <p>{{  }}</p>
+            </div>
+            <div class="actions col-sm-12 col-lg-1">
+                <div class="delete">
+                    <!-- font awesome -->
+                </div>
+                <div class="accept">
+                    <!-- font awesom -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <v-pagination id="pageinate" v-model="page" :length="pageCount" color="#FF3D00"></v-pagination>
 </div>
 </template>
@@ -24,133 +36,17 @@ import LoadingOverlay from '../LoadingOverlay.vue'
 export default {
     data() {
         return {
-            headers: [
-                {
-                    text: 'ردیف',
-                    align: 'start',
-                    sortable: false,
-                    value: 'row',
-                },
-                { text: 'نام کاربر', value: 'userName' },
-                { text: 'پیام', value: 'message' },
-                { text: 'تاریخ', value: 'date' },
-            ],
-            desserts: [
-                {
-                    id: 1,
-                    row: '123123',
-                    userName: 'هود سارینا',
-                    price: 2000000,
-                    date: 24,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 2,
-                    row: '123123',
-                    userName: 'هود کارینا',
-                    price: 2880000,
-                    date: 53,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 3,
-                    row: '123123',
-                    userName: 'هود سارینا',
-                    price: 2000000,
-                    date: 24,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 4,
-                    row: '123123',
-                    userName: 'هود سارینا',
-                    price: 2000000,
-                    date: 24,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 5,
-                    row: '123123',
-                    userName: 'هود سارینا',
-                    price: 2000000,
-                    date: 24,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 6,
-                    row: '123123',
-                    userName: 'هود کارینا',
-                    price: 2880000,
-                    date: 53,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 7,
-                    row: '123123',
-                    userName: 'هود کارینا',
-                    price: 2880000,
-                    date: 53,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 8,
-                    row: '123123',
-                    userName: 'هود سارینا',
-                    price: 2000000,
-                    date: 24,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 9,
-                    row: '123123',
-                    userName: 'هود سارینا',
-                    price: 2000000,
-                    date: 24,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 10,
-                    row: '123123',
-                    userName: 'هود کارینا',
-                    price: 2880000,
-                    date: 53,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 11,
-                    row: '123123',
-                    userName: 'هود سارینا',
-                    price: 2000000,
-                    date: 24,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 12,
-                    row: '123123',
-                    userName: 'هود سارینا',
-                    price: 2000000,
-                    date: 24,
-                    message: 'ایلیااستیل',
-                },
-                {
-                    id: 13,
-                    row: '123123',
-                    userName: 'هود سارینا',
-                    price: 2000000,
-                    date: 24,
-                    message: 'ایلیااستیل',
-                },
-            ],
-            
-            selected : [],
-
             page : 1,
             pageCount : 0,
             itemsPerPage : 5,
-            }
+        }
     },
     components: {
       LoadingOverlay,
     },
 }
 </script>
+
+<style scoped>
+    
+</style>
