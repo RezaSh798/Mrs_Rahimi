@@ -70,6 +70,9 @@ export default {
     },
     actionOperation () {
       this.deleteUsers(this.selected);
+        setTimeout(() => {
+          this.$router.go()
+        }, 2000);
     },
     getPage() {
       this.getUsers(this.page);

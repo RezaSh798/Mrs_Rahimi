@@ -8,7 +8,7 @@ const store = new Vuex.Store({
     state: {
         isAuthenticated: false,
         user: undefined,
-        
+
         rol: 'admin',
         error: '',
         pageCount: 0,
@@ -294,26 +294,35 @@ const store = new Vuex.Store({
             const user = JSON.parse(localStorage.getItem('user'));
             let ids = '';
             products.forEach(product => {
-                ids += `${product.id},`
+                ids += `${product.id},`;
             });
 
             const fd = new FormData();
             fd.append('_method', 'PUT');
             fd.append('ids', ids);
-            
+
             axios.post(`http://localhost:8000/api/v1/multi/delete/product?api_token=${user.api_token}`, fd)
             .then(response => {
-                console.log(response);
+                alert(response.data.data);
             })
             .catch(error => {
                 console.log(error);
             })
         },
         deleteUsers(state, users) {
-            const user = JSON.parse(localStorage.getItem('user'))
-            axios.delete(`http://localhost:8000/api/v1/user?api_token=${user.api_token}`, users)
+            const user = JSON.parse(localStorage.getItem('user'));
+            let ids = '';
+            users.forEach(user => {
+                ids += `${user.id},`;
+            });
+
+            const fd = new FormData();
+            fd.append('_method', 'PUT');
+            fd.append('ids', ids);
+            
+            axios.post(`http://localhost:8000/api/v1/multi/delete/user?api_token=${user.api_token}`, fd)
             .then(response => {
-                console.log(response);
+                alert(response.data.message);
             })
             .catch(error => {
                 console.log(error);

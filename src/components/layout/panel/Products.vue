@@ -91,6 +91,9 @@ export default {
         this.alert = true;
       } else {
         this.deleteProducts(this.selected);
+        setTimeout(() => {
+          this.$router.go()
+        }, 2000);
       }
     },
     getPage() {
