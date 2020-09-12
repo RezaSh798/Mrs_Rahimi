@@ -7,11 +7,11 @@
     </page-title>
     <section id="shopgrid" class="shop shop-grid">
 		<div class="container">
-			<div class="row">
+			<div class="row" style="position:relative;">
 				<div class="col-xs-12 col-sm-12 col-md-9">
 					<div class="row">
 						<div class="col-xs-12  col-sm-12  col-md-12">
-							<button @click="openSidbar()" style="color:black !important;">Click Me</button>
+							<button @click="openSidbar()" style="color:black !important;">منو</button>
 							<div class="shop-options">
 								<div id="my-shop-option" class="product-options2 pull-right pull-none-xs" style="direction:rtl;">
 									<ul class="list-inline">
@@ -94,7 +94,7 @@
 				</div>
 				<!-- .col-md-9 end -->
 				<div id="my-sidebar" class="col-xs-12 col-sm-12 col-md-3 sidebar">
-					<h5>فیلتر کردن با :</h5>
+					<h2 @click="openSidbar()">بستن</h2>
 					<!-- Categories
                     ============================================= -->
 					<div class="widget widget-categories">
@@ -152,6 +152,7 @@ export default {
 			page : 1,
 			itemsPerPage : 9,
 			priceRange: null,
+			showSidbar: false
 		}
 	},
     components : {
@@ -185,7 +186,14 @@ export default {
 			this.singleProduct(product);
 		},
 		openSidbar() {
-			document.getElementById('my-sidebar').style.width = '250px';
+			this.showSidbar = !this.showSidbar;
+			if(this.showSidbar) {
+				document.getElementById('my-sidebar').style.display = 'block';
+				document.getElementById('my-sidebar').style.width = '250px';
+			} else {
+				document.getElementById('my-sidebar').style.display = 'none';
+				document.getElementById('my-sidebar').style.width = '0px';
+			}
 		}
 	},
 	created() {
@@ -225,13 +233,16 @@ export default {
 			margin-top: -15px;
 		}
 		#my-sidebar {
-			width: 0px;
+			display: none;
 			height: 100%;
+			width: 250px;
+			position: fixed;
+			z-index: 1031;
 			top: 0;
 			right: 0;
+			background-color: #f6f6f6;
 			overflow-x: hidden;
-			transition: .5s;
-			z-index: 1;
+			padding-top: 20px;
 		}
 	}
 </style>

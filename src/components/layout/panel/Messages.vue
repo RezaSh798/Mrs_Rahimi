@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import LoadingOverlay from '../LoadingOverlay.vue'
 
 export default {
@@ -44,6 +45,14 @@ export default {
     components: {
       LoadingOverlay,
     },
+    computed: {
+        ...mapActions(['getComments'])
+    },
+    methods: {
+    },
+    created() {
+        this.getComments;
+    }
 }
 </script>
 

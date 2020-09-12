@@ -8,14 +8,19 @@ const store = new Vuex.Store({
     state: {
         isAuthenticated: false,
         user: undefined,
-        users: [],
+        
         rol: 'admin',
-        products: [],
-        product: {},
-        categories: [],
-        pageCount: 0,
-
         error: '',
+        pageCount: 0,
+        len: 0,
+        
+        product: {},
+        
+        users: [],
+        products: [],
+        categories: [],
+        comments: [],
+
         // filter states
         categoryTitle: '',
     },
@@ -94,22 +99,23 @@ const store = new Vuex.Store({
             const user = JSON.parse(localStorage.getItem('user'));
             axios.get(`http://localhost:8000/api/v1/product/${product_id}?api_token=${user.api_token}`)
             .then(response => {
-                state.product = response.data.data
+                state.product = response.data.data;
+                state.product.comments = response.data.data.comments[0];
+                state.len = state.product.comments.length;
             })
             .catch(error => {
                 console.log(error);
             })
         },
-        getComments(state, product_id) {
-            console.log(product_id);
-            // const user = JSON.parse(localStorage.getItem('user'));
-            // axios.get(`http://localhost:8000/api/v1/comment/${product_id}?api_token=${user.api_token}`)
-            // .then(response => {
-            //     console.log(response);
-            // })
-            // .catch(error => {
-            //     console.log(error);
-            // });
+        getComments() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.get(`http://localhost:8000/api/v1/comment?api_token=${user.api_token}`)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
         },
         // POST Requests
         register(state, newUser) {
@@ -217,6 +223,23 @@ const store = new Vuex.Store({
                 console.log(error);
             })
         },
+        sendTicket(state, ticket) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.post(`http://localhost:8000/api/v1/send/ticket?api_token=${user.api_token}`, ticket)
+            .then(response => {
+                alert(response.data.data);
+                if(response.status == 200) {
+                    let time = new Date().toLocaleDateString('fa-IR');
+                    localStorage.setItem('ticket', JSON.stringify({
+                        body: ticket.body,
+                        time: time
+                    }));
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
         // PUT Request
         updateCategory( state, update ) {
             const user = JSON.parse(localStorage.getItem('user'));
@@ -269,11 +292,11 @@ const store = new Vuex.Store({
         },
         deleteProducts(state, products) {
             const user = JSON.parse(localStorage.getItem('user'));
-            let fd = new FormData();
-            for (let index = 0; index < products.length; index++) {
-                fd.append('products[]', products[index]);                
-            }
-            axios.delete(`http://localhost:8000/api/v1/multi/delete/product?api_token=${user.api_token}`, fd)
+            // let fd = new FormData();
+            // for (let index = 0; index < products.length; index++) {
+            //     fd.append('products[]', products[index]);                
+            // }
+            axios.put(`http://localhost:8000/api/v1/multi/delete/product?api_token=${user.api_token}`, products)
             .then(response => {
                 console.log(response);
             })
@@ -310,11 +333,14 @@ const store = new Vuex.Store({
         getCategories({ commit }) {
             commit('getCategories');
         },
-        getComments({commit}, payload) {
-            commit('getComments', payload);
+        getComments({commit}) {
+            commit('getComments');
         },
         getProduct({commit}, payload) {
             commit('getProduct', payload);
+        },
+        getProductComments({commit}, payload) {
+            commit('getProductComments', payload);
         },
         // POST
         createPruduct({ commit }, payload) {
@@ -337,6 +363,9 @@ const store = new Vuex.Store({
         },
         createComment({commit}, payload) {
             commit('createComment', payload);
+        },
+        sendTicket({commit}, payload) {
+            commit('sendTicket', payload);
         },
         // PUT
         updateCategory({ commit }, payload) {

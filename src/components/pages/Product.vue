@@ -83,9 +83,9 @@
 					<div class="product-details text-center-xs">
 						<h5>جزئیات بیشتر :</h5>
 						<ul class="list-unstyled">
-							<li>محصول : <span class="my-other-details">{{ product.title }}</span></li>
-							<li>موجودی : <span class="my-other-details">{{ product.inventory > 0 ? 'موجود' : 'ناموجود' }}</span></li>
-							<li>دسته بندی : <span class="my-other-details">{{ product.category }}</span></li>
+							<li>محصول : <span class="my-other-details" style="float: none !important">{{ product.title }}</span></li>
+							<li>موجودی : <span class="my-other-details" style="float: none !important">{{ product.inventory > 0 ? 'موجود' : 'ناموجود' }}</span></li>
+							<li>دسته بندی : <span class="my-other-details" style="float: none !important">{{ product.category }}</span></li>
 						</ul>
 					</div>
 					<!-- .product-details end -->
@@ -125,7 +125,7 @@
 						<!-- Nav tabs -->
 						<ul class="nav nav-tabs" role="tablist">
 							<li role="presentation" style="float:right;">
-								<a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">دیدگاه ها )({{  }}</a>
+								<a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">دیدگاه ها ({{ len }})</a>
 							</li>
 						</ul>
 						
@@ -135,11 +135,11 @@
 							<div role="tabpanel" class="tab-pane reviews" id="reviews">
 								<ul class="product-review list-unstyled">
 									<!-- for loop to show all comments -->
-									<li class="review-comment">
+									<li class="review-comment" v-for="comment in product.comments" :key="comment.id">
 										<h6>Mostafa Amin</h6>
 										<p class="review-date">22/02/2016</p>
 										<div class="product-comment">
-											<p>Lorem ipsum dolor sit amet, mauris suspendisse viverra eleifend tortor tellus suscipit, tortor aliquet at nulla mus, dignissim neque, nulla neque. Ultrices proin mi urna nibh ut, aenean sollicitudin etiam libero nisl, ultrices ridiculus in magna purus consequuntur, ipsum donec orci ad vitae pede, id odio.</p>
+											<p>{{ comment.body }}</p>
 										</div>
 									</li>
 									<!-- .review-comment end -->
@@ -350,8 +350,8 @@ export default {
 		return {
 			comment: {
 				email: '',
-				body: ''
-			}
+				body: '',
+			},	
 		}
 	},
     components : {
@@ -360,17 +360,16 @@ export default {
 		ValidationProvider
 	},
 	computed: {
-		...mapState(['product', 'isAuthenticated']),
+		...mapState(['product', 'isAuthenticated', 'len']),
 	},
 	methods: {
-		...mapActions(['getComments', 'getProduct', 'createComment']),
+		...mapActions(['getProduct', 'createComment']),
 		onComment() {
 			this.createComment(this.comment);
 		}
 	},
 	created() {
-		this.getProduct(this.$route.params.id)
-		this.getComments(this.$route.params.id);
+		this.getProduct(this.$route.params.id);
 	},
 	mounted() {
 		/* ------------------ Product Image SLider ------------------ */

@@ -5,19 +5,31 @@
             <form id="contact-form">
                 <div class="col-md-6">
                     <ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
-                        <input type="email" class="form-control mb-30" v-model="user.email" id="email" placeholder="ایمیل : " />
+                        <input type="email" class="form-control mb-30" v-model="ticket.email" id="email" placeholder="ایمیل : " />
                         <span>{{ errors[0] }}</span>
                     </ValidationProvider>
                 </div>
                 <div class="col-md-6">
-                    <ValidationProvider name="نام" rules="required" v-slot="{ errors }">
-                        <input type="text" class="form-control mb-30" v-model="user.name" id="name" placeholder="نام : " />
+                    <ValidationProvider name="نام" rules="required|alpha" v-slot="{ errors }">
+                        <input type="text" class="form-control mb-30" v-model="ticket.name" id="name" placeholder="نام : " />
+                        <span>{{ errors[0] }}</span>
+                    </ValidationProvider>
+                </div>
+                <div class="col-md-6">
+                    <ValidationProvider name="موضوع" rules="required|alpha" v-slot="{ errors }">
+                        <input type="text" class="form-control mb-30" v-model="ticket.title" id="name" placeholder="موضوع : " />
+                        <span>{{ errors[0] }}</span>
+                    </ValidationProvider>
+                </div>
+                <div class="col-md-6">
+                    <ValidationProvider name="شماره همراه" rules="required|alpha_num" v-slot="{ errors }">
+                        <input type="text" class="form-control mb-30" v-model="ticket.phone_number" id="name" placeholder="شماره همراه : " />
                         <span>{{ errors[0] }}</span>
                     </ValidationProvider>
                 </div>
                 <div class="col-md-12">
                     <ValidationProvider name="متن" rules="required|min:50|max:300" v-slot="{ errors }">
-                        <textarea class="form-control mb-30" id="message" v-model="user.message" rows="4" placeholder="پیام شما ..."></textarea>
+                        <textarea class="form-control mb-30" id="message" v-model="ticket.body" rows="4" placeholder="پیام شما ..."></textarea>
                         <span>{{ errors[0] }}</span>
                     </ValidationProvider>
                 </div>
@@ -30,8 +42,8 @@
 
     <div class="col-xs-12 col-md-5">
         <div class="alert" style="direction: rtl;">
-            <h6>شما</h6>
-            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.</p>
+            <h6>شما<span style="float: left;">{{ oldTicket.time }}</span></h6>
+            <p>{{ oldTicket.body }}</p>
         </div>
         <hr />
         <div class="alert" style="direction: rtl;">
@@ -46,6 +58,7 @@
 import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'
 import fa from 'vee-validate/dist/locale/fa.json'
 import * as rules from 'vee-validate/dist/rules'
+import { mapActions } from 'vuex';
 // install rules and localization
 Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule]);
@@ -56,17 +69,31 @@ localize('fa', fa);
 export default {
     data() {
         return {
-            user: {
-                name: '',
+            ticket: {
+                title: '',
                 email: '',
-                message: ''
-            }
+                body: '',
+                phone_number: '',
+                name: ''
+            },
+            oldTicket: 'هنوز تیکتی ارسال نکرده اید :)',
         }
     },
     components: {
         ValidationObserver,
-        ValidationProvider
-    }
+        ValidationProvider,
+    },
+    methods: {
+        ...mapActions(['sendTicket']),
+        sendMessage() {
+            this.sendTicket(this.ticket);
+        }
+    },
+    created() {
+        if(localStorage.getItem('ticket')) {
+            this.oldTicket = JSON.parse(localStorage.getItem('ticket'));
+        }
+    },
 }
 </script>
 
@@ -78,5 +105,6 @@ export default {
     }
     p {
         color: black;
+        word-break: break-all
     }
 </style>
