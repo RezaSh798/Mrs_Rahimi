@@ -292,11 +292,16 @@ const store = new Vuex.Store({
         },
         deleteProducts(state, products) {
             const user = JSON.parse(localStorage.getItem('user'));
-            // let fd = new FormData();
-            // for (let index = 0; index < products.length; index++) {
-            //     fd.append('products[]', products[index]);                
-            // }
-            axios.put(`http://localhost:8000/api/v1/multi/delete/product?api_token=${user.api_token}`, products)
+            let ids = '';
+            products.forEach(product => {
+                ids += `${product.id},`
+            });
+
+            const fd = new FormData();
+            fd.append('_method', 'PUT');
+            fd.append('ids', ids);
+            
+            axios.post(`http://localhost:8000/api/v1/multi/delete/product?api_token=${user.api_token}`, fd)
             .then(response => {
                 console.log(response);
             })
