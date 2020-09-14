@@ -20,6 +20,7 @@ import PanelUsers from './components/layout/panel/Users.vue'
 import Messages from './components/layout/panel/Messages.vue'
 import Categories from './components/layout/panel/Categories.vue'
 import PanelUpdateProduct from './components/layout/panel/UpdateProduct.vue'
+import Tickets from './components/layout/panel/Tickets.vue'
 
 // import user panel's children components
 import Ticket from './components/layout/user panel/Ticket.vue'
@@ -60,6 +61,11 @@ const routes = [
                 path: 'categories',
                 name: 'categories',
                 component: Categories
+            },
+            {
+                path: 'tickets',
+                name: 'tickets',
+                component: Tickets,
             }
         ]
     },

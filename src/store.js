@@ -20,6 +20,7 @@ const store = new Vuex.Store({
         products: [],
         categories: [],
         comments: [],
+        tickets: [],
 
         // filter states
         categoryTitle: '',
@@ -112,6 +113,18 @@ const store = new Vuex.Store({
             axios.get(`http://localhost:8000/api/v1/comment?page=${page}&api_token=${user.api_token}`)
             .then(response => {
                 state.comments = response.data.data[0];
+                state.pageCount = Math.ceil(response.data.meta.total / 10);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        getTickets(state, page = 1) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.get(`http://localhost:8000/api/v1/ticket?page=${page}&api_token=${user.api_token}`)
+            .then(response => {
+                console.log(response)
+                state.tickets = response.data.data;
                 state.pageCount = Math.ceil(response.data.meta.total / 10);
             })
             .catch(error => {
@@ -251,6 +264,16 @@ const store = new Vuex.Store({
                 console.log(error);
             })
         },
+        sendAnswerTicket(state, answer) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.post(`http://localhost:8000/api/v1/send/ticket?api_token=${user.api_token}`, answer)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
         // PUT Request
         updateCategory( state, update ) {
             const user = JSON.parse(localStorage.getItem('user'));
@@ -350,6 +373,16 @@ const store = new Vuex.Store({
                 console.log(error);
             })
         },
+        ticketDelete(state, ticket_id) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            axios.delete(`http://localhost:8000/api/v1/ticket/${ticket_id}?api_token=${user.api_token}`)
+            .then(response => {
+                console.log(response.data.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
         // SET STATES
         categoryFilter(state, categoryTitle) {
             state.categoryTitle = categoryTitle;
@@ -377,6 +410,9 @@ const store = new Vuex.Store({
         },
         getProductComments({commit}, payload) {
             commit('getProductComments', payload);
+        },
+        getTickets({commit}, payload) {
+            commit('getTickets', payload);
         },
         // POST
         createPruduct({ commit }, payload) {
@@ -406,6 +442,9 @@ const store = new Vuex.Store({
         commentStatus({commit}, payload) {
             commit('commentStatus', payload);
         },
+        sendAnswerTicket({commit}, payload) {
+            commit('sendAnswerTicket', payload);
+        },
         // PUT
         updateCategory({ commit }, payload) {
             commit('updateCategory', payload);
@@ -425,6 +464,9 @@ const store = new Vuex.Store({
         },
         commentDelete({commit}, payload) {
             commit('commentDelete', payload);
+        },
+        ticketDelete({commit}, payload) {
+            commit('ticketDelete', payload);
         }
     }
 });
