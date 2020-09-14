@@ -52,7 +52,8 @@
         
             <div class="row">
                 <main id="my-main" role="main" class="col-12 ml-sm-auto px-md-4">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"> -->
+                    <div>
                         <router-view></router-view>
                     </div>
                 </main>
@@ -90,8 +91,8 @@ export default {
     .my-panel-nav div ul li a {
         color: gray;
     }
-    #my-main {
+    /* #my-main {
         display: flex;
         justify-content: center;
-    }
+    } */
 </style>

@@ -23,12 +23,14 @@
                 <div class="userInfo col-sm-12 col-lg-2">
                     <div class="name">
                         <h6>{{ comment.writter }}</h6>
+                        <p>{{ comment.time }}</p>
                     </div>
                 </div>
             </div>
-            
-            <v-pagination class="col-12" id="pageinate" v-model="page" @input="changePage()" :length="pageCount" color="#FF3D00"></v-pagination>
         </div> 
+        <div class="row">
+            <v-pagination class="col-12" id="pageinate" v-model="page" @input="changePage()" :length="pageCount" color="#FF3D00"></v-pagination>
+        </div>
     </div>
     
 </div>
