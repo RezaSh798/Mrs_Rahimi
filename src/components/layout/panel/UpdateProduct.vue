@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import $ from 'jquery/dist/jquery'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import LoadingOverlay from '../LoadingOverlay.vue'
 
@@ -131,14 +132,7 @@ export default {
   data : () => ({
     // DATAES
     valid: true,
-    product : {
-      title: '',
-      c_price: '',
-      u_price: '',
-      inventory: '',
-      desc: '',
-      category_id: ''
-    },
+    product : {},
     images : [],
     categoryId: '',
 
@@ -169,10 +163,12 @@ export default {
   computed: {
     ...mapGetters(['pCategories']),
     ...mapActions(['getCategories']),
-    ...mapState(['singleProduct']),
+    ...mapState({
+      singleProduct: 'product'
+    }),
   },
   methods : {
-    ...mapActions(['createPruduct']),
+    ...mapActions(['createPruduct', 'getProduct']),
     validate () {
       this.$refs.form.validate()
     },
@@ -191,11 +187,13 @@ export default {
   },
   created() {
     this.getCategories;
+    this.getProduct(this.$route.params.id);
   },
   mounted() {
     $("#category").click(() => {
       $('#lable').addClass('onLable');
     });
+    this.product = this.singleProduct;
   }
 }
 </script>

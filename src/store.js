@@ -123,7 +123,6 @@ const store = new Vuex.Store({
             const user = JSON.parse(localStorage.getItem('user'));
             axios.get(`http://localhost:8000/api/v1/ticket?page=${page}&api_token=${user.api_token}`)
             .then(response => {
-                console.log(response)
                 state.tickets = response.data.data;
                 state.pageCount = Math.ceil(response.data.meta.total / 10);
             })
@@ -273,6 +272,9 @@ const store = new Vuex.Store({
             .catch(error => {
                 console.log(error);
             })
+        },
+        setSort(state, sort) {
+            console.log(sort);
         },
         // PUT Request
         updateCategory( state, update ) {
@@ -444,6 +446,9 @@ const store = new Vuex.Store({
         },
         sendAnswerTicket({commit}, payload) {
             commit('sendAnswerTicket', payload);
+        },
+        setSort({commit}, payload) {
+            commit('setSort', payload);
         },
         // PUT
         updateCategory({ commit }, payload) {

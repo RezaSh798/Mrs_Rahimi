@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import $ from 'jquery/dist/jquery'
 import { mapActions, mapGetters } from 'vuex'
 import LoadingOverlay from '../LoadingOverlay.vue'
 

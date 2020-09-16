@@ -69,10 +69,12 @@ export default {
         }
     },
     actionOperation () {
-      this.deleteUsers(this.selected);
-        setTimeout(() => {
-          this.$router.go()
-        }, 2000);
+      if(this.selected.length > 0) {
+        this.deleteUsers(this.selected);
+          setTimeout(() => {
+            this.$router.go()
+          }, 2000);
+      }
     },
     getPage() {
       this.getUsers(this.page);

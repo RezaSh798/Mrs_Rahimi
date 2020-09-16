@@ -331,6 +331,7 @@
 </template>
 
 <script>
+import $ from 'jquery/dist/jquery'
 import PageTitle from '../layout/PageTitle.vue'
 import { mapActions, mapState } from 'vuex';
 

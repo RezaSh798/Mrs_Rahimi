@@ -146,6 +146,7 @@
 </template>
 
 <script>
+import $ from 'jquery/dist/jquery'
 // import components
 import PageTitle from '../layout/PageTitle.vue'
 import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'

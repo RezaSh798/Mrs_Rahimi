@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import $ from 'jquery/dist/jquery'
 import { mapState } from 'vuex'
 
 export default {

@@ -11,6 +11,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "eslint-loader": "^2.1.2",
+    "jquery": "^3.5.1",
     "vee-validate": "^3.3.9",
     "vue": "^2.6.11",
     "vue-loading-overlay": "^3.4.0",

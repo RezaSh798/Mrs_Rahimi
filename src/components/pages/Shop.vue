@@ -11,7 +11,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-9">
 					<div class="row">
 						<div class="col-xs-12  col-sm-12  col-md-12">
-							<button @click="openSidbar()" style="color:black !important;">منو</button>
+							<button id="openSidebar" @click="openSidbar()" style="color:black !important;border: 1px solid #e5e5e5;float: right;margin-top: -22px;width: 40px;">منو</button>
 							<div class="shop-options">
 								<div id="my-shop-option" class="product-options2 pull-right pull-none-xs" style="direction:rtl;">
 									<ul class="list-inline">
@@ -19,12 +19,12 @@
 											<div class="product-sort mb-15-xs">
 												<span>مرتب کردن بر اساس : </span>
 												<i class="fa fa-angle-down"></i>
-												<select>
-													<option selected="" value="Default">اسم</option>
-													<option value="Larger">جدید ترین</option>
-													<option value="Larger">قدیمی ترین</option>
-													<option value="Small">گران ترین</option>
-													<option value="Medium">ارزان ترین</option>
+												<select @change="onSort(sort)" v-model="sort">
+													<option selected="" value="title">نام محصول</option>
+													<option value="newest">جدید ترین</option>
+													<option value="oldest">قدیمی ترین</option>
+													<option value="expensive">گران ترین</option>
+													<option value="cheapest">ارزان ترین</option>
 												</select>
 											</div>
 										</li>
@@ -42,7 +42,7 @@
 						<div>
 							<div class="col-xs-12 col-sm-6 col-md-4 product" v-for="product in products" :key="product.id">
 								<div class="product-img">
-									<img :src="product.images[0].length ? product.images[0][0].image : './product.png'" alt="تصویر محصول"/>
+									<img :src="product.images[0].length ? 'http://localhost:8000/' + product.images[0][0].image : './product.png'" alt="تصویر محصول"/>
 									<div class="product-hover">
 										<div class="product-action">
 											<!-- <a class="btn btn-primary" href="#">افزودن به سبد</a> -->
@@ -94,7 +94,7 @@
 				</div>
 				<!-- .col-md-9 end -->
 				<div id="my-sidebar" class="col-xs-12 col-sm-12 col-md-3 sidebar">
-					<h2 @click="openSidbar()">بستن</h2>
+					<i id="closeSidebar" @click="openSidbar()" class="fas fa-times" style="display:none;"></i>
 					<!-- Categories
                     ============================================= -->
 					<div class="widget widget-categories">
@@ -139,6 +139,7 @@
 </template>
 
 <script>
+import $ from 'jquery/dist/jquery'
 // imports components
 import PageTitle from '../layout/PageTitle.vue'
 import LoadingOverlay from '../layout/LoadingOverlay.vue'
@@ -152,7 +153,8 @@ export default {
 			page : 1,
 			itemsPerPage : 9,
 			priceRange: null,
-			showSidbar: false
+			showSidbar: false,
+			sort: 'title'
 		}
 	},
     components : {
@@ -170,12 +172,13 @@ export default {
 		]),
 	},
 	methods: {
-		...mapMutations(['singleProduct']),
+		...mapMutations(['singleProduct', 'setSortnpm']),
 		...mapActions([
 			'getProductsPerPage',
 			'shopFilters'
 		]),
 		getPage() {
+			window.scrollTo(0,0);
 			this.getProductsPerPage(this.page);
 		},
 		filter() {
@@ -194,6 +197,14 @@ export default {
 				document.getElementById('my-sidebar').style.display = 'none';
 				document.getElementById('my-sidebar').style.width = '0px';
 			}
+		},
+		onSort(val) {
+			this.sort = val;
+		}
+	},
+	watch: {
+		sort() {
+			this.setSort(this.sort);
 		}
 	},
 	created() {
@@ -227,6 +238,15 @@ export default {
 <style>
 	#my-sidebar {
 		direction: rtl;
+		display: block;
+	}
+	#openSidebar {
+		display: none;
+	}
+	@media only screen and (min-width: 767px) {
+		#my-sidebar {
+			display: block;
+		}
 	}
 	@media only screen and (max-width: 767px) and (min-width: 320px) {
 		#my-shop-option {
@@ -243,6 +263,13 @@ export default {
 			background-color: #f6f6f6;
 			overflow-x: hidden;
 			padding-top: 20px;
+			box-shadow: 0px 0px 11px -1px;
+		}
+		#openSidebar {
+			display: block;
+		}
+		#closeSidebar {
+			display: block;
 		}
 	}
 </style>

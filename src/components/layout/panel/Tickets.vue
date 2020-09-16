@@ -12,7 +12,7 @@
                         </a>
                     </div>
                     <div class="accept">
-                        <a title="پذیرفتن">
+                        <a title="پاسخ">
                             <i :id="'accept' + ticket.id" @click="writeIcon(ticket.id)" class="far fa-edit acceptHover" style="color:#FF3D00;"></i>
                         </a>
                     </div>
