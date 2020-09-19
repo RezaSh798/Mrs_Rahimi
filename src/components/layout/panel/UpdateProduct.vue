@@ -82,7 +82,6 @@
           >
           <v-file-input
             multiple
-            :rules="imageRules"
             accept="image/png, image/jpeg, image/bmp"
             placeholder="انتخاب تصاویر"
             prepend-icon="mdi-camera"
@@ -124,7 +123,7 @@
 </template>
 
 <script>
-import $ from 'jquery/dist/jquery'
+// import $ from 'jquery/dist/jquery'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import LoadingOverlay from '../LoadingOverlay.vue'
 
@@ -148,9 +147,6 @@ export default {
     requiredRules: [
       v => !!v || 'این فیلد باید پر شود !',
     ],
-    imageRules: [
-      v => !!v || 'این فیلد باید پر شود !',
-    ],
     textRules: [
       v => !!v || 'این فیلد باید پر شود !',
       v => v.length > 50 || 'حداقل 50 کاراکتر وارد کنید !',
@@ -168,7 +164,7 @@ export default {
     }),
   },
   methods : {
-    ...mapActions(['createPruduct', 'getProduct']),
+    ...mapActions(['updateProduct', 'getProduct']),
     validate () {
       this.$refs.form.validate()
     },
@@ -176,25 +172,33 @@ export default {
       this.images = files;
     },
     onSubmit() {
-      this.createPruduct({
-        body: this.product,
-        productImages: this.images,
-      });
+      delete this.product.category;
+      if(this.images.length > 0) {
+        delete this.product.images;
+        this.updateProduct({
+          body: this.product,
+          productImages: this.images,
+        });
+      } else {
+        this.updateProduct( this.product );
+      }
     },
     setCategoryId(id) {
       this.product.category_id = id;
     }
   },
   created() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if(user.api_token != 'gyuBYANO28XFTPZPMFj0kBU4ZC74zxjWwjKaiJh4x6oe7ZrGCqmgBf3XgOWsRIQciwh0kpLsMqVul85jW2Cri2Q8tw9lhWD5ijs1') {
+      this.$router.push({name: 'error404'});
+    }
     this.getCategories;
     this.getProduct(this.$route.params.id);
+    setTimeout(() => {
+      this.product = this.singleProduct;
+      this.categoryId = this.singleProduct.category_id;
+    }, 2000);
   },
-  mounted() {
-    $("#category").click(() => {
-      $('#lable').addClass('onLable');
-    });
-    this.product = this.singleProduct;
-  }
 }
 </script>
 
@@ -210,13 +214,9 @@ export default {
   }
   #lable {
     position: absolute;
-    top: 18px;
-    background: white;
-    color: #666666;
-  }
-  .onLable {
     top: -5px !important;
     font-size: 12px !important;
-    transition: 300ms;
+    background: white;
+    color: #666666;
   }
 </style>

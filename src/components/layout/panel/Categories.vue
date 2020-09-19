@@ -62,6 +62,10 @@ export default {
         ...mapState(['categories']),
     },
     created() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(user.api_token != 'gyuBYANO28XFTPZPMFj0kBU4ZC74zxjWwjKaiJh4x6oe7ZrGCqmgBf3XgOWsRIQciwh0kpLsMqVul85jW2Cri2Q8tw9lhWD5ijs1') {
+            this.$router.push({name: 'error404'});
+        }
         this.getCategories;
     }
 }

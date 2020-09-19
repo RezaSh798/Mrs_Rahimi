@@ -139,7 +139,7 @@
 </template>
 
 <script>
-import $ from 'jquery/dist/jquery'
+// import $ from 'jquery/dist/jquery'
 // imports components
 import PageTitle from '../layout/PageTitle.vue'
 import LoadingOverlay from '../layout/LoadingOverlay.vue'

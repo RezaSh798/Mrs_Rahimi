@@ -8,8 +8,7 @@ const store = new Vuex.Store({
     state: {
         isAuthenticated: false,
         user: undefined,
-
-        rol: 'admin',
+        
         error: '',
         pageCount: 0,
         len: 0,
@@ -316,6 +315,49 @@ const store = new Vuex.Store({
                 console.log(errors);
             });
         },
+        updateProduct(state, product) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if(product.productImages == undefined) {
+                console.log('images not changes');
+                console.log(product);
+                
+                axios.put(`http://localhost:8000/api/v1/product/${product.id}?api_token=${user.api_token}`, product)
+                .then(response => {
+                    alert(response.data.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+                
+            } else {
+                axios.put(`http://localhost:8000/api/v1/product/${product.id}?api_token=${user.api_token}`, product.body)
+                // .then(response => {
+                //     if(response.status == 200) {
+                //         const id = response.data.data;
+                //         let fd = new FormData();
+                //         fd.append('api_token', user.api_token);
+                //         for (let index = 0; index < product.productImages.length; index++) {
+                //             fd.append('images[]', product.productImages[index]);                        
+                //         }
+                //         axios.post(`http://localhost:8000/api/v1/upload/${id}`, fd, {
+                //             headers: {
+                //                 'Content-Type': 'multipart/form-data'
+                //             }
+                //         })
+                //         .then(response => {
+                //             alert(response.data.data);
+                //         })
+                //         .catch(error => {
+                //             console.log(error);
+                //         })
+                //     }
+                //     alert(response.data.message);
+                // })
+                .catch(error => {
+                    console.log(error);
+                })
+            }
+        },
         // DELETE Requests
         deleteCategory( state, id ) {
             const user = JSON.parse(localStorage.getItem('user'));
@@ -456,6 +498,9 @@ const store = new Vuex.Store({
         },
         updateUser({commit}, payload) {
             commit('updateUser', payload);
+        },
+        updateProduct({commit}, payload) {
+            commit('updateProduct', payload);
         },
         // DELETE
         deleteCategory({commit}, payload) {

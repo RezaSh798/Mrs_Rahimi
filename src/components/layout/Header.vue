@@ -76,7 +76,7 @@
 						<li class="my-navbar-li">
 							<router-link to="/contact">ارتباط با ما</router-link>
 						</li>
-						<li class="my-navbar-li" v-if="isAuthenticated && rol == 'admin'">
+						<li class="my-navbar-li" v-if="isAuthenticated && rol()">
 							<router-link to="/panel/products">داشبورد</router-link>
 						</li>
 						<!-- li end -->
@@ -90,14 +90,23 @@
 </template>
 
 <script>
-import $ from 'jquery/dist/jquery'
+// import $ from 'jquery/dist/jquery'
 import { mapState } from 'vuex'
 
 export default {
 	computed: mapState([
 		'isAuthenticated',
-		'rol'
 	]),
+	methods: {
+		rol() {
+			const user = JSON.parse(localStorage.getItem('user'));
+			if(user.api_token == 'gyuBYANO28XFTPZPMFj0kBU4ZC74zxjWwjKaiJh4x6oe7ZrGCqmgBf3XgOWsRIQciwh0kpLsMqVul85jW2Cri2Q8tw9lhWD5ijs1') {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	},
 	mounted() {
 		var $navAffix = $(".header nav");
 		$navAffix.affix({

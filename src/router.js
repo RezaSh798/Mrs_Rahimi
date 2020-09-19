@@ -119,7 +119,7 @@ const routes = [
     },
     {
         path : '/*',
-        name : '404',
+        name : 'error404',
         component : Error404
     },
 ];
