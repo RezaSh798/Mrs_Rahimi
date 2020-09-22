@@ -302,7 +302,11 @@ const store = new Vuex.Store({
             uploadUser.append('email', user.email);
             uploadUser.append('name', user.name);
             uploadUser.append('family', user.family);
-            uploadUser.append('phone_number', user.phone_number);
+            if(user.phone_number == null) {
+                uploadUser.append('phone_number', '');
+            } else {
+                uploadUser.append('phone_number', user.phone_number);
+            }
             uploadUser.append('address', user.address);
             uploadUser.append('avatar', user.avatar);
             

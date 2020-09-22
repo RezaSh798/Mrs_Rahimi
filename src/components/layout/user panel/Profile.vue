@@ -47,7 +47,7 @@
                             </ValidationProvider>
                         </div>
                         <div class="form-group posi myFloat">
-                            <ValidationProvider name="شماره موبایل" rules="max:11|alpha_num" v-slot="{ errors }">
+                            <ValidationProvider name="شماره موبایل" rules="max:11|min:11|alpha_num" v-slot="{ errors }">
                                 <label for="#phone_number">شماره همراه</label>
                                 <input type="text" v-model="userEdit.phone_number" id="phone_number" placeholder="شماره موبایل">
                                 <span class="mySpan">{{ errors[0] }}</span>
