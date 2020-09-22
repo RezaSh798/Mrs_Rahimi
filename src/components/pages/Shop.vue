@@ -118,16 +118,29 @@
 						<div class="widget-title">
 							<h5>قیمت</h5>
 						</div>
-						<div class="widget-content">
-							<div id="slider-range"></div>
-							<p>
-								<label for="amount">قیمت ( تومن ) : </label>
-								<input type="text" id="amount" readonly style="direction:ltr;">
-							</p>
-							<a class="btn btn-secondary" @click="filter()">فیلتر</a>
+						<v-app>
+						<v-card-text>
+						<v-row>
+							<v-col class="pr-4">
+							<v-range-slider
+								v-model="range"
+								:max="max"
+								:min="min"
+								hide-details
+								class="align-center"
+							>
+							</v-range-slider>
+							</v-col>
+						</v-row>
+						<div style="display: flex;justify-content: center;">
+							<p>{{ range[1] }} - {{ range[0] }}</p>
 						</div>
+						</v-card-text>
+						<a class="btn btn-secondary" @click="filter()">فیلتر</a>
+						</v-app>
 					</div>
 					<!-- .widget-filter end -->
+					
 				</div>
 				<!-- .col-md-3 end -->
 			</div>
@@ -154,7 +167,11 @@ export default {
 			itemsPerPage : 9,
 			priceRange: null,
 			showSidbar: false,
-			sort: 'title'
+			sort: 'title',
+			min: 0,
+			max: 1000000,
+			slider: 40,
+			range: [50000, 500000],
 		}
 	},
     components : {
@@ -211,26 +228,6 @@ export default {
 		this.$store.dispatch('getProductsPerPage');
 		this.$store.dispatch('getCategories');
 		this.$vuetify.rtl = false;
-	},
-	mounted() {
-		// Slider Range
-		let test = null;
-		var $sliderRange = $("#slider-range"),
-        $sliderAmount = $("#amount");
-		$sliderRange.slider({
-			range: true,
-			min: 500000,
-			max: 10000000,
-			values: [1000000, 3000000],
-			slide: function(event, ui) {
-				$sliderAmount.val( ui.values[0] + " - " + ui.values[1] );
-				test = ui;
-			},
-			change: () => {
-				this.priceRange = test.values;
-			}
-		});
-		$sliderAmount.val( $sliderRange.slider("values", 0) + " - " + $sliderRange.slider("values", 1) );
 	},
 }
 </script>
