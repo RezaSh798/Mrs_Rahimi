@@ -28,20 +28,21 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-5">
 					<div class="prodcut-images">
-						<div class="product-img-slider">
-							<img src="assets/images/shop/full/1.jpg" alt="product image">
-							<img src="assets/images/shop/full/2.jpg" alt="product image">
-							<img src="assets/images/shop/full/3.jpg" alt="product image">
-							<img src="assets/images/shop/full/4.jpg" alt="product image">
-							<img src="assets/images/shop/full/3.jpg" alt="product image">
-						</div>
-						<div class="product-img-nav">
-							<img src="assets/images/shop/full/5.jpg" alt="product image">
-							<img src="assets/images/shop/full/6.jpg" alt="product image">
-							<img src="assets/images/shop/full/7.jpg" alt="product image">
-							<img src="assets/images/shop/full/8.jpg" alt="product image">
-							<img src="assets/images/shop/full/7.jpg" alt="product image">
-						</div>
+						<v-app>
+							<v-carousel
+								cycle
+								height="300"
+								hide-delimiter-background
+								show-arrows-on-hover
+							>
+								<v-carousel-item
+								v-for="(item, i) in items"
+								:key="i"
+								:src="item.src"
+								>
+								</v-carousel-item>
+							</v-carousel>
+						</v-app>
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-7" style="direction:rtl !important">
@@ -173,156 +174,6 @@
 				</div>
 			</div>
 			<!-- .row end -->
-			<!-- related products -->
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12">
-					<div class="widget-related-product">
-						<div class="widget-title">
-							<h4>Related Products</h4>
-						</div>
-						<div class="widget-content">
-							<div class="row">
-								<!-- Product #1 -->
-								<div class="col-xs-12 col-sm-6 col-md-3 product">
-									<div class="product-img">
-										<img  src="assets/images/shop/grid/1.jpg" alt="Product"/>
-										<div class="product-hover">
-											<div class="product-action">
-												<a class="btn btn-primary" href="#">Add To Cart</a>
-												<a class="btn btn-primary" href="#">Item Details</a>
-											</div>
-										</div>
-										<!-- .product-overlay end -->
-									</div>
-									<!-- .product-img end -->
-									<div class="product-bio">
-										<div class="prodcut-cat">
-											<a href="#">Opel</a>
-										</div>
-										<!-- .product-cat end -->
-										<div class="prodcut-title">
-											<h3>
-												<a href="#">Brake Discs</a>
-											</h3>
-										</div>
-										<!-- .product-title end -->
-										<div class="product-price">
-											<span class="symbole">$</span><span>68.00</span>
-										</div>
-										<!-- .product-price end -->
-										
-									</div>
-									<!-- .product-bio end -->
-								</div>
-								<!-- .product end -->
-								
-								<!-- Product #2 -->
-								<div class="col-xs-12 col-sm-6 col-md-3 product">
-									<div class="product-img">
-										<img  src="assets/images/shop/grid/2.jpg" alt="Product"/>
-										<div class="product-hover">
-											<div class="product-action">
-												<a class="btn btn-primary" href="#">Add To Cart</a>
-												<a class="btn btn-primary" href="#">Item Details</a>
-											</div>
-										</div>
-										<!-- .product-overlay end -->
-									</div>
-									<!-- .product-img end -->
-									<div class="product-bio">
-										<div class="prodcut-cat">
-											<a href="#">Subaru</a>
-										</div>
-										<!-- .product-cat end -->
-										<div class="prodcut-title">
-											<h3>
-												<a href="#">OIL FILTER</a>
-											</h3>
-										</div>
-										<!-- .product-title end -->
-										<div class="product-price">
-											<span class="symbole">$</span><span>40.00</span>
-										</div>
-										<!-- .product-price end -->
-										
-									</div>
-									<!-- .product-bio end -->
-								</div>
-								<!-- .product end -->
-								
-								<!-- Product #3 -->
-								<div class="col-xs-12 col-sm-6 col-md-3 product">
-									<div class="product-img">
-										<img  src="assets/images/shop/grid/3.jpg" alt="Product"/>
-										<div class="product-hover">
-											<div class="product-action">
-												<a class="btn btn-primary" href="#">Add To Cart</a>
-												<a class="btn btn-primary" href="#">Item Details</a>
-											</div>
-										</div>
-										<!-- .product-overlay end -->
-									</div>
-									<!-- .product-img end -->
-									<div class="product-bio">
-										<div class="prodcut-cat">
-											<a href="#">Opel</a>
-										</div>
-										<!-- .product-cat end -->
-										<div class="prodcut-title">
-											<h3>
-												<a href="#">Belt Car Engine</a>
-											</h3>
-										</div>
-										<!-- .product-title end -->
-										<div class="product-price">
-											<span class="symbole">$</span><span>180.00</span>
-										</div>
-										<!-- .product-price end -->
-										
-									</div>
-									<!-- .product-bio end -->
-								</div>
-								<!-- .product end -->
-								
-								<!-- Product #4 -->
-								<div class="col-xs-12 col-sm-6 col-md-3 product">
-									<div class="product-img">
-										<img  src="assets/images/shop/grid/4.jpg" alt="Product"/>
-										<div class="product-hover">
-											<div class="product-action">
-												<a class="btn btn-primary" href="#">Add To Cart</a>
-												<a class="btn btn-primary" href="#">Item Details</a>
-											</div>
-										</div>
-										<!-- .product-overlay end -->
-									</div>
-									<!-- .product-img end -->
-									<div class="product-bio">
-										<div class="prodcut-cat">
-											<a href="#">Mercedes</a>
-										</div>
-										<!-- .product-cat end -->
-										<div class="prodcut-title">
-											<h3>
-												<a href="#">Tire Chains</a>
-											</h3>
-										</div>
-										<!-- .product-title end -->
-										<div class="product-price">
-											<span class="symbole">$</span><span>230.00</span>
-										</div>
-										<!-- .product-price end -->
-										
-									</div>
-									<!-- .product-bio end -->
-								</div>
-								<!-- .product end -->
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- .product-related end -->
 		</div>
 		<!-- .container end -->
 	</section>
@@ -352,7 +203,18 @@ export default {
 			comment: {
 				email: '',
 				body: '',
-			},	
+			},
+            items: [
+                {
+                    src: './assets/images/sliders/1.jpg'
+                },
+                {
+                    src: './assets/images/sliders/2.jpg'
+                },
+                {
+                    src: './assets/images/sliders/3.jpg'
+                }
+            ],
 		}
 	},
     components : {
