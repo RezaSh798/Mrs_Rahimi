@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section style="padding:0px;">
         <v-app>
             <v-carousel
                 cycle

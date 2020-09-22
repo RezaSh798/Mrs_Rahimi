@@ -22,49 +22,49 @@
 			</div>
 		</div>
 	</div>
-	<section id="signIn" class="sign" v-if="changeLocation() == 'login'">
+	<section id="signIn" class="sign" v-if="changeLocation() == 'login'" style="margin-bottom: -700px;">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12  col-sm-12  col-md-12">
-					<div class="text-center">
-						<button type="button" class="btn btn-primary text-center" data-toggle="modal" data-target=".login-modal-lg">ورود به حساب</button>
-					</div>
-					<div id="loginDialog" class="modal model-sign fade login-modal-lg" tabindex="-1" role="dialog">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-body" style="direction:rtl;">
-									<p>خوش برگشتید</p>
-									<h6>ورود به سیستم</h6>
-									<div class="sign-form">
-										<ValidationObserver v-slot="{ invalid }">
-											<form class="mb-0">
-												<div class="form-group">
-													<ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
-														<input type="text" v-model="user.email" class="form-control" id="email" placeholder="ایمیل">
-														<span>{{ errors[0] }}</span>
-													</ValidationProvider>
-												</div>
-												<div class="form-group">
-													<ValidationProvider name="گذرواژه" rules="required|min:8|max:11" v-slot="{ errors }">
-														<input type="password" v-model="user.password" class="form-control" id="pwd" placeholder="گذرواژه">
-														<span>{{ errors[0] }}</span>
-													</ValidationProvider>
-												</div>
-												<!-- <div class="pull-left lost-pass">
-													<a href="#">گذرواژه تان را فراموش کرده اید ؟</a>
-												</div> -->
-												<button type="submit" :disabled="invalid" class="btn btn-primary btn-block" @click="onLogin">ورود</button>
-											</form>
-										</ValidationObserver>
-										<div class="form-links text-center">
-											<router-link to="/user/register">ایجاد حساب کاربری</router-link>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /.modal-content -->
-						</div>
-					</div>
+					<v-app>
+					<v-row justify="center">
+						<v-dialog v-model="dialog" persistent max-width="350px">
+						<template v-slot:activator="{ on, attrs }">
+							<v-btn
+							color="#ff3d00"
+							class="btn btn-primary text-center"
+							dark
+							v-bind="attrs"
+							v-on="on"
+							>
+							ورود
+							</v-btn>
+						</template>
+						<v-card>
+							<v-card-title>
+							<span>ورود به حساب</span>
+							</v-card-title>
+							<v-card-text>
+							<v-container>
+								<v-row>
+								<v-col cols="12">
+									<v-text-field :rules="emailRules" v-model="user.email" label="ایمیل"></v-text-field>
+								</v-col>
+								<v-col cols="12">
+									<v-text-field :rules="passwordRules" v-model="user.password" label="گذرواژه" type="password"></v-text-field>
+								</v-col>
+								</v-row>
+							</v-container>
+							</v-card-text>
+							<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn color="blue darken-1" text @click="dialog = false">بستن</v-btn>
+							<v-btn color="blue darken-1" text @click="onLogin()">ورود</v-btn>
+							</v-card-actions>
+						</v-card>
+						</v-dialog>
+					</v-row>
+				</v-app>
 				</div>
 				<!-- .col-md-12 end -->
 			</div>
@@ -85,59 +85,49 @@
 			</div>
 		</div>
 	</div>
-	<section id="register" class="register" v-if="changeLocation() == 'register'">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12  col-sm-12  col-md-12">
-					<div class="text-center">
-						<button type="button" class="btn btn-primary text-center" data-toggle="modal" data-target=".login-modal-lg">ایجاد حساب</button>
-					</div>
-					<div id="registerDialog" class="modal model-sign fade login-modal-lg" tabindex="-1" role="dialog">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-body" style="direction:rtl;">
-									<p>سلام</p>
-									<h6>فرم ثبت نام</h6>
-									<div class="register-form">
-										<ValidationObserver v-slot="{ invalid }">
-											<form class="mb-0">
-												<div class="form-group">
-													<ValidationProvider name="ایمیل" rules="required|email" v-slot="{ errors }">
-														<input type="text" v-model="user.email" class="form-control" id="email" placeholder="ایمیل">
-														<span>{{ errors[0] }}</span>
-													</ValidationProvider>
-												</div>
-												<div class="form-group">
-													<ValidationProvider name="گذرواژه" rules="required|min:8|max:11" v-slot="{ errors }" vid="confirmation">
-														<input type="password" v-model="user.password_confirmation" class="form-control" placeholder="گذرواژه">
-														<span>{{ errors[0] }}</span>
-													</ValidationProvider>
-												</div>
-												<div class="form-group">
-													<ValidationProvider name="تائید گذرواژه" rules="required|confirmed:confirmation" v-slot="{ errors }">
-														<input type="password" v-model="user.password" class="form-control" placeholder="تائید گذرواژه">
-														<span>{{ errors[0] }}</span>
-													</ValidationProvider>
-												</div>
-
-												<button type="submit" :disabled="invalid" class="btn btn-primary btn-block mt-30" @click="onRegister">ایجاد حساب</button>
-											</form>
-										</ValidationObserver>
-										<div class="form-links text-center">
-											<router-link to="/user/login">حساب کاربری دارید ؟ وارد شوید</router-link>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /.modal-content -->
-						</div>
-					</div>
-				</div>
-				<!-- .col-md-12 end -->
-			</div>
-			<!-- .row end -->
-		</div>
-		<!-- .container end -->
+	<section id="register" class="register" v-if="changeLocation() == 'register'" style="margin-bottom: -700px;">
+		<v-app>
+			<v-row justify="center">
+				<v-dialog v-model="dialog" persistent max-width="350px">
+				<template v-slot:activator="{ on, attrs }">
+					<v-btn
+					color="#ff3d00"
+					class="btn btn-primary text-center"
+					dark
+					v-bind="attrs"
+					v-on="on"
+					>
+					عضویت
+					</v-btn>
+				</template>
+				<v-card>
+					<v-card-title>
+					<span>فرم ثبت نام</span>
+					</v-card-title>
+					<v-card-text>
+					<v-container>
+						<v-row>
+						<v-col cols="12">
+							<v-text-field :rules="emailRules" v-model="user.email" label="ایمیل"></v-text-field>
+						</v-col>
+						<v-col cols="12">
+							<v-text-field :rules="passwordRules" v-model="user.password" label="گذرواژه" type="password"></v-text-field>
+						</v-col>
+						<v-col cols="12">
+							<v-text-field :rules="confirmRules" v-model="user.password_confirmation" label="تکرار گذرواژه" type="password"></v-text-field>
+						</v-col>
+						</v-row>
+					</v-container>
+					</v-card-text>
+					<v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn color="blue darken-1" text @click="dialog = false">بستن</v-btn>
+					<v-btn color="blue darken-1" text @click="onRegister">ذخیره</v-btn>
+					</v-card-actions>
+				</v-card>
+				</v-dialog>
+			</v-row>
+		</v-app>
 	</section>
 	<!-- #register end -->
 	
@@ -149,18 +139,7 @@
 // import $ from 'jquery/dist/jquery'
 // import components
 import PageTitle from '../layout/PageTitle.vue'
-import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate'
-import fa from 'vee-validate/dist/locale/fa.json'
-import * as rules from 'vee-validate/dist/rules'
 import { mapState, mapActions } from 'vuex'
-
-// install rules and localization
-Object.keys(rules).forEach(rule => {
-  extend(rule, rules[rule]);
-});
-
-localize('fa', fa);
-
 export default {
 	data() {
 		return {
@@ -168,13 +147,24 @@ export default {
 				email : '',
 				password: null,
 				password_confirmation : null,
-			}
+			},
+			dialog: false,
+			// Rules
+			emailRules: [
+			v => !!v || 'ایمیل باید پر شود !',
+			v => /.+@.+/.test(v) || 'ایمیل باید درست باشد !',
+			],
+			passwordRules: [
+			v => !!v || 'گذرواژه باید پر شود !',
+			v => v.length > 6 || 'حداقل 6 کاراکتر وارد کنید !',
+			],
+			confirmRules: [
+			v => v == this.user.password || 'گذرواژه با تائیدیه اش مطابقت ندارد !'
+			]
 		}
 	},
     components : {
 		'page-title' : PageTitle,
-		ValidationProvider,
-		ValidationObserver
 	},
 	methods : {
 		...mapActions(['register','login']),
@@ -187,13 +177,11 @@ export default {
 		},
 		onRegister() {		
 			this.register(this.user);
-			$("#registerDialog").modal('hide');
-			this.$router.push({ name: 'home' });
+			this.dialog = false;
 		},
 		onLogin() {
 			this.login(this.user);
-			$("#loginDialog").modal('hide');
-			this.$router.push({ name: 'home' });
+			this.dialog = false;
 		}
 	},
 	computed: mapState(['isAuthenticated']),
