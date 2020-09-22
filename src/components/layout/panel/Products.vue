@@ -102,7 +102,7 @@ export default {
   },
   created() {
     const user = JSON.parse(localStorage.getItem('user'));
-    if(user.api_token != 'gyuBYANO28XFTPZPMFj0kBU4ZC74zxjWwjKaiJh4x6oe7ZrGCqmgBf3XgOWsRIQciwh0kpLsMqVul85jW2Cri2Q8tw9lhWD5ijs1') {
+    if(user.api_token != 'zOFmCoxdWA3ep1igMsC6MQqd06QBA1qN8KV9EQ07m7HAR6qA6pgR6qU9pWbgR0skZlbutZlBCWdHwzuzT3OUpsEGlepVMJsNd1EW') {
       this.$router.push({name: 'error404'});
     }
     this.$store.dispatch('getProductsPerPage');
