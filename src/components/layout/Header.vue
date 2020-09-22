@@ -1,33 +1,7 @@
 <template>
     <header id="navbar-spy" class="header header-1">
-		<div class="top-bar">
-			<div class="container">
-				<div class="row" style="margin-top:-25px !important">
-					<div class="col-xs-12 col-sm-6 col-md-5">
-						<ul class="list-inline top-contact">
-							<li>05137133686<span> : تماس</span></li>
-							<li>mehravidniroo@gmail.com<span> : ایمیل</span></li>
-						</ul>
-					</div>
-					<div class="col-xs-12 col-sm-6 col-md-7">
-						<ul class="list-inline pull-right top-links">
-							<li v-if="!isAuthenticated">
-								<router-link to="/user/login">ورود</router-link>
-								/
-								<router-link to="/user/register">عضویت</router-link>
-							</li>
-							<li v-else>
-								<router-link to="/user/panel/profile">پنل کاربر</router-link>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- .row end -->
-			</div>
-			<!-- .container end -->
-		</div>
 		<!-- .top-bar end -->
-		<nav id="primary-menu" class="navbar navbar-fixed-top">
+		<nav id="primary-menu" class="navbar navbar-fixed-top" style="background:white;">
 			<div class="container">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
@@ -107,31 +81,6 @@ export default {
 			}
 		}
 	},
-	mounted() {
-		var $navAffix = $(".header nav");
-		$navAffix.affix({
-			offset: {
-				top: 50
-			}
-		});
-
-		/* ------------------  mobile menu ------------------ */
-
-		var $dropToggle = $("ul.dropdown-menu [data-toggle=dropdown]"),
-			$module = $(".module");
-		$dropToggle.on("click", function(event) {
-			event.preventDefault();
-			event.stopPropagation();
-			$(this).parent().siblings().removeClass("open");
-			$(this).parent().toggleClass("open");
-		});
-		$module.on("click",function() {
-			$(this).toggleClass("toggle-module");
-		});
-		$module.find("input.form-control", ".btn", ".cancel").on("click",function(e) {
-			e.stopPropagation();
-		});
-	}
 }
 </script>
 

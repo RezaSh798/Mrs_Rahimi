@@ -372,41 +372,6 @@ export default {
 	created() {
 		this.getProduct(this.$route.params.id);
 	},
-	mounted() {
-		/* ------------------ Product Image SLider ------------------ */
-		$('.product-img-slider').slick({
-			slidesToShow: 1,
-			slidesToScroll: 1,
-			arrows: false,
-			fade: true,
-			asNavFor: '.product-img-nav',
-			infinite: true,
-
-		});
-		$('.product-img-nav').slick({
-			slidesToShow: 4,
-			slidesToScroll: 2,
-			asNavFor: '.product-img-slider',
-			dots: false,
-			arrows: true,
-			prevArrow: '<div class="arrows arrow-prev"><i class="fa fa-angle-left"></i></div>',
-			nextArrow: '<div class="arrows arrow-next"><i class="fa fa-angle-right"></i></div>',
-			centerMode: false,
-			focusOnSelect: true,
-			infinite: true,
-			responsive: [{
-				breakpoint: 1280,
-				settings: {
-					slidesToShow: 4
-				}
-			}, {
-				breakpoint: 768,
-				settings: {
-					slidesToShow: 2
-				}
-			}]
-		});
-	}
 }
 </script>
 
